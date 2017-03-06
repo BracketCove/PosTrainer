@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_alarm_dismiss"
+        android:layout_width="192dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ripple_bg"
+        android:fontFamily="sans-serif-medium"
+        android:padding="8dp"
+        android:text="@string/stop_alarm"
+        android:textColor="@color/WHITE"
+        android:textSize="28sp" />
+
+</merge>

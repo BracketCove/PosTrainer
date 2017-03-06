@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer.alarm;
+package com.bracketcove.postrainer.util;
 
 
 import java.text.DateFormat;

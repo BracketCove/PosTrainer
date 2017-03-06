@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer.alarm;
+package com.bracketcove.postrainer.database;
 
 /**
  * This class describes interactions between AlarmPresenter and AlarmService.
