@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/divider_accent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:showDividers="middle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/btn_settings_disclaimer"
+        style="@style/Button_Settings"
+        android:text="@string/settings_button_disclaimer" />
+
+    <Button
+        android:id="@+id/btn_settings_contact"
+        style="@style/Button_Settings"
+        android:text="@string/settings_button_contact" />
+
+    <TextView
+        android:id="@+id/lbl_settings_version"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="@string/settings_version_number"
+        android:fontFamily="sans-serif-light"
+        android:textSize="24sp"
+        />
+
+    <ImageView
+        android:id="@+id/settings_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bracketlogobluelarge"
+
+        />
+
+</LinearLayout>

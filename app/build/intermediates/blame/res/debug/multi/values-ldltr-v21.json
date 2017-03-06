@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ldltr-v21\\values-ldltr-v21.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 112,
+                    "endOffset": 163
+                },
+                "from": {
+                    "file": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 112,
+                        "endOffset": 163
+                    }
+                }
+            }
+        ]
+    }
+]

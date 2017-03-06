@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    android:paddingBottom="32dp"
+    >
+
+    <TextView
+        android:id="@+id/fragment_disclaimer_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="@string/disclaimer_title"
+        android:textColor="@color/WHITE"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:textAlignment="center" />
+
+    <ScrollView
+        android:id="@+id/scv_fragment_disclaimer_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/chb_disclaimer_accepted"
+        android:layout_below="@+id/fragment_disclaimer_title">
+
+        <TextView
+            android:id="@+id/fragment_disclaimer_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_disclaimer_title"
+            android:fontFamily="sans-serif-medium"
+            android:padding="16dp"
+            android:text="@string/disclaimer_body"
+            android:textColor="@color/WHITE"
+            android:textSize="16sp"
+            android:textAlignment="center" />
+
+    </ScrollView>
+
+    <CheckBox
+        android:id="@+id/chb_disclaimer_accepted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_disclaimer_proceed"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/disclaimer_check_box"
+        android:textColor="@color/WHITE"
+        android:theme="@style/AppTheme.Inverse" />
+
+    <Button
+        android:id="@+id/btn_disclaimer_proceed"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ripple_bg"
+        android:text="@string/disclaimer_button"
+        android:textColor="@color/ALPHA_WHITE" />
+
+
+</RelativeLayout>

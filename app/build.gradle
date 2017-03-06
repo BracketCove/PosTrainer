@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        applicationId "com.bracketcove.postrainer"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 7
+        versionName "1.6"
+
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+        }
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:cardview-v7:25.1.0'
+    compile 'com.google.code.gson:gson:2.7'
+
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.5'
+
+    provided 'javax.annotation:jsr250-api:1.0'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+
+
+    testCompile 'junit:junit:4.12'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support:support-annotations:25.1.0'
+}

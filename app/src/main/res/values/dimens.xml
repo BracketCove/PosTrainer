@@ -1,0 +1,10 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <integer name="text_switch_anim_duration">320</integer>
+    <integer name="act_transition_length">300</integer>
+    <item name="act_fade_deg" format="float" type="dimen">0.6</item>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

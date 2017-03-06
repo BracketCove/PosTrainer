@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cont_manage_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    >
+
+    <ImageButton
+        android:id="@+id/imb_manage_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:background="@color/colorPrimary"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_arrow_back_white_24dp" />
+
+    <ImageButton
+        android:id="@+id/imb_manage_proceed"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:background="@color/colorPrimary"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_done_white_24dp" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edt_reminder_title"
+        style="@style/EditText_Input"
+        android:theme="@style/AppTheme.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imb_manage_proceed"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:autoText="false"
+        android:hint="@string/manage_alarm_title_hint" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/chb_vibrate_only"
+        style="@style/CheckBox_White_Border"
+        android:theme="@style/AppTheme.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_reminder_title"
+        android:text="@string/manage_alarm_vibrate"
+
+        />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/chb_renew_automatically"
+        style="@style/CheckBox_White_Border"
+        android:theme="@style/AppTheme.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chb_vibrate_only"
+        android:text="@string/manage_alarm_renew" />
+
+    <View
+        android:id="@+id/div_manage_one"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/chb_renew_automatically"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/divider_white" />
+
+    <TimePicker
+        android:id="@+id/pck_reminder_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/div_manage_one"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:theme="@style/Custom_Picker_Text_Color" />
+
+</RelativeLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_one"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_reminders"
+            android:icon="@drawable/ic_alarm_black_48dp"
+            android:title="@string/menu_item_reminders" />
+
+        <item
+            android:id="@+id/nav_item_movements"
+            android:icon="@drawable/ic_accessibility_black_24dp"
+            android:title="@string/menu_item_movements" />
+        <item
+            android:id="@+id/nav_item_about"
+            android:icon="@drawable/ic_info_outline_black_24dp"
+            android:title="@string/menu_item_about" />
+    </group>
+</menu>

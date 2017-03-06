@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\layout-v21\\notification_action.xml"
+    }
+]

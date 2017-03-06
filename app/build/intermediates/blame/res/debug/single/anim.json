@@ -1,0 +1,102 @@
+[
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\slide_in_left.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\slide_in_left.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\ab96dd2b0e267f4f2533d3bef27d99ed66534159\\output\\res\\anim\\design_snackbar_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\fade_out_right.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\fade_out_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_out.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\ab96dd2b0e267f4f2533d3bef27d99ed66534159\\output\\res\\anim\\design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\scale_up.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\scale_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\slide_in_right.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\slide_in_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\slide_out_right.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\slide_out_right.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\ab96dd2b0e267f4f2533d3bef27d99ed66534159\\output\\res\\anim\\design_snackbar_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\a21733d2860de90a05a98b8aefbd751369e59b11\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\ab96dd2b0e267f4f2533d3bef27d99ed66534159\\output\\res\\anim\\design_fab_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\slide_out_left.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\slide_out_left.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\decelerate_interpolator.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\decelerate_interpolator.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_in.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\ab96dd2b0e267f4f2533d3bef27d99ed66534159\\output\\res\\anim\\design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\scale_down.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\scale_down.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\fade_in_shadow.xml",
+        "source": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\src\\main\\res\\anim\\fade_in_shadow.xml"
+    },
+    {
+        "merged": "C:\\Users\\Ryan\\Desktop\\postrainer\\PosTrainer\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_in.xml",
+        "source": "C:\\Users\\Ryan\\.android\\build-cache\\ab96dd2b0e267f4f2533d3bef27d99ed66534159\\output\\res\\anim\\design_fab_in.xml"
+    }
+]

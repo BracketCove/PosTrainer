@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">PosTrainer</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_movement_detail">ActivityMovementDetail</string>
+    <string name="title_activity_movement_menu">ActivityMovementMenu</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_reminders">ActivityReminders</string>
+    <string name="title_activity_manage_reminder">ActivityManageReminder</string>
+
+    <!-- ReminderListActivity -->
+    <string name="reminders_alarm_on">ON</string>
+    <string name="reminders_alarm_off">OFF</string>
+    <string name="reminders_new_alarm_prompt">Hit "+" to Create a New Reminder</string>
+    <string name="reminders_alarm_title">Alarm Title Text</string>
+    <string name="reminders_alarm_dialog_delete_title">Delete Reminder?</string>
+
+    <!-- ActivityManageReminder -->
+    <string name="manage_alarm_title_hint">Alarm Title</string>
+    <string name="manage_alarm_vibrate">Vibrate Only</string>
+    <string name="manage_alarm_renew">Renew Automatically</string>
+    <string name="manage_alarm_action_done">Done</string>
+    <string name="manage_alarm_action_delete">Delete</string>
+    <string name="manage_alarm_new_title">New Alarm</string>
+    <string name="manage_alarm_toolbar_title">Set Reminder</string>
+    <string name="manage_alarm_write_successful">Alarm Updated/Created</string>
+    <string name="manage_alarm_write_unsuccessful">Alarm Update Unsuccessful</string>
+
+    <!-- ActivityMovementMenu -->
+    <string name="movement_menu_guide">GUIDE</string>
+    <string name="movement_menu_tab_stretches">STRETCHES</string>
+    <string name="movement_menu_tab_exercises">EXERCISES</string>
+
+    <!-- ActivityMovementDetail -->
+    <string name="movement_detail_tab_description_abrv">DESC.</string>
+
+    <string name="movement_detail_tab_description">DESCRIPTION</string>
+    <string name="movement_detail_tab_steps">STEPS</string>
+
+
+    <!-- SettingsActivity -->
+    <string name="settings_button_about">About</string>
+    <string name="settings_button_disclaimer">Disclaimer</string>
+    <string name="settings_button_contact">Contact</string>
+    <string name="settings_version_number">Version: 1.3</string>
+
+
+    <!-- Dialog -->
+    <string name="dialog_positive_ok">OK</string>
+    <string name="dialog_negative_cancel">Cancel</string>
+
+    <!-- Navigation Fragment-->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="jump_to">Jump To:</string>
+
+    <!-- Validation -->
+    <string name="error_input_invalid_blank">Title can\'t be blank</string>
+    <string name="error_input_invalid_too_long">Title must be 36 Chars. or less</string>
+    <string name="error_too_many_reminders">Maximum Number of Reminders is 5</string>
+
+    <!--Toolbar Titles -->
+    <string name="movement_menu_title">Movements</string>
+    <string name="movement_detail_title">Movement Detail</string>
+    <string name="reminder_list_title">Current Reminders</string>
+    <string name="reminder_manage_title">Manage Reminder</string>
+    <string name="reminder_disclaimer_title">Disclaimer</string>
+    <string name="settings_title">About</string>
+
+    <!-- Other -->
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="disclaimer_body"> The information provided within this App, must at no point be considered as professional advice.
+        I have selected a series of low-impact Stretches and Exercises which, in my admittedly unprofessional opinion, may alleviate postural imbalances associated with being a desk jockey.
+        All forms of Exercise carry a risk of injury, however small. Some of the movements may stretch/activate muscles which haven\'t seen a lot of stretching/activation in a long time.
+        I implore you to take extreme caution when performing any of the movements for the first time, performing only a few repetitions and not going beyond a \'light stretching\' sensation.
+        If you experience excessive pain during, or any level of long-term pain after a movement, consult a professional before performing any more movements. You have been warned.
+    </string>
+    <string name="disclaimer_title">Damnit Jim, I\'m a Programmer, not a Doctor!</string>
+    <string name="disclaimer_check_box">I understand the risk.</string>
+    <string name="disclaimer_button">Proceed</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="contact_title">Contact Information</string>
+    <string name="contact_info">
+        Primary Website: wiseassblog.com\n
+        Youtube Tutorials: youtube.com/wiseass\n
+        Facebook: facebook.com/wiseassblog\n
+        Personal Linkedin: linkedin.com/in/ryan-kay-808388114
+    </string>
+    <string name="stop_alarm">Stop Alarm</string>
+    <string name="menu_item_reminders">Reminders</string>
+    <string name="menu_item_movements">Movements</string>
+    <string name="menu_item_about">About</string>
+
+
+</resources>
