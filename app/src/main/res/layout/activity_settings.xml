@@ -1,42 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cont_settings_content"
+    android:id="@+id/root_settings_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    >
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout_settings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
-
-
-        <include layout="@layout/content_activity_settings" />
-
-
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view_settings"
-            android:layout_width="250dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:headerLayout="@layout/view_nav_header"
-            app:menu="@menu/menu_navigation_items" />
-
-
-    </android.support.v4.widget.DrawerLayout>
-
-
     <FrameLayout
-        android:id="@+id/cont_settings_dialog"
+        android:id="@+id/cont_settings_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 

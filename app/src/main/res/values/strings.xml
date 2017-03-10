@@ -90,6 +90,8 @@
     <string name="menu_item_reminders">Reminders</string>
     <string name="menu_item_movements">Movements</string>
     <string name="menu_item_about">About</string>
+    <string name="error_database_write_failure">Unable to write to Database :(</string>
+    <string name="message_database_write_successful">Reminder updated Succesfully</string>
 
 
 </resources>

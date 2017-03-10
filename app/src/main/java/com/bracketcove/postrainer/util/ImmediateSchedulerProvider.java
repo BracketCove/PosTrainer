@@ -1,5 +1,7 @@
 package com.bracketcove.postrainer.util;
 
+import android.support.annotation.Nullable;
+
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
@@ -9,6 +11,20 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class ImmediateSchedulerProvider implements BaseSchedulerProvider {
+    @Nullable
+    private static ImmediateSchedulerProvider INSTANCE;
+
+    // Prevent direct instantiation.
+    private ImmediateSchedulerProvider() {
+    }
+
+    public static synchronized BaseSchedulerProvider getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ImmediateSchedulerProvider();
+        }
+        return INSTANCE;
+    }
+
     @Override
     public Scheduler computation() {
         return Schedulers.trampoline();

@@ -1,6 +1,5 @@
 package com.bracketcove.postrainer.reminderlist;
 
-import com.bracketcove.postrainer.database.AlarmSource;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -13,15 +12,15 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
     private ReminderListContract.View view;
     private CompositeDisposable disposableSubscriptions;
-    private AlarmSource alarmSource;
+    private ReminderSource reminderSource;
     private BaseSchedulerProvider schedulerProvider;
 
 
     public ReminderListPresenter(ReminderListContract.View view,
-                                 AlarmSource alarmSource,
+                                 ReminderSource reminderSource,
                                  BaseSchedulerProvider schedulerProvider) {
         this.view = view;
-        this.alarmSource = alarmSource;
+        this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;
 
     }
@@ -47,7 +46,8 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     @Override
-    public void onAlarmWidgetSwiped() {
+    public void onAlarmWidgetSwiped(int swipedItemPosition) {
 
     }
+
 }

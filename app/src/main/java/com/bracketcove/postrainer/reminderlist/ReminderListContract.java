@@ -2,7 +2,7 @@ package com.bracketcove.postrainer.reminderlist;
 
 import com.bracketcove.postrainer.BasePresenter;
 import com.bracketcove.postrainer.BaseView;
-import com.bracketcove.postrainer.database.Reminder;
+import com.bracketcove.postrainer.data.reminder.Reminder;
 
 import java.util.ArrayList;
 
@@ -23,6 +23,6 @@ public interface ReminderListContract  {
 
         void onAlarmIconClicked();
 
-        void onAlarmWidgetSwiped();
+        void onAlarmWidgetSwiped(int swipedItemPosition);
     }
 }

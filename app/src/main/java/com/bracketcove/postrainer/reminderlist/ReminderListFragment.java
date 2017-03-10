@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bracketcove.postrainer.ReminderInjection;
 import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.SchedulerInjection;
 import com.bracketcove.postrainer.util.TimeConverter;
-import com.bracketcove.postrainer.database.Reminder;
+import com.bracketcove.postrainer.data.reminder.Reminder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +39,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     private ReminderListContract.Presenter presenter;
 
     public ReminderListFragment() {
+
     }
 
     public static ReminderListFragment newInstance() {
@@ -46,6 +49,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
 
     }
 
@@ -58,14 +62,11 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         fabulous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (callback != null) {
-                    callback.onFabAddReminderClicked();
-                }
+
             }
         });
         prompt = (TextView) v.findViewById(R.id.lbl_reminder_prompt);
         return v;
-
     }
 
     @Override
@@ -74,7 +75,8 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         if (presenter == null) {
             presenter = new ReminderListPresenter(this,
-
+                    ReminderInjection.provideReminderService(),
+                    SchedulerInjection.provideSchedulerProvider()
                     );
         }
         presenter.subscribe();
@@ -226,8 +228,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                presenter
-                callback.onReminderSwiped(viewHolder.getAdapterPosition());
+                presenter.onAlarmWidgetSwiped(viewHolder.getAdapterPosition());
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
         };
