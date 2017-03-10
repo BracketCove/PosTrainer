@@ -10,17 +10,17 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Ryan on 05/03/2017.
  */
 
-public class ImmediateSchedulerProvider implements BaseSchedulerProvider {
+public class ImmediateScheduler implements BaseScheduler {
     @Nullable
-    private static ImmediateSchedulerProvider INSTANCE;
+    private static ImmediateScheduler INSTANCE;
 
     // Prevent direct instantiation.
-    private ImmediateSchedulerProvider() {
+    private ImmediateScheduler() {
     }
 
-    public static synchronized BaseSchedulerProvider getInstance() {
+    public static synchronized BaseScheduler getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ImmediateSchedulerProvider();
+            INSTANCE = new ImmediateScheduler();
         }
         return INSTANCE;
     }

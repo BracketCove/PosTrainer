@@ -34,5 +34,5 @@ public interface ReminderSource extends BaseSource {
      * 3. It can throw an error
      * @return
      */
-    Maybe<List<Reminder>> getReminders()
+    Maybe<List<Reminder>> getReminders();
 }

@@ -48,6 +48,7 @@ public class AlarmActivity extends AppCompatActivity implements MediaPlayer.OnPr
 
         getWakeLock();
 
+
         //TODO: Delete if found no longer useful
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Setting Theme.NoActionBar

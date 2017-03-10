@@ -1,6 +1,7 @@
 package com.bracketcove.postrainer.reminderlist;
 
-import com.bracketcove.postrainer.util.BaseSchedulerProvider;
+import com.bracketcove.postrainer.reminderservice.ReminderSource;
+import com.bracketcove.postrainer.util.BaseScheduler;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -8,17 +9,17 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by Ryan on 05/03/2017.
  */
 
-public class ReminderListPresenter implements ReminderListContract.Presenter {
+final class ReminderListPresenter implements ReminderListContract.Presenter {
 
     private ReminderListContract.View view;
     private CompositeDisposable disposableSubscriptions;
     private ReminderSource reminderSource;
-    private BaseSchedulerProvider schedulerProvider;
+    private BaseScheduler schedulerProvider;
 
 
     public ReminderListPresenter(ReminderListContract.View view,
                                  ReminderSource reminderSource,
-                                 BaseSchedulerProvider schedulerProvider) {
+                                 BaseScheduler schedulerProvider) {
         this.view = view;
         this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;

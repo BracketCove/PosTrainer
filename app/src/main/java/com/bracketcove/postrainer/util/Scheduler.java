@@ -2,42 +2,41 @@ package com.bracketcove.postrainer.util;
 
 import android.support.annotation.Nullable;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * This SchedulerProvider is for use during Device Tests/Production
+ * This Scheduler is for use during Device Tests/Production
  * Created by Ryan on 05/03/2017.
  */
 
-public class SchedulerProvider implements BaseSchedulerProvider {
+public class Scheduler implements BaseScheduler {
     @Nullable
-    private static SchedulerProvider INSTANCE;
+    private static Scheduler INSTANCE;
 
     // Prevent direct instantiation.
-    private SchedulerProvider() {
+    private Scheduler() {
     }
 
-    public static synchronized BaseSchedulerProvider getInstance() {
+    public static synchronized BaseScheduler getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new SchedulerProvider();
+            INSTANCE = new Scheduler();
         }
         return INSTANCE;
     }
 
     @Override
-    public Scheduler computation() {
+    public io.reactivex.Scheduler computation() {
         return Schedulers.computation();
     }
 
     @Override
-    public Scheduler io() {
+    public io.reactivex.Scheduler io() {
         return Schedulers.io();
     }
 
     @Override
-    public Scheduler ui() {
+    public io.reactivex.Scheduler ui() {
         return AndroidSchedulers.mainThread();
     }
 }

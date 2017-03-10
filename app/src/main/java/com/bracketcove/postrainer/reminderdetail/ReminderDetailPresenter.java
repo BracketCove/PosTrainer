@@ -3,9 +3,11 @@ package com.bracketcove.postrainer.reminderdetail;
 import android.util.Log;
 
 import com.bracketcove.postrainer.reminderservice.ReminderSource;
-import com.bracketcove.postrainer.util.BaseSchedulerProvider;
+import com.bracketcove.postrainer.util.BaseScheduler;
 
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -17,12 +19,13 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
 
     private ReminderDetailContract.View view;
     private ReminderSource reminderSource;
-    private BaseSchedulerProvider schedulerProvider;
+    private BaseScheduler schedulerProvider;
     private CompositeDisposable disposableSubscriptions;
 
+    @Inject
     public ReminderDetailPresenter(ReminderDetailContract.View view,
                                    ReminderSource reminderSource,
-                                   BaseSchedulerProvider schedulerProvider) {
+                                   BaseScheduler schedulerProvider) {
         this.view = view;
         this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;
@@ -41,7 +44,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
 
     @Override
     public void onBackIconPress() {
-
+        view.startReminderListActivity();
     }
 
     @Override
