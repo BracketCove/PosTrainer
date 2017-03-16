@@ -5,9 +5,9 @@ package com.bracketcove.postrainer;
  */
 
 /*
-public class AlarmFragment extends Fragment implements AlarmController.View {
+public class AlarmFragment extends Fragment implements AlarmContract.View {
 
-    private AlarmController.Presenter presenter;
+    private AlarmContract.Presenter presenter;
 
 
     public AlarmFragment() {
@@ -62,7 +62,7 @@ public class AlarmFragment extends Fragment implements AlarmController.View {
     }
 
     @Override
-    public void setPresenter(AlarmController.Presenter presenter) {
+    public void setPresenter(AlarmContract.Presenter presenter) {
 
     }
 

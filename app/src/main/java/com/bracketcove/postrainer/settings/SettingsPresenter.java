@@ -1,6 +1,10 @@
 package com.bracketcove.postrainer.settings;
 
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.reminderlist.ReminderListContract;
 import com.bracketcove.postrainer.util.BaseScheduler;
+
+import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -9,15 +13,16 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class SettingsPresenter implements SettingsContract.Presenter {
-    private SettingsContract.View view;
-    private CompositeDisposable disposableSubscriptions;
-    private BaseScheduler baseScheduler;
+    private final SettingsContract.View view;
+    private final BaseScheduler schedulerProvider;
+    private final CompositeDisposable compositeDisposable;
 
+    @Inject
     public SettingsPresenter(SettingsContract.View view,
-                             BaseScheduler baseScheduler) {
+                             BaseScheduler schedulerProvider) {
         this.view = view;
-        this.baseScheduler = baseScheduler;
-        this.disposableSubscriptions = new CompositeDisposable();
+        this.schedulerProvider = schedulerProvider;
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override

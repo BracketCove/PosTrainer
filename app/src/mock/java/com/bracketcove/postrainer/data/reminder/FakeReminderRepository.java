@@ -1,11 +1,10 @@
-package com.bracketcove.postrainer.reminderservice;
-
-import android.net.Credentials;
-
-import com.bracketcove.postrainer.data.reminder.Reminder;
+package com.bracketcove.postrainer.data.reminder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
@@ -15,17 +14,17 @@ import io.reactivex.Maybe;
  * tests.
  * Created by Ryan on 07/03/2017.
  */
-
-public class FakeReminderService implements ReminderSource {
+@Singleton
+public class FakeReminderRepository implements ReminderSource {
     boolean returnFailure = false;
     boolean returnEmpty = false;
 
-    public FakeReminderService() {
+     @Inject FakeReminderRepository() {
 
     }
 
-    public static FakeReminderService getInstance() {
-        return new FakeReminderService();
+    public static FakeReminderRepository getInstance() {
+        return new FakeReminderRepository();
     }
 
     @Override

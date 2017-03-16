@@ -2,13 +2,15 @@ package com.bracketcove.postrainer.reminderdetail;
 
 import android.util.Log;
 
-import com.bracketcove.postrainer.reminderservice.ReminderSource;
+
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.util.BaseScheduler;
 
 import java.util.Calendar;
 
 import javax.inject.Inject;
 
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -17,10 +19,10 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class ReminderDetailPresenter implements ReminderDetailContract.Presenter {
 
-    private ReminderDetailContract.View view;
-    private ReminderSource reminderSource;
-    private BaseScheduler schedulerProvider;
-    private CompositeDisposable disposableSubscriptions;
+    private final ReminderDetailContract.View view;
+    private final ReminderSource reminderSource;
+    private final BaseScheduler schedulerProvider;
+    private final CompositeDisposable compositeDisposable;
 
     @Inject
     public ReminderDetailPresenter(ReminderDetailContract.View view,
@@ -29,7 +31,11 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
         this.view = view;
         this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;
-        this.disposableSubscriptions = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
+
+        //this may be better called elsewhere like subscribe(), or may need to be
+        //injected via method injection. We'll see...
+        this.view.setPresenter(this);
     }
 
     @Override
@@ -60,7 +66,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
      */
     public int getDate() {
         Calendar calendar = Calendar.getInstance();
-        String date  = "" + calendar.get(Calendar.DAY_OF_YEAR);
+        String date = "" + calendar.get(Calendar.DAY_OF_YEAR);
         date += "" + calendar.get(Calendar.HOUR_OF_DAY);
         date += "" + calendar.get(Calendar.MINUTE);
         date += "" + calendar.get(Calendar.SECOND);

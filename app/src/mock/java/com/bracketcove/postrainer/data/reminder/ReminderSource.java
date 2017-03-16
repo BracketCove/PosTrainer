@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer.reminderservice;
+package com.bracketcove.postrainer.data.reminder;
 
 import com.bracketcove.postrainer.BaseSource;
 import com.bracketcove.postrainer.data.reminder.Reminder;
@@ -10,7 +10,7 @@ import io.reactivex.Maybe;
 
 /**
  * This interface describes the responsibilities and interactions between
- * Presenters and The ReminderService class.
+ * Presenters and The ReminderRepository class.
  * Created by Ryan on 09/03/2017.
  */
 

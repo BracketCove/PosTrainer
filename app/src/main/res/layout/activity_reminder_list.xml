@@ -5,13 +5,8 @@
     android:id="@+id/root_reminder_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".reminderlist.ReminderListActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/cont_reminder_list_fragment"

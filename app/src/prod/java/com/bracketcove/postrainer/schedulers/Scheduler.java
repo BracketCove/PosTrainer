@@ -1,11 +1,15 @@
-package com.bracketcove.postrainer.util;
+package com.bracketcove.postrainer.schedulers;
 
 import android.support.annotation.Nullable;
+
+import com.bracketcove.postrainer.util.BaseScheduler;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * THIS CLASS MAY BE USELESS!
+ *
  * This Scheduler is for use during Device Tests/Production
  * Created by Ryan on 05/03/2017.
  */

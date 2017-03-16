@@ -1,48 +1,29 @@
 package com.bracketcove.postrainer.reminderdetail;
 
-import com.bracketcove.postrainer.reminderservice.ReminderSource;
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.util.BaseScheduler;
-import com.bracketcove.postrainer.util.FragmentScoped;
+
+import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * This class describes the Dependencies of a Presenter.
+ * This is a feature level (think reminderdetail or reminderlist packages) Module. It satisfies the Presenter's
+ * Dependency on the View Interface.
  * Created by Ryan on 10/03/2017.
  */
-@FragmentScoped
 @Module
 public class ReminderDetailPresenterModule {
     //List what you would normally pass in as arguments to a Presenter's constructor
     private final ReminderDetailContract.View view;
 
-
-    private final ReminderSource reminderSource;
-
-    private final BaseScheduler baseScheduler;
-
-    //Same as what Presenter's Constructor would be, except it's for the Module now.
-    public ReminderDetailPresenterModule(ReminderDetailContract.View view,
-                                         ReminderSource reminderSource,
-                                         BaseScheduler baseScheduler) {
+    public ReminderDetailPresenterModule(ReminderDetailContract.View view) {
         this.view = view;
-        this.reminderSource = reminderSource;
-        this.baseScheduler = baseScheduler;
     }
 
     @Provides
     ReminderDetailContract.View provideReminderDetailView(){
         return view;
-    }
-
-    @Provides
-    ReminderSource provideReminderSource(){
-        return reminderSource;
-    }
-
-    @Provides
-    BaseScheduler provideScheduler(){
-        return baseScheduler;
     }
 }

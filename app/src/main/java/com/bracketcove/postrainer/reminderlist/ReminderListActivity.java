@@ -9,6 +9,8 @@ import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailFragment;
 import com.bracketcove.postrainer.util.ActivityUtils;
 
+import static android.R.attr.fragment;
+
 public class ReminderListActivity extends AppCompatActivity {
     private static final String FRAG_REMINDER_LIST = "FRAG_REMINDER_LIST";
 
@@ -21,6 +23,7 @@ public class ReminderListActivity extends AppCompatActivity {
         //Toolbar
        // toolbar = (Toolbar) findViewById(R.id.toolbar);
        // setSupportActionBar(toolbar);
+        manager = getSupportFragmentManager();
 
         ReminderListFragment fragment =  (ReminderListFragment) manager.findFragmentByTag(FRAG_REMINDER_LIST);
 

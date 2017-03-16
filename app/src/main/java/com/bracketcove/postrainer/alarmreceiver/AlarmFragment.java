@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
+
+import javax.inject.Inject;
 
 /**
  *
@@ -17,8 +20,10 @@ import com.bracketcove.postrainer.R;
  * Created by Ryan on 05/03/2017.
  */
 
-public class AlarmFragment extends Fragment  {
-    private AlarmController alarmController;
+public class AlarmFragment extends Fragment implements AlarmContract.View {
+
+    @Inject AlarmContract.Presenter presenter;
+
     public AlarmFragment() {
 
     }
@@ -44,9 +49,35 @@ public class AlarmFragment extends Fragment  {
         stopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alarmController.onDismissAlarmClick();
+                //alarmController.onDismissAlarmClick();
             }
         });
         return v;
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if (presenter == null) {
+            DaggerAlarmComponent.builder()
+                    .alarmPresenterModule(new AlarmPresenterModule(this))
+                    .reminderRepositoryComponent(
+                            ((PostrainerApplication) getActivity().getApplication())
+                                    .getReminderRepositoryComponent()
+
+                    )
+                    .build();
+            presenter.subscribe();
+        }
+
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void setPresenter(AlarmContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void makeToast(String message) {
+
     }
 }

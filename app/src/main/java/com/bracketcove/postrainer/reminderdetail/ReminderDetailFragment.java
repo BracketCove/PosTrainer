@@ -16,14 +16,11 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.bracketcove.postrainer.ReminderInjection;
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.SchedulerInjection;
 import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
 
 import javax.inject.Inject;
-
-import dagger.Provides;
 
 
 /**
@@ -32,15 +29,7 @@ import dagger.Provides;
 public class ReminderDetailFragment extends Fragment implements ReminderDetailContract.View {
     private static final String REMINDER_ITEM = "REMINDER_ITEM";
 
-
-    /*
-     * 1. Is it important that this Presenter is spoken to via the Interface?
-     * 2. If #1 is the case, how can I make it so that The Injected class below is an Interface and
-     * not a Concrete Class.
-     */
-    @Inject ReminderDetailPresenter presenter;
-
-    private ReminderDetailContract.Presenter presenter;
+    @Inject ReminderDetailContract.Presenter presenter;
 
     private AppCompatEditText reminderTitle;
     private AppCompatCheckBox vibrateOnly, autoRenew;
@@ -62,6 +51,24 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if (presenter == null) {
+                DaggerReminderDetailComponent.builder()
+                        .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
+                        .reminderRepositoryComponent(
+                                ((PostrainerApplication) getActivity().getApplication())
+                                        .getReminderRepositoryComponent()
+
+                        )
+                       .build();
+            presenter.subscribe();
+        }
+
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -93,36 +100,7 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
         return v;
     }
 
-    /**
-     * The difference between my old approach and Dagger 2, is that
-     * my old approach still requires the Fragment to create the Presenter.
-     * This means that if I change my Presenter's Architecture, I may need to
-     * then make the appropriate change in this Fragment
-     * @param savedInstanceState
-     */
-    public void onActivityCreated(Bundle savedInstanceState) {
-        if (presenter == null) {
-            /*
-            presenter = new ReminderDetailPresenter(this,
-                    ReminderInjection.provideReminderService(),
-                    SchedulerInjection.provideSchedulerProvider()*/
 
-
-            /*How can I reduce ReminderDetailPresenterModule's constructor to only
-             *new ReminderDetailPresenterModule(this)?
-             */
-
-            DaggerReminderDetailComponent.builder()
-                    .reminderDetailPresenterModule(
-                            new ReminderDetailPresenterModule(this,
-                                    ReminderInjection.provideReminderService(),
-                                    SchedulerInjection.provideSchedulerProvider()
-                            )).build()
-                    .inject(this);
-        }
-        presenter.subscribe();
-        super.onActivityCreated(savedInstanceState);
-    }
 
     @Override
     public void onAttach(Context context) {

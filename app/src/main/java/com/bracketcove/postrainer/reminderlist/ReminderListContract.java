@@ -5,6 +5,7 @@ import com.bracketcove.postrainer.BaseView;
 import com.bracketcove.postrainer.data.reminder.Reminder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ryan on 06/03/2017.
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public interface ReminderListContract  {
 
     interface View extends BaseView<Presenter> {
-        void setReminderListData(ArrayList<Reminder> reminderListData);
+        void setReminderListData(List<Reminder> reminderListData);
 
         void setNoReminderListDataFound();
     }

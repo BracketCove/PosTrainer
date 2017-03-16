@@ -14,9 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bracketcove.postrainer.ReminderInjection;
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.SchedulerInjection;
+
+import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenterModule;
 import com.bracketcove.postrainer.util.TimeConverter;
 import com.bracketcove.postrainer.data.reminder.Reminder;
 
@@ -24,19 +25,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by Ryan on 08/08/2016.
  */
 public class ReminderListFragment extends Fragment implements ReminderListContract.View {
     private static final String LIST_DATA = "LIST_DATA";
 
-    private ArrayList<Reminder> reminderListData;
+    private List<Reminder> reminderListData;
     private RecyclerView reminderList;
     private FloatingActionButton fabulous;
     private TextView prompt;
     private ReminderListAdapter adapter;
 
-    private ReminderListContract.Presenter presenter;
+    @Inject ReminderListContract.Presenter presenter;
 
     public ReminderListFragment() {
 
@@ -50,6 +53,14 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        DaggerReminderListComponent.builder()
+                .reminderListPresenterModule(new ReminderListPresenterModule(this))
+                .reminderRepositoryComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getReminderRepositoryComponent()
+                )
+                .build();
 
     }
 
@@ -73,16 +84,11 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (presenter == null) {
-            presenter = new ReminderListPresenter(this,
-                    ReminderInjection.provideReminderService(),
-                    SchedulerInjection.provideSchedulerProvider()
-                    );
-        }
-        presenter.subscribe();
     }
 
-    private void setUpRecyclerView() {
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
@@ -100,7 +106,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
     @Override
     public void setPresenter(ReminderListContract.Presenter presenter) {
-
+        this.presenter = presenter;
     }
 
     @Override
@@ -109,11 +115,8 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     }
 
     @Override
-    public void setReminderListData(ArrayList<Reminder> reminderListData) {
+    public void setReminderListData(List<Reminder> reminderListData) {
         this.reminderListData = reminderListData;
-
-        // Let's build an App! | Episode 3| Unit Testing and RxJava 2
-        //
 
         adapter = new ReminderListAdapter(getActivity(), reminderListData);
         reminderList.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.SchedulerInjection;
+import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenterModule;
+
+import javax.inject.Inject;
 
 /**
  * Created by Ryan on 05/03/2017.
@@ -17,7 +20,8 @@ import com.bracketcove.postrainer.SchedulerInjection;
 
 public class SettingsFragment extends Fragment implements SettingsContract.View {
 
-    private SettingsContract.Presenter presenter;
+    @Inject
+    SettingsContract.Presenter presenter;
 
     public SettingsFragment() {
 
@@ -48,15 +52,15 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
         return v;
     }
 
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         if (presenter == null) {
-            presenter = new SettingsPresenter(this,
-                    SchedulerInjection.provideSchedulerProvider()
-                    );
+            DaggerSettingsComponent.builder()
+                    .settingsPresenterModule(new SettingsPresenterModule(this))
+                    .build();
+            presenter.subscribe();
         }
-        presenter.subscribe();
+
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

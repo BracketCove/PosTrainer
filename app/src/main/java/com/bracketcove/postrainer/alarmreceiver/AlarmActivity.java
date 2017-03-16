@@ -30,7 +30,7 @@ import java.io.IOException;
  * Created by Ryan on 17/04/2016.
  */
 public class AlarmActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener,
-        AlarmController {
+        AlarmContract {
 
     private static final String ALARM_FRAGMENT = "ALARM_FRAGMENT";
 
@@ -47,7 +47,6 @@ public class AlarmActivity extends AppCompatActivity implements MediaPlayer.OnPr
         super.onCreate(savedInstanceState);
 
         getWakeLock();
-
 
         //TODO: Delete if found no longer useful
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -185,20 +184,5 @@ public class AlarmActivity extends AppCompatActivity implements MediaPlayer.OnPr
         mediaPlayer.start();
     }
 
-
-    @Override
-    public void onDismissAlarmClick() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        if (vibe != null) {
-            vibe.cancel();
-        }
-        finish();
-        Intent i = new Intent(AlarmActivity.this, ReminderListActivity.class);
-        startActivity(i);
-    }
 
 }

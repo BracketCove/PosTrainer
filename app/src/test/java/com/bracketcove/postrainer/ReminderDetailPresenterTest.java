@@ -2,7 +2,7 @@ package com.bracketcove.postrainer;
 
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenter;
-import com.bracketcove.postrainer.reminderservice.ReminderSource;
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,13 +42,13 @@ public class ReminderDetailPresenterTest {
         //In order to set up Mockito properly, we must call:
         MockitoAnnotations.initMocks(this);
 
-        reminderSource = ReminderInjection.provideReminderService();
-
-        presenter = new ReminderDetailPresenter(
-                view,
-                reminderSource,
-                SchedulerInjection.provideSchedulerProvider()
-        );
+//        reminderSource = ReminderInjection.provideReminderService();
+//
+//        presenter = new ReminderDetailPresenter(
+//                view,
+//                reminderSource,
+//                SchedulerInjection.provideSchedulerProvider()
+//        );
     }
                                 //BACK IN 2 MINUTES
     /**
