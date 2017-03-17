@@ -56,17 +56,17 @@ public class AlarmFragment extends Fragment implements AlarmContract.View {
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
-        if (presenter == null) {
-            DaggerAlarmComponent.builder()
-                    .alarmPresenterModule(new AlarmPresenterModule(this))
-                    .reminderRepositoryComponent(
-                            ((PostrainerApplication) getActivity().getApplication())
-                                    .getReminderRepositoryComponent()
-
-                    )
-                    .build();
-            presenter.subscribe();
-        }
+//        if (presenter == null) {
+//            DaggerAlarmComponent.builder()
+//                    .alarmPresenterModule(new AlarmPresenterModule(this))
+//                    .reminderRepositoryComponent(
+//                            ((PostrainerApplication) getActivity().getApplication())
+//                                    .getReminderRepositoryComponent()
+//
+//                    )
+//                    .build();
+//            presenter.subscribe();
+//        }
 
         super.onActivityCreated(savedInstanceState);
     }

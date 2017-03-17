@@ -56,17 +56,17 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
-        if (presenter == null) {
-                DaggerReminderDetailComponent.builder()
-                        .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
-                        .reminderRepositoryComponent(
-                                ((PostrainerApplication) getActivity().getApplication())
-                                        .getReminderRepositoryComponent()
-
-                        )
-                       .build();
-            presenter.subscribe();
-        }
+//        if (presenter == null) {
+//                DaggerReminderDetailComponent.builder()
+//                        .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
+//                        .reminderRepositoryComponent(
+//                                ((PostrainerApplication) getActivity().getApplication())
+//                                        .getReminderRepositoryComponent()
+//
+//                        )
+//                       .build();
+//            presenter.subscribe();
+//        }
 
         super.onActivityCreated(savedInstanceState);
     }

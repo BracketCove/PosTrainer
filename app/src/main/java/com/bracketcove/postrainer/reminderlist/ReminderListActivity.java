@@ -2,19 +2,21 @@ package com.bracketcove.postrainer.reminderlist;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.reminderdetail.ReminderDetailFragment;
 import com.bracketcove.postrainer.util.ActivityUtils;
 
-import static android.R.attr.fragment;
+import javax.inject.Inject;
 
 public class ReminderListActivity extends AppCompatActivity {
     private static final String FRAG_REMINDER_LIST = "FRAG_REMINDER_LIST";
 
     private FragmentManager manager;
+
+    @Inject
+    ReminderListPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,15 @@ public class ReminderListActivity extends AppCompatActivity {
                 R.id.cont_reminder_list_fragment,
                 FRAG_REMINDER_LIST
         );
+
+
+        DaggerReminderListComponent.builder()
+                .reminderListPresenterModule(new ReminderListPresenterModule(fragment))
+                .reminderComponent(
+                        ((PostrainerApplication) getApplication())
+                                .getReminderComponent()
+                )
+                .build().inject(this);
     }
 
 }

@@ -19,15 +19,10 @@ public class Scheduler implements BaseScheduler {
     private static Scheduler INSTANCE;
 
     // Prevent direct instantiation.
-    private Scheduler() {
+    public Scheduler() {
     }
 
-    public static synchronized BaseScheduler getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Scheduler();
-        }
-        return INSTANCE;
-    }
+
 
     @Override
     public io.reactivex.Scheduler computation() {

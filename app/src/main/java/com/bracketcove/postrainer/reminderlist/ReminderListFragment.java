@@ -38,8 +38,9 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     private FloatingActionButton fabulous;
     private TextView prompt;
     private ReminderListAdapter adapter;
+    private Context context;
 
-    @Inject ReminderListContract.Presenter presenter;
+    private ReminderListContract.Presenter presenter;
 
     public ReminderListFragment() {
 
@@ -53,15 +54,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
-        DaggerReminderListComponent.builder()
-                .reminderListPresenterModule(new ReminderListPresenterModule(this))
-                .reminderRepositoryComponent(
-                        ((PostrainerApplication) getActivity().getApplication())
-                                .getReminderRepositoryComponent()
-                )
-                .build();
-
     }
 
     @Override
@@ -83,13 +75,12 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        this.presenter.subscribe();
     }
 
     @Override
@@ -118,7 +109,8 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     public void setReminderListData(List<Reminder> reminderListData) {
         this.reminderListData = reminderListData;
 
-        adapter = new ReminderListAdapter(getActivity(), reminderListData);
+        context = getActivity();
+        adapter = new ReminderListAdapter(context, reminderListData);
         reminderList.setLayoutManager(new LinearLayoutManager(getActivity()));
         reminderList.setAdapter(adapter);
 

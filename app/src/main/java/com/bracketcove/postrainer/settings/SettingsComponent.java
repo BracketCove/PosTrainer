@@ -1,6 +1,5 @@
 package com.bracketcove.postrainer.settings;
 
-import com.bracketcove.postrainer.data.reminder.ReminderRepositoryComponent;
 import com.bracketcove.postrainer.util.FragmentScoped;
 
 import dagger.Component;

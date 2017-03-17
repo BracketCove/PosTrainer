@@ -1,6 +1,11 @@
 package com.bracketcove.postrainer;
 
+import android.app.Application;
 import android.content.Context;
+
+import com.bracketcove.postrainer.data.reminder.ReminderRepository;
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.util.BaseScheduler;
 
 import javax.inject.Singleton;
 
@@ -17,11 +22,10 @@ import dagger.Provides;
  */
 @Module
 public final class ApplicationModule {
-    private final Context context;
+    private final Application application;
 
-    public ApplicationModule(Context context) {
-
-        this.context = context;
+    public ApplicationModule(Application application) {
+        this.application = application;
     }
 
     /**
@@ -32,8 +36,8 @@ public final class ApplicationModule {
      * @return
      */
     @Provides
-    public Context provideContext() {
-        return context.getApplicationContext();
+    @Singleton
+     Application provideApplication() {
+        return application;
     }
-
 }

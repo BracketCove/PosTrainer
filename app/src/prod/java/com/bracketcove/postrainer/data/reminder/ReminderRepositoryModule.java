@@ -2,6 +2,7 @@ package com.bracketcove.postrainer.data.reminder;
 
 import com.bracketcove.postrainer.data.reminder.ReminderRepository;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.util.BaseScheduler;
 
 import javax.inject.Singleton;
 
@@ -20,8 +21,7 @@ public class ReminderRepositoryModule {
 
     @Singleton
     @Provides
-    public ReminderSource provideReminderSource(ReminderRepository repository){
-     return new ReminderRepository();
+    public ReminderSource provideReminderSource(){
+        return new ReminderRepository();
     }
-
 }

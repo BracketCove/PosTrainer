@@ -13,8 +13,8 @@ import io.reactivex.Maybe;
  */
 
 public class ReminderRepository implements ReminderSource {
-    @Inject
-    ReminderRepository() {
+
+    public ReminderRepository() {
     }
 
     @Override

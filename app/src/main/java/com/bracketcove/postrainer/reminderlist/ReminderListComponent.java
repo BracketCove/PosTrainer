@@ -1,8 +1,6 @@
 package com.bracketcove.postrainer.reminderlist;
 
-import com.bracketcove.postrainer.data.reminder.ReminderRepositoryComponent;
-import com.bracketcove.postrainer.reminderdetail.ReminderDetailFragment;
-import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenterModule;
+import com.bracketcove.postrainer.di.ReminderComponent;
 import com.bracketcove.postrainer.util.FragmentScoped;
 
 import dagger.Component;
@@ -13,8 +11,9 @@ import dagger.Component;
  * Created by Ryan on 16/03/2017.
  */
 @FragmentScoped
-@Component(dependencies = ReminderRepositoryComponent.class,
-        modules = ReminderListPresenterModule.class)
+@Component(dependencies = ReminderComponent.class, modules = ReminderListPresenterModule.class)
 public interface ReminderListComponent {
-    //void inject(ReminderListContract.View view);
+
+    void inject(ReminderListActivity reminderListActivity);
+
 }
