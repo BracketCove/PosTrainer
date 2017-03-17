@@ -22,6 +22,7 @@ import dagger.Provides;
  */
 @Module
 public final class ApplicationModule {
+    //TODO is it safe that this is Application and not PostrainerApplication?
     private final Application application;
 
     public ApplicationModule(Application application) {

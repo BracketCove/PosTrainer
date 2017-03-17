@@ -30,11 +30,12 @@ final class ReminderListPresenter implements ReminderListContract.Presenter {
         this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
+        this.view.setPresenter(this);
     }
 
     @Inject
     void registerView() {
-       this.view.setPresenter(this);
+            //TODO:WHAT IT DO??????
     }
 
     @Override

@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.reminderlist.DaggerReminderListComponent;
 import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
+import com.bracketcove.postrainer.reminderlist.ReminderListPresenterModule;
 
 import javax.inject.Inject;
 
@@ -29,7 +31,8 @@ import javax.inject.Inject;
 public class ReminderDetailFragment extends Fragment implements ReminderDetailContract.View {
     private static final String REMINDER_ITEM = "REMINDER_ITEM";
 
-    @Inject ReminderDetailContract.Presenter presenter;
+    @Inject
+    ReminderDetailPresenter presenter;
 
     private AppCompatEditText reminderTitle;
     private AppCompatCheckBox vibrateOnly, autoRenew;
@@ -52,22 +55,17 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-
+        DaggerReminderDetailComponent.builder()
+                .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
+                .reminderComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getReminderComponent()
+                )
+                .build().inject(this);
+        
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
-//        if (presenter == null) {
-//                DaggerReminderDetailComponent.builder()
-//                        .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
-//                        .reminderRepositoryComponent(
-//                                ((PostrainerApplication) getActivity().getApplication())
-//                                        .getReminderRepositoryComponent()
-//
-//                        )
-//                       .build();
-//            presenter.subscribe();
-//        }
-
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -100,7 +98,11 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
         return v;
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.subscribe();
+    }
 
     @Override
     public void onAttach(Context context) {

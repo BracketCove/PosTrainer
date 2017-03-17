@@ -11,6 +11,8 @@ import android.widget.Button;
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenterModule;
+import com.bracketcove.postrainer.reminderlist.DaggerReminderListComponent;
+import com.bracketcove.postrainer.reminderlist.ReminderListPresenterModule;
 
 import javax.inject.Inject;
 
@@ -21,7 +23,7 @@ import javax.inject.Inject;
 public class SettingsFragment extends Fragment implements SettingsContract.View {
 
     @Inject
-    SettingsContract.Presenter presenter;
+    SettingsPresenter presenter;
 
     public SettingsFragment() {
 
@@ -34,8 +36,12 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //This is important for Orientation Change handling!!!
         setRetainInstance(true);
+
+        DaggerSettingsComponent.builder()
+                .settingsPresenterModule(new SettingsPresenterModule(this))
+                .build().inject(this);
+
     }
 
     @Override
@@ -53,13 +59,6 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
-        if (presenter == null) {
-            DaggerSettingsComponent.builder()
-                    .settingsPresenterModule(new SettingsPresenterModule(this))
-                    .build();
-            presenter.subscribe();
-        }
-
         super.onActivityCreated(savedInstanceState);
     }
 

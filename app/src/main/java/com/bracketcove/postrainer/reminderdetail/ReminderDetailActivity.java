@@ -13,9 +13,6 @@ public class ReminderDetailActivity extends AppCompatActivity {
 
     private FragmentManager manager;
 
-
-    private ReminderDetailComponent reminderDetailComponent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -40,7 +40,9 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     private ReminderListAdapter adapter;
     private Context context;
 
-    private ReminderListContract.Presenter presenter;
+    @Inject
+    ReminderListPresenter presenter;
+    //TODO: can I turn this back into an Interface and still inject properly?
 
     public ReminderListFragment() {
 
@@ -54,6 +56,14 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        DaggerReminderListComponent.builder()
+                .reminderListPresenterModule(new ReminderListPresenterModule(this))
+                .reminderComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getReminderComponent()
+                )
+                .build().inject(this);
     }
 
     @Override
@@ -80,7 +90,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     @Override
     public void onResume() {
         super.onResume();
-        this.presenter.subscribe();
+        presenter.subscribe();
     }
 
     @Override
@@ -97,7 +107,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
     @Override
     public void setPresenter(ReminderListContract.Presenter presenter) {
-        this.presenter = presenter;
+
     }
 
     @Override

@@ -12,7 +12,6 @@ import com.bracketcove.postrainer.util.ActivityUtils;
 public class SettingsActivity extends AppCompatActivity {
     private static final String FRAG_SETTINGS = "FRAG_SETTINGS";
 
-
     private Toolbar toolbar;
     private FragmentManager manager;
 
@@ -20,10 +19,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setTitle(R.string.settings_title);
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        getSupportActionBar().setTitle(R.string.settings_title);
 
         manager = getSupportFragmentManager();
 
@@ -39,5 +38,4 @@ public class SettingsActivity extends AppCompatActivity {
                 FRAG_SETTINGS
         );
     }
-
 }

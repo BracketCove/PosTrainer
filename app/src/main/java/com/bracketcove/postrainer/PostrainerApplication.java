@@ -29,7 +29,6 @@ public class PostrainerApplication extends Application {
     //private SchedulerComponent schedulerComponent;
     private ReminderComponent reminderComponent;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,17 +38,6 @@ public class PostrainerApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .reminderModule(new ReminderModule())
                 .build();
-
-
-//        reminderRepositoryComponent = DaggerReminderRepositoryComponent
-//                .builder()
-//                .applicationModule(new ApplicationModule(getApplicationContext()))
-//                .build();
-//
-//        schedulerComponent = DaggerSchedulerComponent
-//                .builder()
-//                .applicationModule(new ApplicationModule(getApplicationContext()))
-//                .build();
     }
 
     public ReminderComponent getReminderComponent() {

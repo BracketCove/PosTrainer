@@ -35,7 +35,7 @@ public class ReminderModule {
 
     @Provides
     @Singleton
-    public BaseScheduler provideScheduler(){
+    BaseScheduler provideScheduler(){
         return new com.bracketcove.postrainer.schedulers.Scheduler();
     }
 }

@@ -6,7 +6,6 @@ import com.bracketcove.postrainer.schedulers.Scheduler;
 import com.bracketcove.postrainer.util.BaseScheduler;
 
 import javax.inject.Singleton;
-
 import dagger.Component;
 
 /**

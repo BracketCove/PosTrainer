@@ -32,9 +32,6 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
         this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
-
-        //this may be better called elsewhere like subscribe(), or may need to be
-        //injected via method injection. We'll see...
         this.view.setPresenter(this);
     }
 

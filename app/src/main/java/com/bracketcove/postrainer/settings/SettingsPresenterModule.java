@@ -16,7 +16,6 @@ public class SettingsPresenterModule {
 
     public SettingsPresenterModule(SettingsContract.View view) {
         this.view = view;
-
     }
 
     @Provides

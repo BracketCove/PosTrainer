@@ -11,5 +11,7 @@ import dagger.Component;
 @FragmentScoped
 @Component(modules = SettingsPresenterModule.class)
 public interface SettingsComponent {
-    //void inject(SettingsFragment settingsFragment);
+
+    void inject(SettingsFragment settingsFragment);
+
 }

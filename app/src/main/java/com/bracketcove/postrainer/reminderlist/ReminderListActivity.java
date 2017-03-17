@@ -15,9 +15,6 @@ public class ReminderListActivity extends AppCompatActivity {
 
     private FragmentManager manager;
 
-    @Inject
-    ReminderListPresenter presenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,14 +36,16 @@ public class ReminderListActivity extends AppCompatActivity {
                 FRAG_REMINDER_LIST
         );
 
-
-        DaggerReminderListComponent.builder()
-                .reminderListPresenterModule(new ReminderListPresenterModule(fragment))
-                .reminderComponent(
-                        ((PostrainerApplication) getApplication())
-                                .getReminderComponent()
-                )
-                .build().inject(this);
+        /*
+        Dagger 2 Notes
+         */
+//        DaggerReminderListComponent.builder()
+//                .reminderListPresenterModule(new ReminderListPresenterModule(fragment))
+//                .reminderComponent(
+//                        ((PostrainerApplication) getApplication())
+//                                .getReminderComponent()
+//                )
+//                .build().inject(this);
     }
 
 }

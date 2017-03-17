@@ -14,6 +14,6 @@ import dagger.Component;
 @Component(dependencies = ReminderComponent.class, modules = ReminderListPresenterModule.class)
 public interface ReminderListComponent {
 
-    void inject(ReminderListActivity reminderListActivity);
+    void inject(ReminderListFragment reminderListFragment);
 
 }
