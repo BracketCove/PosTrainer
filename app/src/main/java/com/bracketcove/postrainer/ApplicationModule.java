@@ -1,11 +1,7 @@
 package com.bracketcove.postrainer;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.bracketcove.postrainer.data.reminder.ReminderRepository;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.util.BaseScheduler;
 
 import javax.inject.Singleton;
 

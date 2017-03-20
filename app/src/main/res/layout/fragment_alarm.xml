@@ -9,7 +9,7 @@
         android:layout_width="192dp"
         android:layout_height="96dp"
         android:layout_gravity="center"
-        android:background="@drawable/ripple_bg"
+        android:background="@drawable/button_flat"
         android:fontFamily="sans-serif-medium"
         android:padding="8dp"
         android:text="@string/stop_alarm"

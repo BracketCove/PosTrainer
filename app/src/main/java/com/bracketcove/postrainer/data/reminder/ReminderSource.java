@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 /**
  * This interface describes the responsibilities and interactions between
@@ -32,7 +33,13 @@ public interface ReminderSource extends BaseSource {
      * 1. It can return some data (in this case a list of Reminders)
      * 2. It can return nothing.
      * 3. It can throw an error
-     * @return
      */
     Maybe<List<Reminder>> getReminders();
+
+    /**
+     * Single: RxJava Observable which has two possible outcomes:
+     * 1. It can return single object (in this case a Reminder)
+     * 2. It can throw an error
+     */
+    Single<Reminder> getReminderById(String reminderId);
 }

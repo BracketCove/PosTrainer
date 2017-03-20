@@ -5,11 +5,16 @@
     android:layout_height="wrap_content"
     android:background="@drawable/layout_bg"
     android:gravity="center"
-    android:translationZ="2dp">
+    android:layout_marginTop="@dimen/standard_vertical_margin"
+    android:layout_marginLeft="@dimen/standard_vertical_margin"
+    android:layout_marginRight="@dimen/standard_vertical_margin"
+    android:elevation="2dp">
+
+    <!-- TODO: Consider converting this to a Constraint layout -->
 
     <TextView
         android:id="@+id/lbl_alarm_title"
-        style="@style/Alarm_Widget_TextView"
+        style="@style/Lable.AlarmWidget"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
@@ -49,7 +54,7 @@
 
         <TextView
             android:id="@+id/lbl_alarm_time"
-            style="@style/Alarm_Widget_TextView"
+            style="@style/Lable.AlarmWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="false"
@@ -75,12 +80,12 @@
         android:layout_below="@+id/div_alarm_widget_two"
         android:layout_toEndOf="@+id/im_clock"
         android:layout_toRightOf="@+id/im_clock"
-        android:background="@drawable/ripple_bg"
+        android:background="@drawable/button_flat"
         android:clickable="true">
 
         <TextView
             android:id="@+id/lbl_alarm_activation"
-            style="@style/Alarm_Widget_TextView"
+            style="@style/Lable.AlarmWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

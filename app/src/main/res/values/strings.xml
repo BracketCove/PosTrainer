@@ -92,6 +92,14 @@
     <string name="menu_item_about">About</string>
     <string name="error_database_write_failure">Unable to write to Database :(</string>
     <string name="message_database_write_successful">Reminder updated Succesfully</string>
+    <string name="prompt_new_alarm">Hit \"+\" to \nProceed</string>
+    <string name="error_database_connection_failure">Couldn\'t connect to Database</string>
+    <string name="msg_alarm_activated">Alarm Activated</string>
+    <string name="msg_alarm_deactivated">Alarm Deactivated</string>
+    <string name="msg_alarm_deleted">Alarm Deleted</string>
+    <string name="def_reminder_name">New Alarm</string>
+    <string name="msg_reminder_limit_reached">Maximun Reminders per Day is 5.</string>
+    <string name="error_invalid_reminder_id">That\'s not supposed to happen. Contact the Dev. if this message keeps appearing.</string>
 
 
 </resources>

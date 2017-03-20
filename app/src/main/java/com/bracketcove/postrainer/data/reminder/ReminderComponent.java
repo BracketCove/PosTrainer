@@ -1,9 +1,7 @@
-package com.bracketcove.postrainer.di;
+package com.bracketcove.postrainer.data.reminder;
 
 import com.bracketcove.postrainer.ApplicationModule;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.schedulers.Scheduler;
-import com.bracketcove.postrainer.util.BaseScheduler;
+import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import javax.inject.Singleton;
 import dagger.Component;
@@ -16,5 +14,6 @@ import dagger.Component;
 @Component(modules = {ApplicationModule.class, ReminderModule.class} )
 public interface ReminderComponent {
     ReminderSource reminderSource();
-    BaseScheduler scheduler();
+    BaseSchedulerProvider scheduler();
+
 }

@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
 public class ActivityUtils extends AppCompatActivity {
 

@@ -1,7 +1,5 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
-import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,14 +11,14 @@ import dagger.Provides;
 @Module
 public class AlarmPresenterModule {
     //List what you would normally pass in as arguments to a Presenter's constructor
-    private final AlarmContract.View view;
+    private final AlarmReceiverContract.View view;
 
-    public AlarmPresenterModule(AlarmContract.View view) {
+    public AlarmPresenterModule(AlarmReceiverContract.View view) {
         this.view = view;
     }
 
     @Provides
-    AlarmContract.View provideReminderDetailView(){
+    AlarmReceiverContract.View provideReminderDetailView(){
         return view;
     }
 }

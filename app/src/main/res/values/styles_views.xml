@@ -1,4 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- I put style data which effects Views/Widgets/ViewGroups here. -->
+    <!-- *********************** Input Fields  *********************** -->
+    <style name="InputField" parent="Widget.AppCompat.EditText" />
+
+    <style name="InputField.ReminderName" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/WHITE</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColorHint">@color/windowBackground</item>
+        <item name="android:inputType">textCapWords|textNoSuggestions</item>
+    </style>
+
+    <!-- *********************** Labels  *********************** -->
+    <style name="Label">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:alpha">.86</item>
+        <item name="android:textColor">@color/WHITE</item>
+    </style>
+
+    <style name="Label.Tabs" parent="android:Widget.TextView">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/WHITE</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Lable.AlarmWidget" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/WHITE</item>
+    </style>
+
+    <style name="Label.InputSub" parent="android:Widget.TextView">
+        <item name="android:textColorPrimary">@color/LIGHT_GREY</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Label.BrandHeader" >
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- *********************** Containers  *********************** -->
+
+    <!-- *********************** Buttons  *********************** -->
+    <style name="Button.Flat" parent="Widget.AppCompat.Button.Borderless" />
+
+    <style name="Button_Detail_Frag" parent="android:Widget.ImageButton">
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:textColor">@color/WHITE</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">36dp</item>
+        <item name="android:paddingRight">36dp</item>
+        <item name="android:background">@drawable/button_flat</item>
+    </style>
+
+
+    <style name="Button.Flat.Primary">
+        <item name="android:background">@drawable/button_flat</item>
+        <item name="android:textColor">@color/WHITE</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingLeft">16sp</item>
+        <item name="android:paddingRight">16sp</item>
+    </style>
+
+    <style name="Button_Settings" parent="android:Widget.Button">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textColor">@color/ALPHA_BLACK</item>
+        <item name="android:background">@drawable/button_flat_inverse</item>
+    </style>
+
+    <!-- *********************** ImageView/Buttons  *********************** -->
+
+    <!-- *********************** Toolbar  *********************** -->
+
+
+    <!-- *********************** Others  *********************** -->
+
+    <style name="CheckboxCustomOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/WHITE</item>
+        <item name="android:textColorSecondary">@color/WHITE</item>
+    </style>
+
+    <style name="PickerTextColor">
+        <item name="android:textColorPrimary">@color/BLACK</item>
+    </style>
+
+    <style name="Alarm_Switch_Theme" parent="ThemeOverlay.AppCompat">
+        <item name="colorControlActivated">@color/MINT_GREEN</item>
+    </style>
+
+    <style name="CheckBox_White_Border" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/WHITE</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="DividerAccent">
+        <item name="android:background">@drawable/horizontal_divider_accent</item>
+    </style>
+
+    <style name="DividerAccent.UserDetail">
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="ToolbarTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Toolbar_Popup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:background">@color/WHITE</item>
+    </style>
+
+    <style name="Toolbar_Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
 </resources>

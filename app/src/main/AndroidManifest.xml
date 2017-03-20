@@ -14,17 +14,19 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/Postrainer"
+        >
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Postrainer"
             />
 
         <activity
             android:name=".reminderlist.ReminderListActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/Postrainer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,9 +34,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".alarmreceiver.AlarmActivity"
+            android:name=".alarmreceiver.AlarmReceiverActivity"
             android:label="@string/title_activity_manage_reminder"
-            android:theme="@style/AppTheme.Inverse" />
+            android:theme="@style/Postrainer.Inverse" />
         <activity android:name=".reminderdetail.ReminderDetailActivity"></activity>
     </application>
 

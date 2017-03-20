@@ -1,13 +1,14 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 
 import javax.inject.Inject;
@@ -20,16 +21,16 @@ import javax.inject.Inject;
  * Created by Ryan on 05/03/2017.
  */
 
-public class AlarmFragment extends Fragment implements AlarmContract.View {
+public class AlarmReceiverFragment extends Fragment implements AlarmReceiverContract.View {
 
-    @Inject AlarmContract.Presenter presenter;
+    @Inject AlarmReceiverContract.Presenter presenter;
 
-    public AlarmFragment() {
+    public AlarmReceiverFragment() {
 
     }
 
-    public static AlarmFragment newInstance() {
-        return new AlarmFragment();
+    public static AlarmReceiverFragment newInstance() {
+        return new AlarmReceiverFragment();
     }
 
     @Override
@@ -49,35 +50,21 @@ public class AlarmFragment extends Fragment implements AlarmContract.View {
         stopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //alarmController.onDismissAlarmClick();
+                presenter.onAlarmDismissClick();
             }
         });
         return v;
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
-//        if (presenter == null) {
-//            DaggerAlarmComponent.builder()
-//                    .alarmPresenterModule(new AlarmPresenterModule(this))
-//                    .reminderRepositoryComponent(
-//                            ((PostrainerApplication) getActivity().getApplication())
-//                                    .getReminderRepositoryComponent()
-//
-//                    )
-//                    .build();
-//            presenter.subscribe();
-//        }
-
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
-    public void setPresenter(AlarmContract.Presenter presenter) {
-
-    }
-
-    @Override
-    public void makeToast(String message) {
-
+    public void makeToast(@StringRes int message) {
+        Toast.makeText(getActivity(),
+                message,
+                Toast.LENGTH_SHORT)
+                .show();
     }
 }

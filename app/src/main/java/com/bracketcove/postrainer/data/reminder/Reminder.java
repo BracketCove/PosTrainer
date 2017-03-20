@@ -9,40 +9,46 @@ import android.os.Parcelable;
  */
 public class Reminder implements Parcelable{
 
-    private String alarmTitle;
-    private boolean isActive;
+    private String reminderTitle;
+    private boolean active;
     private boolean vibrateOnly;
     private boolean renewAutomatically;
     private int minute;
     private int hourOfDay;
-    private int creationDate;
+    private String reminderId;
 
-    public Reminder(int hourOfDay, int minute, String alarmTitle, boolean isActive, boolean vibrateOnly, boolean renewAutomatically, int creationDate) {
+    public Reminder(int hourOfDay,
+                    int minute,
+                    String reminderTitle,
+                    boolean active,
+                    boolean vibrateOnly,
+                    boolean renewAutomatically,
+                    String reminderId) {
         this.hourOfDay = hourOfDay;
         this.minute = minute;
-        this.alarmTitle = alarmTitle;
-        this.isActive = isActive;
+        this.reminderTitle = reminderTitle;
+        this.active = active;
         this.vibrateOnly = vibrateOnly;
         this.renewAutomatically = renewAutomatically;
-        this.creationDate = creationDate;
+        this.reminderId = reminderId;
     }
 
     protected Reminder(Parcel in) {
-        alarmTitle = in.readString();
-        isActive = in.readByte() != 0;
+        reminderTitle = in.readString();
+        active = in.readByte() != 0;
         vibrateOnly = in.readByte() != 0;
         renewAutomatically = in.readByte() != 0;
         minute = in.readInt();
         hourOfDay = in.readInt();
-        creationDate = in.readInt();
+        reminderId = in.readString();
     }
 
-    public int getCreationDate() {
-        return creationDate;
+    public String getReminderId() {
+        return reminderId;
     }
 
-    public void setCreationDate(int creationDate) {
-        this.creationDate = creationDate;
+    public void setReminderId(String reminderId) {
+        this.reminderId = reminderId;
     }
 
     public boolean isRenewAutomatically() {
@@ -67,27 +73,27 @@ public class Reminder implements Parcelable{
         this.vibrateOnly = vibrateOnly;
     }
 
-    public String getAlarmTitle() {
-        return alarmTitle;
+    public String getReminderTitle() {
+        return reminderTitle;
     }
 
     /**
-     * @param alarmTitle User defined name of a title. Must be less than 36, characters,
+     * @param reminderTitle User defined name of a title. Must be less than 36, characters,
      * (validation handled in Activity Code)
      */
-    public void setAlarmTitle(String alarmTitle) {
-        this.alarmTitle = alarmTitle;
+    public void setReminderTitle(String reminderTitle) {
+        this.reminderTitle = reminderTitle;
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     /**
-     * @param active Alarm is Active or Not
+     * @param active Alarm is Active or Not (True or False)
      */
     public void setActive(boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
     public int getMinute() {
@@ -132,12 +138,12 @@ public class Reminder implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(alarmTitle);
-        dest.writeByte((byte) (isActive ? 1 : 0));
+        dest.writeString(reminderTitle);
+        dest.writeByte((byte) (active ? 1 : 0));
         dest.writeByte((byte) (vibrateOnly ? 1 : 0));
         dest.writeByte((byte) (renewAutomatically ? 1 : 0));
         dest.writeInt(minute);
         dest.writeInt(hourOfDay);
-        dest.writeInt(creationDate);
+        dest.writeString(reminderId);
     }
 }

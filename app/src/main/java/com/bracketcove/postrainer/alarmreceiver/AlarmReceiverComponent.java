@@ -13,7 +13,7 @@ import dagger.Component;
 //@FragmentScoped
 //@Component(dependencies = ReminderRepositoryComponent.class,
  //       modules = ReminderDetailPresenterModule.class)
-public interface AlarmComponent {
+public interface AlarmReceiverComponent {
 
     //ReminderDetailFragment reminder
     //void inject(ReminderDetailFragment reminderDetailFragment);

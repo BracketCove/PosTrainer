@@ -1,11 +1,8 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
+    <!-- I put high level theme data which effects App/Activities/Fragments here. -->
 
-    </style>
-
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Postrainer" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -15,7 +12,7 @@
         <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.Inverse" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Postrainer.Inverse" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -26,97 +23,4 @@
         <item name="android:textColorPrimary">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
-
-    <style name="Custom_Picker_Text_Color" parent="Theme.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/WHITE</item>
-    </style>
-
-    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="Alarm_Widget_TextView" parent="@android:style/Widget.TextView">
-        <item name="android:textSize">22sp</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textColor">@color/WHITE</item>
-
-    </style>
-
-    <style name="Alarm_Switch_Theme" parent="ThemeOverlay.AppCompat">
-        <item name="colorControlActivated">@color/MINT_GREEN</item>
-    </style>
-
-    <style name="CheckBox_White_Border" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:textColor">@color/WHITE</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:padding">8dp</item>
-
-    </style>
-
-    <style name="Custom_Checkbox_Overlay" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">@color/WHITE</item>
-        <item name="android:textColorSecondary">@color/WHITE</item>
-    </style>
-
-    <style name="Label_Input" parent="android:Widget.TextView">
-        <item name="android:textColorPrimary">@color/LIGHT_GREY</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="EditText_Input" parent="android:Widget.TextView">
-        <item name="android:textColor">@color/WHITE</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColorHint">@color/windowBackground</item>
-        <item name="android:inputType">textCapWords|textNoSuggestions</item>
-    </style>
-
-    <style name="Label_Tabs" parent="android:Widget.TextView">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColor">@color/WHITE</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="Button_Settings" parent="android:Widget.Button">
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">64dp</item>
-        <item name="android:gravity">left|center_vertical</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:textColor">@color/ALPHA_BLACK</item>
-        <item name="android:background">@drawable/ripple_bg</item>
-    </style>
-
-    <style name="Button_Detail_Frag" parent="android:Widget.ImageButton">
-        <item name="android:layout_alignParentTop">true</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:textColor">@color/WHITE</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingLeft">36dp</item>
-        <item name="android:paddingRight">36dp</item>
-        <item name="android:background">@drawable/ripple_bg</item>
-    </style>
-
-    <style name="Toolbar_Popup" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:background">@color/WHITE</item>
-    </style>
-
-    <style name="Toolbar_Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">20sp</item>
-    </style>
-
-
-
 </resources>

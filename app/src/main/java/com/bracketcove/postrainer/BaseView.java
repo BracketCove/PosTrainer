@@ -9,8 +9,10 @@ import android.support.annotation.StringRes;
 
 public interface BaseView<T> {
 
+    /* Probably not necessary anymore due to DI
     void setPresenter(T presenter);
+    */
 
-    void makeToast(String message);
+    void makeToast(@StringRes int message);
 
 }

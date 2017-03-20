@@ -1,5 +1,7 @@
 package com.bracketcove.postrainer.data.reminder;
 
+import com.bracketcove.postrainer.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 /**
  * This is a Fake Service. I use it during Unit Tests, as I don't want a real service during such
@@ -19,12 +22,25 @@ public class FakeReminderRepository implements ReminderSource {
     boolean returnFailure = false;
     boolean returnEmpty = false;
 
-     @Inject FakeReminderRepository() {
+    private static final String TITLE = "Coffee Break";
 
-    }
+    private static final int MINUTE = 30;
 
-    public static FakeReminderRepository getInstance() {
-        return new FakeReminderRepository();
+    private static final int HOUR = 10;
+
+    //TODO: fix this test data to look the same as implementation would
+    private static final String CREATION_DATE = "111111111111111";
+
+    private static final Reminder testReminder = new Reminder(HOUR,
+            MINUTE,
+            TITLE,
+            false,
+            false,
+            false,
+            CREATION_DATE
+    );
+
+     @Inject public FakeReminderRepository() {
     }
 
     @Override
@@ -70,8 +86,16 @@ public class FakeReminderRepository implements ReminderSource {
         }
 
         List<Reminder> reminders = new ArrayList<>();
-        reminders.add(new Reminder(15, 15, "title", true, true, true, 15));
+        reminders.add(testReminder);
 
         return Maybe.just(reminders);
+    }
+
+    @Override
+    public Single<Reminder> getReminderById(String reminderId) {
+        if (returnFailure) {
+            return Single.error(new Exception());
+        }
+        return Single.just(testReminder);
     }
 }

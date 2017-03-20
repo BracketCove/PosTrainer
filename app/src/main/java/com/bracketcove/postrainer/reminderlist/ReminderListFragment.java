@@ -1,7 +1,9 @@
 package com.bracketcove.postrainer.reminderlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,17 +13,21 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 
-import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenterModule;
+import com.bracketcove.postrainer.reminderdetail.ReminderDetailActivity;
+import com.bracketcove.postrainer.settings.SettingsActivity;
 import com.bracketcove.postrainer.util.TimeConverter;
 import com.bracketcove.postrainer.data.reminder.Reminder;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,14 +37,14 @@ import javax.inject.Inject;
  * Created by Ryan on 08/08/2016.
  */
 public class ReminderListFragment extends Fragment implements ReminderListContract.View {
-    private static final String LIST_DATA = "LIST_DATA";
+    private static final String REMINDER_TO_BE_EDITED = "REMINDER_TO_BE_EDITED";
 
-    private List<Reminder> reminderListData;
     private RecyclerView reminderList;
     private FloatingActionButton fabulous;
     private TextView prompt;
     private ReminderListAdapter adapter;
-    private Context context;
+    private ArrayList<Reminder> reminders;
+    private ImageButton settings;
 
     @Inject
     ReminderListPresenter presenter;
@@ -51,6 +57,8 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     public static ReminderListFragment newInstance() {
         return new ReminderListFragment();
     }
+
+    /*------------------------------- Lifecycle -------------------------------*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,15 +78,31 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_reminder_list, container, false);
-        reminderList = (RecyclerView) v.findViewById(R.id.lst_reminders);
+
+        prompt = (TextView) v.findViewById(R.id.lbl_reminder_prompt);
+
+        settings = (ImageButton)v.findViewById(R.id.btn_reminder_list_settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onSettingsIconClick();
+            }
+        });
+
+        reminderList = (RecyclerView) v.findViewById(R.id.lst_reminder_list);
+
+        initializeRecyclerView();
+
         fabulous = (FloatingActionButton) v.findViewById(R.id.fab_reminders);
         fabulous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                presenter.onCreateReminderButtonClick(reminders.size(),
+                        getString(R.string.def_reminder_name),
+                        getDate()
+                );
             }
         });
-        prompt = (TextView) v.findViewById(R.id.lbl_reminder_prompt);
         return v;
     }
 
@@ -96,7 +120,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -105,22 +128,95 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
     }
 
-    @Override
-    public void setPresenter(ReminderListContract.Presenter presenter) {
+    /*------------------------------- Contract -------------------------------*/
 
+    @Override
+    public void makeToast(@StringRes int message) {
+        Toast.makeText(getActivity(),
+                message,
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    /*
+    Context may be risky here during orientation changes. Check for such use cases
+    during tests.
+     */
+    @Override
+    public void setReminderListData(List<Reminder> reminders) {
+        prompt.setVisibility(View.INVISIBLE);
+        reminderList.setVisibility(View.VISIBLE);
+        //if reminderListData isn't empty
+        if (!this.reminders.isEmpty()) {
+            this.reminders.clear();
+            adapter.notifyDataSetChanged();
+        }
+
+        for (Reminder reminder : reminders) {
+            //add reminder to fragments list, and inform adapter of this change
+            this.reminders.add(reminder);
+            adapter.notifyItemInserted(this.reminders.lastIndexOf(reminder));
+        }
     }
 
     @Override
-    public void makeToast(String message) {
+    public void setNoReminderListDataFound() {
+        reminderList.setVisibility(View.INVISIBLE);
+        prompt.setVisibility(View.VISIBLE);
+    }
 
+    /**
+     * Must add Reminder both to list and UI
+     *
+     * @param reminder new Reminder to be added
+     */
+    @Override
+    public void addNewReminderToListView(Reminder reminder) {
+        reminders.add(reminder);
+        adapter.notifyItemInserted(this.reminders.lastIndexOf(reminder));
     }
 
     @Override
-    public void setReminderListData(List<Reminder> reminderListData) {
-        this.reminderListData = reminderListData;
+    public void undoDeleteReminderAt(int index, Reminder reminder) {
+        reminders.add(index, reminder);
+        adapter.notifyItemInserted(index);
+    }
 
-        context = getActivity();
-        adapter = new ReminderListAdapter(context, reminderListData);
+    @Override
+    public void startReminderDetailActivity(String reminderId) {
+        Intent i = new Intent(getActivity(), ReminderDetailActivity.class);
+        i.putExtra(REMINDER_TO_BE_EDITED, reminderId);
+        startActivity(i);
+    }
+
+    @Override
+    public void startSettingsActivity() {
+        Intent i = new Intent(getActivity(), SettingsActivity.class);
+        startActivity(i);
+    }
+
+    /**
+     * All of this crap is just to create a unique identifier which is used to identify Reminders in
+     * the Database.
+     *
+     * @return a unique id, based on the current time. Doesn't need to be fancy or stupidly long
+     * like Calendar.getTimeInMillis()
+     */
+    public String getDate() {
+        Calendar calendar = Calendar.getInstance();
+        String date = "" + calendar.get(Calendar.DAY_OF_YEAR);
+        date += "" + calendar.get(Calendar.HOUR_OF_DAY);
+        date += "" + calendar.get(Calendar.MINUTE);
+        date += "" + calendar.get(Calendar.SECOND);
+        date += "" + calendar.get(Calendar.MILLISECOND);
+        return date;
+    }
+
+    /*------------------------------- RecView Boilerplate -------------------------------*/
+
+    private void initializeRecyclerView() {
+        reminders = new ArrayList<>();
+        adapter = new ReminderListAdapter(getActivity(), reminders);
         reminderList.setLayoutManager(new LinearLayoutManager(getActivity()));
         reminderList.setAdapter(adapter);
 
@@ -128,11 +224,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         itemTouchHelper.attachToRecyclerView(reminderList);
 
         reminderList.addItemDecoration(new CustomItemDecorator(getActivity()));
-    }
-
-    @Override
-    public void setNoReminderListDataFound() {
-
     }
 
     private class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapter.ViewHolder> {
@@ -159,12 +250,12 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         @Override
         public void onBindViewHolder(ReminderListAdapter.ViewHolder holder, final int position) {
             Reminder item = data.get(position);
-            holder.alarmTitle.setText(item.getAlarmTitle());
+            holder.alarmTitle.setText(item.getReminderTitle());
 
             holder.alarmTime.setText(
-                    TimeConverter.convertTime(item.getHourOfDay(),item.getMinute())
+                    TimeConverter.convertTime(item.getHourOfDay(), item.getMinute())
             );
-            if (item.isActive()){
+            if (item.isActive()) {
                 holder.alarmStateLabel.setText(R.string.on);
             } else {
                 holder.alarmStateLabel.setText(R.string.off);
@@ -189,7 +280,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
             public ViewHolder(View itemView) {
                 super(itemView);
-
                 alarmTitle = (TextView) itemView.findViewById(R.id.lbl_alarm_title);
                 alarmTime = (TextView) itemView.findViewById(R.id.lbl_alarm_time);
                 alarmStateLabel = (TextView) itemView.findViewById(R.id.lbl_alarm_activation);
@@ -204,21 +294,30 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
             public void onClick(View v) {
                 int id = v.getId();
 
-                if (id == R.id.swi_alarm_activation){
-                    if (alarmStateSwitch.isChecked()){
+                if (id == R.id.swi_alarm_activation) {
+
+                    if (alarmStateSwitch.isChecked()) {
                         alarmStateLabel.setText(R.string.on);
+                        presenter.onReminderToggled(
+                                true,
+                                reminders.get(this.getAdapterPosition())
+                        );
                     } else {
                         alarmStateLabel.setText(R.string.off);
+                        presenter.onReminderToggled(
+                                false,
+                                reminders.get(this.getAdapterPosition())
+                        );
                     }
-                } else if (id == R.id.im_clock){
+                } else if (id == R.id.im_clock) {
+                    presenter.onReminderIconClick(
+                            reminders.get(this.getAdapterPosition())
+                    );
                 }
 
             }
         }
-
     }
-
-    /*----------------------RecyclerView S**t--------------------------*/
 
     private ItemTouchHelper.Callback createHelperCallback() {
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
@@ -233,11 +332,18 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                presenter.onAlarmWidgetSwiped(viewHolder.getAdapterPosition());
+                int position = viewHolder.getAdapterPosition();
+                presenter.onReminderSwiped(
+                        position,
+                        reminders.get(position)
+                );
+
+                reminders.remove(position);
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+
             }
         };
         return simpleItemTouchCallback;
     }
-
 }

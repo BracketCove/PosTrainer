@@ -34,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                 fragment,
-                R.id.cont_reminder_list_fragment,
+                R.id.cont_settings_fragment,
                 FRAG_SETTINGS
         );
     }

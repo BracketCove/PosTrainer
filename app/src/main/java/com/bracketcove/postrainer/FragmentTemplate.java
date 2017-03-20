@@ -5,17 +5,17 @@ package com.bracketcove.postrainer;
  */
 
 /*
-public class AlarmFragment extends Fragment implements AlarmContract.View {
+public class AlarmReceiverFragment extends Fragment implements AlarmReceiverContract.View {
 
-    private AlarmContract.Presenter presenter;
+    private AlarmReceiverContract.Presenter presenter;
 
 
-    public AlarmFragment() {
+    public AlarmReceiverFragment() {
 
     }
 
-    public static AlarmFragment newInstance() {
-        return new AlarmFragment();
+    public static AlarmReceiverFragment newInstance() {
+        return new AlarmReceiverFragment();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AlarmFragment extends Fragment implements AlarmContract.View {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (presenter == null) {
-            presenter = new AlarmPresenter(this,
+            presenter = new AlarmReceiverPresenter(this,
 
                     );
         }
@@ -62,7 +62,7 @@ public class AlarmFragment extends Fragment implements AlarmContract.View {
     }
 
     @Override
-    public void setPresenter(AlarmContract.Presenter presenter) {
+    public void setPresenter(AlarmReceiverContract.Presenter presenter) {
 
     }
 

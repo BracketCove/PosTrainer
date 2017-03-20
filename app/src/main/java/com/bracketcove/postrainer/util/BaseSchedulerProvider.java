@@ -6,7 +6,7 @@ import io.reactivex.Scheduler;
  * Created by Ryan on 05/03/2017.
  */
 
-public interface BaseScheduler {
+public interface BaseSchedulerProvider {
 
     Scheduler computation();
 

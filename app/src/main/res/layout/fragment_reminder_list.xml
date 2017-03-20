@@ -1,37 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_reminder_list_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@id/toolbar"
-    android:background="@color/windowBackground">
+    tools:context=".reminderlist.ReminderListActivity"
+    tools:layout_editor_absoluteY="25dp"
+    tools:layout_editor_absoluteX="0dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lst_reminders"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/tlb_reminder_list"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1">
+
+        <TextView
+            android:id="@+id/lbl_reminder_list_brand_header"
+            style="@style/Label.BrandHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:paddingLeft="16dp"
+            android:gravity="center_vertical|left"
+            android:text="@string/app_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+
+        <ImageButton
+            android:id="@+id/btn_reminder_list_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/button_flat_inverse"
+            android:padding="16dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_settings_white_24dp"
+            android:layout_marginEnd="8dp" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/lbl_reminder_prompt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/prompt_new_alarm"
+        android:textColor="@color/ALPHA_WHITE"
+        android:fontFamily="sans-serif-medium"
+        android:background="@color/colorPrimary"
+        android:textSize="34sp"
         android:gravity="center"
-        android:padding="64dp"
-        android:text="@string/reminders_new_alarm_prompt"
-        android:textColor="@color/colorPrimary"
-        android:textSize="22sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:listitem="@layout/item_alarm_widget"
+        app:layout_constraintTop_toBottomOf="@+id/tlb_reminder_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lst_reminder_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/windowBackground"
         android:visibility="invisible"
-        android:layout_centerInParent="true" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:listitem="@layout/item_alarm_widget"
+        app:layout_constraintTop_toBottomOf="@+id/tlb_reminder_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_reminders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:alpha=".86"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:padding="16dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_add_white_24dp" />
-
-</RelativeLayout>
+        android:alpha=".86"
+        android:src="@drawable/ic_add_white_24dp"
+        app:srcCompat="@drawable/ic_add_white_24dp"
+        android:layout_marginRight="16dp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="18dp" />
+</android.support.constraint.ConstraintLayout>

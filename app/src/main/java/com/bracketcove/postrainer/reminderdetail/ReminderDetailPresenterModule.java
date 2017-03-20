@@ -1,10 +1,5 @@
 package com.bracketcove.postrainer.reminderdetail;
 
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.util.BaseScheduler;
-
-import javax.inject.Inject;
-
 import dagger.Module;
 import dagger.Provides;
 

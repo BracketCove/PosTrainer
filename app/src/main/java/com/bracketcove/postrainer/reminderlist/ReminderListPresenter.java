@@ -1,85 +1,191 @@
 package com.bracketcove.postrainer.reminderlist;
 
+import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.reminder.Reminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.util.BaseScheduler;
+import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 
 /**
  * Created by Ryan on 05/03/2017.
  */
 
-final class ReminderListPresenter implements ReminderListContract.Presenter {
+public class ReminderListPresenter implements ReminderListContract.Presenter {
 
     private final ReminderListContract.View view;
     private final ReminderSource reminderSource;
-    private final BaseScheduler schedulerProvider;
+    private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable compositeDisposable;
 
     @Inject
     public ReminderListPresenter(ReminderListContract.View view,
                                  ReminderSource reminderSource,
-                                 BaseScheduler schedulerProvider) {
+                                 BaseSchedulerProvider schedulerProvider) {
         this.view = view;
         this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
-        this.view.setPresenter(this);
+
     }
 
     @Inject
     void registerView() {
-            //TODO:WHAT IT DO??????
+        //TODO:WHAT IT DO??????
     }
 
+    /**
+     * Checks Repository for any existing reminders.
+     * returns one of:
+     * List of 1-5 Reminders : Display Reminders to User
+     * Nothing : Display create Reminder Prompt to User
+     * error : Display database error
+     */
     @Override
     public void subscribe() {
         compositeDisposable.add(
-                reminderSource.getReminderList()
-                .subscribeWith(new DisposableMaybeObserver<List<Reminder>>() {
-                    @Override
-                    public void onSuccess(List<Reminder> reminders) {
-                        view.setReminderListData(reminders);
-                    }
+                reminderSource.getReminders()
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(new DisposableMaybeObserver<List<Reminder>>() {
+                            @Override
+                            public void onSuccess(List<Reminder> reminders) {
+                                view.setReminderListData(reminders);
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
+                            @Override
+                            public void onError(Throwable e) {
+                                view.makeToast(R.string.error_database_connection_failure);
+                            }
 
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                })
+                            @Override
+                            public void onComplete() {
+                                view.setNoReminderListDataFound();
+                            }
+                        })
         );
-
     }
 
     @Override
     public void unsubscribe() {
+        compositeDisposable.clear();
+    }
 
+    /**
+     * Compares a desired reminder to the state of the current reminder.
+     * - If states matches, we shouldn't need to update the Repository (I think so anyway).
+     * - If state doesn't match, animate the toggle in the view, and update the Repository to
+     * desired state
+     *
+     * @param active   user's desired state of the alarm (probably)
+     * @param reminder current state of alarm in View. Assumed to be current with Repository
+     */
+    @Override
+    public void onReminderToggled(final boolean active, final Reminder reminder) {
+        if (active != reminder.isActive()) {
+            reminder.setActive(active);
+
+            compositeDisposable.add(
+                    reminderSource.updateReminder(reminder)
+                            .subscribeOn(schedulerProvider.io())
+                            .observeOn(schedulerProvider.ui())
+                            .subscribeWith(new DisposableCompletableObserver() {
+                                @Override
+                                public void onError(Throwable e) {
+                                    view.makeToast(R.string.error_database_write_failure);
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    if (active) {
+                                        view.makeToast(R.string.msg_alarm_activated);
+                                    } else {
+                                        view.makeToast(R.string.msg_alarm_deactivated);
+                                    }
+
+                                }
+                            }));
+        } else {
+            view.makeToast(getAppropriateMessage(active));
+        }
+    }
+
+    private int getAppropriateMessage(boolean active) {
+        if (active){
+            return R.string.msg_alarm_activated;
+        } else {
+            return R.string.msg_alarm_deactivated;
+        }
     }
 
     @Override
-    public void onAlarmToggled(boolean active) {
-
+    public void onSettingsIconClick() {
+        view.startSettingsActivity();
     }
 
     @Override
-    public void onAlarmIconClicked() {
+    public void onReminderSwiped(final int position, final Reminder reminder) {
+        compositeDisposable.add(
+                reminderSource.deleteReminder(reminder)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        view.makeToast(R.string.msg_alarm_deleted);
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        view.makeToast(R.string.error_database_connection_failure);
+                        view.undoDeleteReminderAt(position, reminder);
+                    }
+                })
+        );
     }
 
     @Override
-    public void onAlarmWidgetSwiped(int swipedItemPosition) {
-
+    public void onReminderIconClick(Reminder reminder) {
+        view.startReminderDetailActivity(reminder.getReminderId());
     }
 
+    @Override
+    public void onCreateReminderButtonClick(int currentNumberOfReminders, String defaultName, String creationDate) {
+        if (currentNumberOfReminders < 5){
+            final Reminder reminder = new Reminder(
+                    12,
+                    30,
+                    defaultName,
+                    false,
+                    true,
+                    false,
+                    creationDate
+            );
+
+            compositeDisposable.add(
+                    reminderSource.createReminder(reminder)
+                            .subscribeOn(schedulerProvider.io())
+                            .observeOn(schedulerProvider.ui())
+                            .subscribeWith(new DisposableCompletableObserver() {
+                                @Override
+                                public void onComplete() {
+                                    view.addNewReminderToListView(reminder);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    view.makeToast(R.string.error_database_write_failure);
+                                }
+                            })
+            );
+        } else {
+            view.makeToast(R.string.msg_reminder_limit_reached);
+        }
+    }
 }

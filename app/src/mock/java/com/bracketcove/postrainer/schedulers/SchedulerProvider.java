@@ -2,29 +2,30 @@ package com.bracketcove.postrainer.schedulers;
 
 import android.support.annotation.Nullable;
 
-import com.bracketcove.postrainer.util.BaseScheduler;
+import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * THIS CLASS MAY BE USELESS!
+ * IMPORTANT: This scheduler is for use during TESTING ONLY! This is why it is in
+ * the Mock build variant. You must use Schedulers.trampoline() during tests, otherwise RxJava
+ * will complain (as far as I've seen).
  *
- * This Scheduler is for use during Tests which require immediate Schedulers
  * Created by Ryan on 05/03/2017.
  */
 
-public class ImmediateScheduler implements BaseScheduler {
+    public class SchedulerProvider implements BaseSchedulerProvider {
     @Nullable
-    private static ImmediateScheduler INSTANCE;
+    private static SchedulerProvider INSTANCE;
 
     // Prevent direct instantiation.
-    private ImmediateScheduler() {
+    private SchedulerProvider() {
     }
 
-    public static synchronized BaseScheduler getInstance() {
+    public static synchronized BaseSchedulerProvider getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ImmediateScheduler();
+            INSTANCE = new SchedulerProvider();
         }
         return INSTANCE;
     }

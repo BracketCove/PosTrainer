@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/standard_vertical_margin"
     >
 
     <ImageButton
-        android:id="@+id/imb_manage_back"
+        android:id="@+id/imb_reminder_detail_back"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentLeft="true"
@@ -18,7 +18,7 @@
         android:src="@drawable/ic_arrow_back_white_24dp" />
 
     <ImageButton
-        android:id="@+id/imb_manage_proceed"
+        android:id="@+id/imb_reminder_detail_proceed"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
@@ -30,11 +30,11 @@
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/edt_reminder_title"
-        style="@style/EditText_Input"
-        android:theme="@style/AppTheme.Inverse"
+        style="@style/InputField.ReminderName"
+        android:theme="@style/Postrainer.Inverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imb_manage_proceed"
+        android:layout_below="@id/imb_reminder_detail_proceed"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
@@ -44,7 +44,7 @@
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/chb_vibrate_only"
         style="@style/CheckBox_White_Border"
-        android:theme="@style/AppTheme.Inverse"
+        android:theme="@style/Postrainer.Inverse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edt_reminder_title"
@@ -55,7 +55,7 @@
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/chb_renew_automatically"
         style="@style/CheckBox_White_Border"
-        android:theme="@style/AppTheme.Inverse"
+        android:theme="@style/Postrainer.Inverse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chb_vibrate_only"
@@ -78,6 +78,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:theme="@style/Custom_Picker_Text_Color" />
+        android:theme="@style/PickerTextColor" />
 
 </RelativeLayout>

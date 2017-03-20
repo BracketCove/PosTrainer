@@ -1,17 +1,16 @@
 package com.bracketcove.postrainer.reminderdetail;
 
-import android.util.Log;
 
-
+import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.data.reminder.Reminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.util.BaseScheduler;
-
-import java.util.Calendar;
+import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import javax.inject.Inject;
 
-import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 
 /**
  * Created by Ryan on 05/03/2017.
@@ -21,23 +20,43 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
 
     private final ReminderDetailContract.View view;
     private final ReminderSource reminderSource;
-    private final BaseScheduler schedulerProvider;
+    private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable compositeDisposable;
 
     @Inject
     public ReminderDetailPresenter(ReminderDetailContract.View view,
                                    ReminderSource reminderSource,
-                                   BaseScheduler schedulerProvider) {
+                                   BaseSchedulerProvider schedulerProvider) {
         this.view = view;
         this.reminderSource = reminderSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
-        this.view.setPresenter(this);
     }
 
     @Override
     public void subscribe() {
+        compositeDisposable.add(
+              reminderSource.getReminderById(
+                      view.getReminderId())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(new DisposableSingleObserver<Reminder>() {
+                    @Override
+                    public void onSuccess(Reminder reminder) {
+                        view.setReminderTitle(reminder.getReminderTitle());
+                        view.setVibrateOnly(reminder.isVibrateOnly());
+                        view.setRenewAutomatically(reminder.isRenewAutomatically());
+                        view.setPickerTime(reminder.getHourOfDay(), reminder.getMinute());
+                        view.setCurrentAlarmState(reminder.isActive());
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        view.makeToast(R.string.error_invalid_reminder_id);
+                        view.startReminderListActivity();
+                    }
+                })
+        );
     }
 
     @Override
@@ -50,24 +69,39 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
         view.startReminderListActivity();
     }
 
+    /**
+     * Ensure that the Reminder is updated in repository
+     *
+     */
     @Override
     public void onDoneIconPress() {
-    }
+        Reminder reminder = new Reminder(
+                view.getPickerHour(),
+                view.getPickerMinute(),
+                view.getReminderTitle(),
+                view.getCurrentAlarmState(),
+                view.getVibrateOnly(),
+                view.getRenewAutomatically(),
+                view.getReminderId()
+        );
 
-    /**
-     * All of this crap is just to create a unique identifier which is used in Database and for
-     * creating unique intents.
-     *
-     * @return a unique id, based on the current time. Doesn't need to be fancy or stupidly long
-     * like Calendar.getTimeInMillis()
-     */
-    public int getDate() {
-        Calendar calendar = Calendar.getInstance();
-        String date = "" + calendar.get(Calendar.DAY_OF_YEAR);
-        date += "" + calendar.get(Calendar.HOUR_OF_DAY);
-        date += "" + calendar.get(Calendar.MINUTE);
-        date += "" + calendar.get(Calendar.SECOND);
-        Log.d("TAG", "Date works out to: " + date);
-        return Integer.parseInt(date);
+        compositeDisposable.add(
+                reminderSource.updateReminder(reminder)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(new DisposableCompletableObserver() {
+                            @Override
+                            public void onComplete() {
+                                view.makeToast(R.string.message_database_write_successful);
+                                view.startReminderListActivity();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                view.makeToast(R.string.error_database_write_failure);
+
+                            }
+                        })
+        );
     }
 }

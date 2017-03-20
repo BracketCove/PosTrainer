@@ -17,13 +17,27 @@ public interface ReminderListContract  {
         void setReminderListData(List<Reminder> reminderListData);
 
         void setNoReminderListDataFound();
+
+        void addNewReminderToListView(Reminder reminder);
+
+        void undoDeleteReminderAt(int index, Reminder reminder);
+
+        void startReminderDetailActivity(String reminderId);
+
+        void startSettingsActivity();
+
+
     }
 
     interface Presenter extends BasePresenter {
-        void onAlarmToggled(boolean active);
+        void onReminderToggled(boolean active, Reminder reminder);
 
-        void onAlarmIconClicked();
+        void onSettingsIconClick();
 
-        void onAlarmWidgetSwiped(int swipedItemPosition);
+        void onReminderSwiped(int index, Reminder reminder);
+
+        void onReminderIconClick(Reminder reminder);
+
+        void onCreateReminderButtonClick(int currentNumberOfReminders,String defaultName, String creationDate);
     }
 }

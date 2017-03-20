@@ -2,9 +2,13 @@ package com.bracketcove.postrainer;
 
 import android.app.Application;
 
-import com.bracketcove.postrainer.di.DaggerReminderComponent;
-import com.bracketcove.postrainer.di.ReminderComponent;
-import com.bracketcove.postrainer.di.ReminderModule;
+
+import com.bracketcove.postrainer.data.alarm.AlarmComponent;
+import com.bracketcove.postrainer.data.alarm.AlarmModule;
+import com.bracketcove.postrainer.data.alarm.DaggerAlarmComponent;
+import com.bracketcove.postrainer.data.reminder.DaggerReminderComponent;
+import com.bracketcove.postrainer.data.reminder.ReminderComponent;
+import com.bracketcove.postrainer.data.reminder.ReminderModule;
 
 /**
  * Please note that the following comment uses the word *component* to refer to parts of
@@ -25,30 +29,29 @@ import com.bracketcove.postrainer.di.ReminderModule;
  */
 
 public class PostrainerApplication extends Application {
-    //private ReminderRepositoryComponent reminderRepositoryComponent;
-    //private SchedulerComponent schedulerComponent;
     private ReminderComponent reminderComponent;
+    private AlarmComponent alarmComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        ApplicationModule applicationModule = new ApplicationModule(this);
+
         reminderComponent = DaggerReminderComponent
                 .builder()
-                .applicationModule(new ApplicationModule(this))
+                .applicationModule(applicationModule)
                 .reminderModule(new ReminderModule())
+                .build();
+
+        alarmComponent = DaggerAlarmComponent
+                .builder()
+                .applicationModule(applicationModule)
+                .alarmModule(new AlarmModule(this))
                 .build();
     }
 
     public ReminderComponent getReminderComponent() {
         return this.reminderComponent;
     }
-
-//    public ReminderRepositoryComponent getReminderRepositoryComponent(){
-//        return this.reminderRepositoryComponent;
-//    }
-//
-//    public SchedulerComponent getSchedulerComponent(){
-//        return this.schedulerComponent;
-//    }
 }
