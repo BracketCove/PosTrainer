@@ -1,6 +1,7 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
-import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenterModule;
+import com.bracketcove.postrainer.data.alarm.AlarmComponent;
+import com.bracketcove.postrainer.data.reminder.ReminderComponent;
 import com.bracketcove.postrainer.util.FragmentScoped;
 
 import dagger.Component;
@@ -10,11 +11,9 @@ import dagger.Component;
  * satisfy the dependency by supplying TaskRepositoryComponent.class.
  * Created by Ryan on 16/03/2017.
  */
-//@FragmentScoped
-//@Component(dependencies = ReminderRepositoryComponent.class,
- //       modules = ReminderDetailPresenterModule.class)
+@FragmentScoped
+@Component(dependencies = {ReminderComponent.class, AlarmComponent.class},
+       modules = {ApplicationModuleAlarmReceiverPresenterModule.class})
 public interface AlarmReceiverComponent {
-
-    //ReminderDetailFragment reminder
-    //void inject(ReminderDetailFragment reminderDetailFragment);
+    void inject(AlarmReceiverFragment alarmReceiverFragment);
 }

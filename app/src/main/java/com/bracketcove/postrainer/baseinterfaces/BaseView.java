@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer;
+package com.bracketcove.postrainer.baseinterfaces;
 
 import android.support.annotation.StringRes;
 

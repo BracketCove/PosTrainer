@@ -4,7 +4,7 @@ import android.media.AudioManager;
 import android.os.PowerManager;
 import android.os.Vibrator;
 
-import com.bracketcove.postrainer.ApplicationModule;
+import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import javax.inject.Singleton;

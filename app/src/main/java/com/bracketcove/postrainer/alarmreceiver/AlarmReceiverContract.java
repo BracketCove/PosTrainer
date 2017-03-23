@@ -1,7 +1,7 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
-import com.bracketcove.postrainer.BasePresenter;
-import com.bracketcove.postrainer.BaseView;
+import com.bracketcove.postrainer.baseinterfaces.BasePresenter;
+import com.bracketcove.postrainer.baseinterfaces.BaseView;
 
 /**
  * Created by Ryan on 05/03/2017.

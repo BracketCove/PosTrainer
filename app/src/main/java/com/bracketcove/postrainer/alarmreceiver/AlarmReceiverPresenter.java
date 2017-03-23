@@ -1,5 +1,6 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
+import com.bracketcove.postrainer.data.alarm.AlarmSource;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
@@ -15,15 +16,18 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
 
     private final AlarmReceiverContract.View view;
     private final ReminderSource reminderSource;
+    private final AlarmSource alarmSource;
     private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable compositeDisposable;
 
     @Inject
     public AlarmReceiverPresenter(AlarmReceiverContract.View view,
                                   ReminderSource reminderSource,
+                                   AlarmSource alarmSource,
                                   BaseSchedulerProvider schedulerProvider) {
         this.view = view;
         this.reminderSource = reminderSource;
+        this.alarmSource = alarmSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
     }

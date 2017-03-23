@@ -1,7 +1,6 @@
 package com.bracketcove.postrainer.data.reminder;
 
-import com.bracketcove.postrainer.BaseSource;
-import com.bracketcove.postrainer.data.reminder.Reminder;
+import com.bracketcove.postrainer.baseinterfaces.BaseSource;
 
 import java.util.List;
 

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverPresenterModule;
 import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
 
 import javax.inject.Inject;
@@ -60,12 +61,14 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
 
         this.reminderId = getArguments().getString(REMINDER_TO_BE_EDITED);
 
-        DaggerReminderDetailComponent.builder()
-                .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
+        DaggerAlarmReceiverComponent.builder()
+                .alarmReceiverPresenterModule(new AlarmReceiverPresenterModule(this))
                 .reminderComponent(
                         ((PostrainerApplication) getActivity().getApplication())
                                 .getReminderComponent()
                 )
+                .alarmComponent(((PostrainerApplication) getActivity().getApplication())
+                        .getAlarmComponent())
                 .build().inject(this);
         
     }

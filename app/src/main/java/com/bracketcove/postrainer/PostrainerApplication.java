@@ -9,6 +9,7 @@ import com.bracketcove.postrainer.data.alarm.DaggerAlarmComponent;
 import com.bracketcove.postrainer.data.reminder.DaggerReminderComponent;
 import com.bracketcove.postrainer.data.reminder.ReminderComponent;
 import com.bracketcove.postrainer.data.reminder.ReminderModule;
+import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
 
 /**
  * Please note that the following comment uses the word *component* to refer to parts of

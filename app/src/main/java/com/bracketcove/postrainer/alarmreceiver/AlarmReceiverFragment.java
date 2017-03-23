@@ -15,9 +15,6 @@ import javax.inject.Inject;
 
 /**
  *
- *      SQLBrite and RxJava
- *
- *      SQLBrite is a plugin for RxJava to work with SQLite Database
  * Created by Ryan on 05/03/2017.
  */
 

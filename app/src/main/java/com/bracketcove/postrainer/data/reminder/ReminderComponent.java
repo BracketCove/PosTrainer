@@ -1,6 +1,6 @@
 package com.bracketcove.postrainer.data.reminder;
 
-import com.bracketcove.postrainer.ApplicationModule;
+import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import javax.inject.Singleton;

@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer;
+package com.bracketcove.postrainer.baseinterfaces;
 
 /**
  * Created by Ryan on 05/03/2017.

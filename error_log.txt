@@ -1,0 +1,5 @@
+Error:
+dependency cannot be provided without a @provides-annotated method
+
+Cause:
+Referencing the wrong module class in Component's @Component annotation's { modules = } arguments. This prevented the Component from building properly (which is by design, I think).

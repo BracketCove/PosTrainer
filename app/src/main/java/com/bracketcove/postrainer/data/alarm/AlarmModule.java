@@ -28,33 +28,5 @@ public class AlarmModule {
         this.context = context;
     }
 
-    @Singleton
-    @Provides
-    PowerManager.WakeLock provideWakeLock(){
-        PowerManager powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
-        return ((PowerManager) context
-                .getSystemService(Context.POWER_SERVICE))
-                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Alarm");
-    }
 
-    @Singleton
-    @Provides
-    AudioManager provideAudioManager(){
-        PowerManager powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
-        return ((AudioManager) context.getSystemService(Context.AUDIO_SERVICE));
-    }
-
-    @Singleton
-    @Provides
-    Vibrator provideVibrator(){
-        PowerManager powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
-        return ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE))
-                ;
-    }
-
-    @Provides
-    @Singleton
-    BaseSchedulerProvider provideScheduler(){
-        return SchedulerProvider.getInstance();
-    }
 }
