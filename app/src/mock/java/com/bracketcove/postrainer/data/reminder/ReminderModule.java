@@ -22,7 +22,7 @@ public class ReminderModule {
     @Singleton
     @Provides
     ReminderSource provideReminderSource(){
-        return new FakeReminderRepository();
+        return new ReminderRepository();
     }
 
     @Provides

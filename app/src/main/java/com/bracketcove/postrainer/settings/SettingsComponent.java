@@ -1,6 +1,7 @@
 package com.bracketcove.postrainer.settings;
 
 import com.bracketcove.postrainer.data.reminder.ReminderComponent;
+import com.bracketcove.postrainer.dependencyinjection.ApplicationComponent;
 import com.bracketcove.postrainer.util.FragmentScoped;
 
 import dagger.Component;
@@ -10,7 +11,7 @@ import dagger.Component;
  */
 
 @FragmentScoped
-@Component(modules = SettingsPresenterModule.class)
+@Component(dependencies = ApplicationComponent.class, modules = SettingsPresenterModule.class)
 public interface SettingsComponent {
 
     void inject(SettingsFragment settingsFragment);

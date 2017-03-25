@@ -1,6 +1,6 @@
 package com.bracketcove.postrainer;
 
-import com.bracketcove.postrainer.data.reminder.FakeReminderRepository;
+import com.bracketcove.postrainer.data.reminder.ReminderRepository;
 import com.bracketcove.postrainer.data.reminder.Reminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.reminderlist.ReminderListContract;
@@ -66,7 +66,7 @@ public class ReminderListPresenterTest {
     @Before
     public void SetUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        reminderSource = new FakeReminderRepository();
+        reminderSource = new ReminderRepository();
 
         schedulerProvider = SchedulerProvider.getInstance();
         presenter = new ReminderListPresenter(

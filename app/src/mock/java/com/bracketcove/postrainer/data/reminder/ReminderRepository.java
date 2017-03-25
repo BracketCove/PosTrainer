@@ -18,7 +18,7 @@ import io.reactivex.Single;
  * Created by Ryan on 07/03/2017.
  */
 @Singleton
-public class FakeReminderRepository implements ReminderSource {
+public class ReminderRepository implements ReminderSource {
     boolean returnFailure = false;
     boolean returnEmpty = false;
 
@@ -40,7 +40,7 @@ public class FakeReminderRepository implements ReminderSource {
             CREATION_DATE
     );
 
-     @Inject public FakeReminderRepository() {
+     @Inject public ReminderRepository() {
     }
 
     @Override

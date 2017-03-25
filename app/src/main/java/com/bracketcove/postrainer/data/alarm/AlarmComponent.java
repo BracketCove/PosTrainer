@@ -12,11 +12,13 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
+ *
+ * To be deleted most likely
  * Created by Ryan on 16/03/2017.
  */
 
 @Singleton
-@Component(modules = {ApplicationModule.class, AlarmModule.class} )
+@Component(modules = {ApplicationModule.class} )
 public interface AlarmComponent {
     PowerManager.WakeLock wakeLock();
     AudioManager audioManager();

@@ -61,14 +61,12 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
 
         this.reminderId = getArguments().getString(REMINDER_TO_BE_EDITED);
 
-        DaggerAlarmReceiverComponent.builder()
-                .alarmReceiverPresenterModule(new AlarmReceiverPresenterModule(this))
-                .reminderComponent(
+        DaggerReminderDetailComponent.builder()
+                .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
+                .applicationComponent(
                         ((PostrainerApplication) getActivity().getApplication())
-                                .getReminderComponent()
+                                .getApplicationComponent()
                 )
-                .alarmComponent(((PostrainerApplication) getActivity().getApplication())
-                        .getAlarmComponent())
                 .build().inject(this);
         
     }

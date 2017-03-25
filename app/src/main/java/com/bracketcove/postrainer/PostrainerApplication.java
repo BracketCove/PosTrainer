@@ -2,14 +2,9 @@ package com.bracketcove.postrainer;
 
 import android.app.Application;
 
-
-import com.bracketcove.postrainer.data.alarm.AlarmComponent;
-import com.bracketcove.postrainer.data.alarm.AlarmModule;
-import com.bracketcove.postrainer.data.alarm.DaggerAlarmComponent;
-import com.bracketcove.postrainer.data.reminder.DaggerReminderComponent;
-import com.bracketcove.postrainer.data.reminder.ReminderComponent;
-import com.bracketcove.postrainer.data.reminder.ReminderModule;
+import com.bracketcove.postrainer.dependencyinjection.ApplicationComponent;
 import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
+import com.bracketcove.postrainer.dependencyinjection.DaggerApplicationComponent;
 
 /**
  * Please note that the following comment uses the word *component* to refer to parts of
@@ -30,8 +25,7 @@ import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
  */
 
 public class PostrainerApplication extends Application {
-    private ReminderComponent reminderComponent;
-    private AlarmComponent alarmComponent;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -39,20 +33,25 @@ public class PostrainerApplication extends Application {
 
         ApplicationModule applicationModule = new ApplicationModule(this);
 
-        reminderComponent = DaggerReminderComponent
+        applicationComponent = DaggerApplicationComponent
                 .builder()
                 .applicationModule(applicationModule)
-                .reminderModule(new ReminderModule())
                 .build();
 
-        alarmComponent = DaggerAlarmComponent
-                .builder()
-                .applicationModule(applicationModule)
-                .alarmModule(new AlarmModule(this))
-                .build();
+//        reminderComponent = DaggerReminderComponent
+//                .builder()
+//                .applicationModule(applicationModule)
+//                .reminderModule(new ReminderModule())
+//                .build();
+//
+//        alarmComponent = DaggerAlarmComponent
+//                .builder()
+//                .applicationModule(applicationModule)
+//                .alarmModule(new AlarmModule(this))
+//                .build();
     }
 
-    public ReminderComponent getReminderComponent() {
-        return this.reminderComponent;
+    public ApplicationComponent getApplicationComponent() {
+        return this.applicationComponent;
     }
 }

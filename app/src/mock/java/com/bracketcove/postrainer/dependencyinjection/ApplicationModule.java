@@ -7,6 +7,10 @@ import android.os.PowerManager;
 import android.os.Vibrator;
 
 
+import com.bracketcove.postrainer.data.alarm.AlarmService;
+import com.bracketcove.postrainer.data.alarm.AlarmSource;
+import com.bracketcove.postrainer.data.reminder.ReminderRepository;
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.schedulers.SchedulerProvider;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
@@ -28,11 +32,9 @@ import static android.content.Context.POWER_SERVICE;
 @Module
 public final class ApplicationModule {
     //TODO is it safe that this is Application and not PostrainerApplication?
-    private final Application application;
     private final Context applicationContext;
 
     public ApplicationModule(Application application) {
-        this.application = application;
         this.applicationContext = application;
     }
 
@@ -46,14 +48,13 @@ public final class ApplicationModule {
      */
     @Provides
     @Singleton
-    Application provideApplication() {
-        return application;
+    Context provideApplication() {
+        return applicationContext;
     }
 
     @Singleton
     @Provides
     PowerManager.WakeLock provideWakeLock() {
-        Context applicationContext = (Context) application;
         PowerManager powerManager = (PowerManager) applicationContext.getSystemService(POWER_SERVICE);
         return ((PowerManager) applicationContext
                 .getSystemService(POWER_SERVICE))
@@ -78,5 +79,17 @@ public final class ApplicationModule {
     @Singleton
     BaseSchedulerProvider provideScheduler() {
         return SchedulerProvider.getInstance();
+    }
+
+    @Singleton
+    @Provides
+    ReminderSource provideReminderSource(){
+        return new ReminderRepository();
+    }
+
+    @Singleton
+    @Provides
+    AlarmSource provideAlarmSource(){
+        return new AlarmService(provideWakeLock(), provideAudioManager(), provideVibrator());
     }
 }

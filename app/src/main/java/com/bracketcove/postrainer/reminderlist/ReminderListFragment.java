@@ -67,9 +67,9 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         DaggerReminderListComponent.builder()
                 .reminderListPresenterModule(new ReminderListPresenterModule(this))
-                .reminderComponent(
+                .applicationComponent(
                         ((PostrainerApplication) getActivity().getApplication())
-                                .getReminderComponent()
+                                .getApplicationComponent()
                 )
                 .build().inject(this);
     }

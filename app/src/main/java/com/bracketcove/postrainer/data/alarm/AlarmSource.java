@@ -23,7 +23,4 @@ public interface AlarmSource extends BaseSource {
 
     Completable updateAlarm(Reminder reminder);
 
-    Maybe<List<Reminder>> getReminders();
-
-    Single<Reminder> getReminderById(String reminderId);
 }
