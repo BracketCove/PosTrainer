@@ -17,7 +17,7 @@ public class AlarmReceiverPresenterModule {
     }
 
     @Provides
-    AlarmReceiverContract.View provideReminderDetailView(){
+    AlarmReceiverContract.View provideAlarmReceiverView(){
         return view;
     }
 }

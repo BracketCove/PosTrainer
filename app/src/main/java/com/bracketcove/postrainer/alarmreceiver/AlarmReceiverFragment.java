@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 
 import javax.inject.Inject;
@@ -20,7 +21,7 @@ import javax.inject.Inject;
 
 public class AlarmReceiverFragment extends Fragment implements AlarmReceiverContract.View {
 
-    @Inject AlarmReceiverContract.Presenter presenter;
+    @Inject AlarmReceiverPresenter presenter;
 
     public AlarmReceiverFragment() {
 
@@ -35,6 +36,15 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
         super.onCreate(savedInstanceState);
         //This is important for Orientation Change handling!!!
         setRetainInstance(true);
+
+
+        DaggerAlarmReceiverComponent.builder()
+                .alarmReceiverPresenterModule(new AlarmReceiverPresenterModule(this))
+                .applicationComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getApplicationComponent()
+                )
+                .build().inject(this);
 
     }
 

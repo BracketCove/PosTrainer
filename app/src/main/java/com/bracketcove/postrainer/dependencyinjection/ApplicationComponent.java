@@ -20,12 +20,9 @@ import android.media.AudioManager;
 import android.os.PowerManager;
 import android.os.Vibrator;
 
+import com.bracketcove.postrainer.data.alarm.AlarmSource;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
-import com.fernandocejas.android10.sample.domain.executor.PostExecutionThread;
-import com.fernandocejas.android10.sample.domain.executor.ThreadExecutor;
-import com.fernandocejas.android10.sample.domain.repository.UserRepository;
-import com.fernandocejas.android10.sample.presentation.view.activity.BaseActivity;
 
 import javax.inject.Singleton;
 
@@ -34,13 +31,13 @@ import dagger.Component;
 /**
  * A component whose lifetime is the life of the application.
  */
-@Singleton // Constraints this component to one-per-application or unscoped bindings.
+@Singleton
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
-  void inject(BaseActivity baseActivity);
 
   Context context();
   ReminderSource reminderSource();
+  AlarmSource alarmSource();
   PowerManager.WakeLock wakeLock();
   AudioManager audioManager();
   Vibrator vibrator();

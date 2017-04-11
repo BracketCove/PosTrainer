@@ -1,6 +1,4 @@
-package com.bracketcove.postrainer.schedulers;
-
-import android.support.annotation.Nullable;
+package com.bracketcove.postrainer.scheduler;
 
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
@@ -9,17 +7,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- *The SchedulerProvider supplies hooks to actual Scheduer
- *
- * Created by Ryan on 05/03/2017.
+ * SchedulerProvider for use during tests. Supplies immediate Schedulers which can be run on the JVM without issue.
+ * Created by Ryan on 10/04/2017.
  */
 
 public class SchedulerProvider implements BaseSchedulerProvider {
-    @Nullable
     private static SchedulerProvider INSTANCE;
 
-    private SchedulerProvider (){
-
+    private SchedulerProvider() {
     }
 
     public static synchronized BaseSchedulerProvider getInstance() {
@@ -31,16 +26,16 @@ public class SchedulerProvider implements BaseSchedulerProvider {
 
     @Override
     public Scheduler computation() {
-        return Schedulers.computation();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler io() {
-        return Schedulers.io();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler ui() {
-        return AndroidSchedulers.mainThread();
+        return Schedulers.trampoline();
     }
 }

@@ -20,11 +20,10 @@ import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailActivity;
 import com.bracketcove.postrainer.settings.SettingsActivity;
 import com.bracketcove.postrainer.util.TimeConverter;
-import com.bracketcove.postrainer.data.reminder.Reminder;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,12 +42,11 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     private FloatingActionButton fabulous;
     private TextView prompt;
     private ReminderListAdapter adapter;
-    private ArrayList<Reminder> reminders;
+    private ArrayList<RealmReminder> reminders;
     private ImageButton settings;
 
     @Inject
     ReminderListPresenter presenter;
-    //TODO: can I turn this back into an Interface and still inject properly?
 
     public ReminderListFragment() {
 
@@ -67,9 +65,9 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         DaggerReminderListComponent.builder()
                 .reminderListPresenterModule(new ReminderListPresenterModule(this))
-                .reminderComponent(
+                .applicationComponent(
                         ((PostrainerApplication) getActivity().getApplication())
-                                .getReminderComponent()
+                                .getApplicationComponent()
                 )
                 .build().inject(this);
     }
@@ -143,7 +141,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     during tests.
      */
     @Override
-    public void setReminderListData(List<Reminder> reminders) {
+    public void setReminderListData(List<RealmReminder> reminders) {
         prompt.setVisibility(View.INVISIBLE);
         reminderList.setVisibility(View.VISIBLE);
         //if reminderListData isn't empty
@@ -152,7 +150,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
             adapter.notifyDataSetChanged();
         }
 
-        for (Reminder reminder : reminders) {
+        for (RealmReminder reminder : reminders) {
             //add reminder to fragments list, and inform adapter of this change
             this.reminders.add(reminder);
             adapter.notifyItemInserted(this.reminders.lastIndexOf(reminder));
@@ -166,18 +164,18 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     }
 
     /**
-     * Must add Reminder both to list and UI
+     * Must add RealmReminder both to list and UI
      *
-     * @param reminder new Reminder to be added
+     * @param reminder new RealmReminder to be added
      */
     @Override
-    public void addNewReminderToListView(Reminder reminder) {
+    public void addNewReminderToListView(RealmReminder reminder) {
         reminders.add(reminder);
         adapter.notifyItemInserted(this.reminders.lastIndexOf(reminder));
     }
 
     @Override
-    public void undoDeleteReminderAt(int index, Reminder reminder) {
+    public void undoDeleteReminderAt(int index, RealmReminder reminder) {
         reminders.add(index, reminder);
         adapter.notifyItemInserted(index);
     }
@@ -228,7 +226,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
     private class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapter.ViewHolder> {
         private LayoutInflater inflater;
-        private List<Reminder> data = Collections.emptyList();
+        private List<RealmReminder> data = Collections.emptyList();
 
         /**
          * @param context - Context of Activity which contains contains the fragment which manages
@@ -236,7 +234,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
          * @param data    - List of NavListItems which contain a title and icon resource id, to be
          *                passed to bound to ViewHolder objects appropriately.
          */
-        public ReminderListAdapter(Context context, List<Reminder> data) {
+        public ReminderListAdapter(Context context, List<RealmReminder> data) {
             inflater = LayoutInflater.from(context);
             this.data = data;
         }
@@ -249,7 +247,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         @Override
         public void onBindViewHolder(ReminderListAdapter.ViewHolder holder, final int position) {
-            Reminder item = data.get(position);
+            RealmReminder item = data.get(position);
             holder.alarmTitle.setText(item.getReminderTitle());
 
             holder.alarmTime.setText(

@@ -1,7 +1,5 @@
 package com.bracketcove.postrainer.data.reminder;
 
-import com.bracketcove.postrainer.baseinterfaces.BaseSource;
-
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -14,18 +12,18 @@ import io.reactivex.Single;
  * Created by Ryan on 09/03/2017.
  */
 
-public interface ReminderSource extends BaseSource {
+public interface ReminderSource {
 
     /**
      *Completable: RxJava Observable which has two possible outcomes:
      * 1. It tells me that the operation completed
      * 2. It throws an error
      */
-    Completable createReminder(Reminder reminder);
+    Completable createReminder(String reminderId);
 
-    Completable deleteReminder(Reminder reminder);
+    Completable deleteReminder(String reminderId);
 
-    Completable updateReminder(Reminder reminder);
+    Completable updateReminder(RealmReminder reminder);
 
     /**
      * Maybe: RxJava Observable which has three possible outcomes:
@@ -33,12 +31,12 @@ public interface ReminderSource extends BaseSource {
      * 2. It can return nothing.
      * 3. It can throw an error
      */
-    Maybe<List<Reminder>> getReminders();
+    Maybe<List<RealmReminder>> getReminders();
 
     /**
      * Single: RxJava Observable which has two possible outcomes:
-     * 1. It can return single object (in this case a Reminder)
+     * 1. It can return single object (in this case a RealmReminder)
      * 2. It can throw an error
      */
-    Single<Reminder> getReminderById(String reminderId);
+    Single<RealmReminder> getReminderById(String reminderId);
 }

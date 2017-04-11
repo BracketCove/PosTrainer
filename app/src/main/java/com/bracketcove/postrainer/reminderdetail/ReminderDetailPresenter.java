@@ -2,7 +2,7 @@ package com.bracketcove.postrainer.reminderdetail;
 
 
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.data.reminder.Reminder;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
@@ -40,9 +40,9 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
                       view.getReminderId())
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableSingleObserver<Reminder>() {
+                .subscribeWith(new DisposableSingleObserver<RealmReminder>() {
                     @Override
-                    public void onSuccess(Reminder reminder) {
+                    public void onSuccess(RealmReminder reminder) {
                         view.setReminderTitle(reminder.getReminderTitle());
                         view.setVibrateOnly(reminder.isVibrateOnly());
                         view.setRenewAutomatically(reminder.isRenewAutomatically());
@@ -70,19 +70,18 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     }
 
     /**
-     * Ensure that the Reminder is updated in repository
-     *
+     * Ensure that the RealmReminder is updated in repository
      */
     @Override
     public void onDoneIconPress() {
-        Reminder reminder = new Reminder(
+        RealmReminder reminder = new RealmReminder(
+                view.getReminderId(),
                 view.getPickerHour(),
                 view.getPickerMinute(),
                 view.getReminderTitle(),
                 view.getCurrentAlarmState(),
                 view.getVibrateOnly(),
-                view.getRenewAutomatically(),
-                view.getReminderId()
+                view.getRenewAutomatically()
         );
 
         compositeDisposable.add(
@@ -99,7 +98,6 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
                             @Override
                             public void onError(Throwable e) {
                                 view.makeToast(R.string.error_database_write_failure);
-
                             }
                         })
         );

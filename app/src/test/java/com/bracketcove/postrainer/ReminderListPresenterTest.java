@@ -1,11 +1,11 @@
 package com.bracketcove.postrainer;
 
-import com.bracketcove.postrainer.data.reminder.FakeReminderRepository;
-import com.bracketcove.postrainer.data.reminder.Reminder;
+import com.bracketcove.postrainer.data.alarm.AlarmSource;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.reminderlist.ReminderListContract;
 import com.bracketcove.postrainer.reminderlist.ReminderListPresenter;
-import com.bracketcove.postrainer.schedulers.SchedulerProvider;
+import com.bracketcove.postrainer.scheduler.SchedulerProvider;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import org.junit.Before;
@@ -16,7 +16,14 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
+
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Ryan on 09/03/2017.
@@ -24,11 +31,14 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ReminderListPresenterTest {
 
-
     @Mock
     private ReminderListContract.View view;
 
+    @Mock
     private ReminderSource reminderSource;
+
+    @Mock
+    private AlarmSource alarmSource;
 
     private BaseSchedulerProvider schedulerProvider;
 
@@ -42,45 +52,55 @@ public class ReminderListPresenterTest {
 
     private static final String DEFAULT_NAME = "New Alarm";
 
+    private static final boolean ALARM_STATE = true;
+
     //TODO: fix this test data to look the same as implementation would
     private static final String REMINDER_ID = "111111111111111";
 
-    private static final Reminder ACTIVE_REMINDER = new Reminder(HOUR,
+    private static final RealmReminder ACTIVE_REMINDER = new RealmReminder(
+            REMINDER_ID,
+            HOUR,
             MINUTE,
             TITLE,
             true,
             false,
-            false,
-            REMINDER_ID
+            false
     );
 
-    private static final Reminder INACTIVE_REMINDER = new Reminder(HOUR,
+    private static final RealmReminder INACTIVE_REMINDER = new RealmReminder(
+            REMINDER_ID,
+            HOUR,
             MINUTE,
             DEFAULT_NAME,
             false,
             false,
-            false,
-            REMINDER_ID
+            false
+
     );
 
     @Before
     public void SetUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        reminderSource = new FakeReminderRepository();
 
         schedulerProvider = SchedulerProvider.getInstance();
         presenter = new ReminderListPresenter(
                 view,
                 reminderSource,
+                alarmSource,
                 schedulerProvider
         );
     }
 
     /**
-     * At least one Reminder found in storage. Display it/them to user.
+     * At least one RealmReminder found in storage. Display it/them to user.
      */
     @Test
     public void onGetRemindersNotEmpty() {
+        List<RealmReminder> reminderList = new ArrayList<>();
+        reminderList.add(INACTIVE_REMINDER);
+
+        when(reminderSource.getReminders()).thenReturn(Maybe.just(reminderList));
+
         presenter.subscribe();
 
         verify(view).setReminderListData(Mockito.anyList());
@@ -91,12 +111,11 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onGetRemindersEmpty() {
-        reminderSource.setReturnEmpty();
+        when(reminderSource.getReminders()).thenReturn(Maybe.<List<RealmReminder>>empty());
 
         presenter.subscribe();
 
         verify(view).setNoReminderListDataFound();
-
     }
 
     /**
@@ -104,7 +123,10 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onGetRemindersError() {
-        reminderSource.setReturnFail();
+        when(reminderSource.getReminders()).thenReturn(
+                Maybe.<List<RealmReminder>>error(new Exception())
+        );
+
 
         presenter.subscribe();
 
@@ -113,7 +135,7 @@ public class ReminderListPresenterTest {
 
     /**
      * Tests be behaviour when:
-     * User toggle's Reminder Active Switch, and
+     * User toggle's RealmReminder Active Switch, and
      * current state of alarm matches is the same.
      * If so, no need to update the Repository
      */
@@ -131,18 +153,31 @@ public class ReminderListPresenterTest {
 
     /**
      * Tests be behaviour when:
-     * User toggle's Reminder Active Switch, and
+     * User toggle's RealmReminder Active Switch, and
      * current state of alarm matches is different.
      * If so, update Repo accordingly.
      */
     @Test
     public void onReminderToggledStatesDifferActivate() {
+
+        Mockito.when(reminderSource.updateReminder(ACTIVE_REMINDER))
+                .thenReturn(Completable.complete());
+
+        Mockito.when(alarmSource.setAlarm(ACTIVE_REMINDER))
+                .thenReturn(Completable.complete());
+
         presenter.onReminderToggled(true, INACTIVE_REMINDER);
         verify(view).makeToast(R.string.msg_alarm_activated);
     }
 
     @Test
     public void onReminderToggledStatesDifferDeactivate() {
+        Mockito.when(reminderSource.updateReminder(INACTIVE_REMINDER))
+                .thenReturn(Completable.complete());
+
+        Mockito.when(alarmSource.setAlarm(INACTIVE_REMINDER))
+                .thenReturn(Completable.complete());
+
         presenter.onReminderToggled(false, ACTIVE_REMINDER);
         verify(view).makeToast(R.string.msg_alarm_deactivated);
     }
@@ -150,6 +185,9 @@ public class ReminderListPresenterTest {
 
     @Test
     public void onReminderSuccessfullyDeleted() {
+        Mockito.when(reminderSource.deleteReminder(REMINDER_ID))
+                .thenReturn(Completable.complete());
+
         presenter.onReminderSwiped(1, ACTIVE_REMINDER);
 
         verify(view).makeToast(R.string.msg_alarm_deleted);
@@ -157,7 +195,8 @@ public class ReminderListPresenterTest {
 
     @Test
     public void onReminderUnsuccessfullyDeleted() {
-        reminderSource.setReturnFail();
+        Mockito.when(reminderSource.deleteReminder(REMINDER_ID))
+                .thenReturn(Completable.error(new Exception()));
 
         presenter.onReminderSwiped(1, ACTIVE_REMINDER);
 
@@ -179,30 +218,28 @@ public class ReminderListPresenterTest {
     public void whenUserTriesToAddMoreThanFiveReminders() {
         presenter.onCreateReminderButtonClick(5, DEFAULT_NAME, REMINDER_ID);
          view.makeToast(R.string.msg_reminder_limit_reached);
-
     }
 
     /**
-     * When we create a Reminder, we must add it to storage
+     * When we create a RealmReminder, we must add it to storage
      * as well as the View.
      */
     @Test
     public void onNewReminderCreatedSuccessfully() {
         presenter.onCreateReminderButtonClick(1, DEFAULT_NAME, REMINDER_ID);
 
-        verify(view).addNewReminderToListView(Mockito.any(Reminder.class));
+        verify(view).addNewReminderToListView(Mockito.any(RealmReminder.class));
     }
 
     @Test
     public void onNewReminderCreatedUnsuccessfully() {
-        reminderSource.setReturnFail();
         presenter.onCreateReminderButtonClick(1, DEFAULT_NAME, REMINDER_ID);
 
         verify(view).makeToast(R.string.error_database_write_failure);
     }
 
     /**
-     * This means that the user wants to edit a Reminder
+     * This means that the user wants to edit a RealmReminder
      */
     @Test
     public void onReminderIconClicked() {
@@ -210,17 +247,5 @@ public class ReminderListPresenterTest {
 
         verify(view).startReminderDetailActivity(REMINDER_ID);
     }
-
-    /*
-    Test stub:
-
-    /**
-    *
-    *
-    @Test
-    public void onSomethingHappened(){
-
-    }
-     */
 
 }

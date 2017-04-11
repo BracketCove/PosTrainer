@@ -1,11 +1,10 @@
 package com.bracketcove.postrainer;
 
-import com.bracketcove.postrainer.data.reminder.FakeReminderRepository;
-import com.bracketcove.postrainer.data.reminder.Reminder;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenter;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.schedulers.SchedulerProvider;
+import com.bracketcove.postrainer.scheduler.SchedulerProvider;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import org.junit.Before;
@@ -36,7 +35,9 @@ public class ReminderDetailPresenterTest {
     @Mock
     private ReminderDetailContract.View view;
 
+    @Mock
     private ReminderSource reminderSource;
+
 
     private BaseSchedulerProvider schedulerProvider;
 
@@ -54,23 +55,27 @@ public class ReminderDetailPresenterTest {
     //TODO: fix this test data to look the same as implementation would
     private static final String REMINDER_ID = "111111111111111";
 
-    private static final Reminder ACTIVE_REMINDER = new Reminder(HOUR,
+    private static final RealmReminder ACTIVE_REMINDER = new RealmReminder(
+            REMINDER_ID,
+            HOUR,
             MINUTE,
             TITLE,
             true,
             false,
-            false,
-            REMINDER_ID
+            false
     );
 
-    private static final Reminder INACTIVE_REMINDER = new Reminder(HOUR,
+    private static final RealmReminder INACTIVE_REMINDER = new RealmReminder(
+            REMINDER_ID,
+            HOUR,
             MINUTE,
             DEFAULT_NAME,
             false,
             false,
-            false,
-            REMINDER_ID
+            false
+
     );
+
     private ReminderDetailPresenter presenter;
 
     @Before
@@ -78,7 +83,6 @@ public class ReminderDetailPresenterTest {
         //In order to set up Mockito properly, we must call:
         MockitoAnnotations.initMocks(this);
 
-        reminderSource = new FakeReminderRepository();
         schedulerProvider = SchedulerProvider.getInstance();
 
         presenter = new ReminderDetailPresenter(
@@ -90,13 +94,12 @@ public class ReminderDetailPresenterTest {
 
 
     /**
-     * Edge case where Reminder Id isn't valid to retrieve a Reminder from storage. In this case,
+     * Edge case where RealmReminder Id isn't valid to retrieve a RealmReminder from storage. In this case,
      * not much to do but start the List Activity Again and inform the user of an error
      */
     @Test
     public void whenReminderIdArgumentsInvalid(){
         Mockito.when(view.getReminderId()).thenReturn(REMINDER_ID);
-        reminderSource.setReturnFail();
 
         presenter.subscribe();
 
@@ -138,9 +141,9 @@ public class ReminderDetailPresenterTest {
     }
 
     /**
-     * Build up a Reminder with the appropriate reminderId, but update according to View state
+     * Build up a RealmReminder with the appropriate reminderId, but update according to View state
      * (picker, check boxes, so forth).
-     * Tell the user that their Reminder has been updated,
+     * Tell the user that their RealmReminder has been updated,
      * and start ReminderListActivity
      */
     @Test
@@ -160,11 +163,10 @@ public class ReminderDetailPresenterTest {
     }
 
     /**
-     * Tell the user that their Reminder wasn't updated.
+     * Tell the user that their RealmReminder wasn't updated.
      */
     @Test
     public void whenReminderUpdatedUnsuccessful(){
-        reminderSource.setReturnFail();
         Mockito.when(view.getReminderTitle()).thenReturn(TITLE);
         Mockito.when(view.getReminderId()).thenReturn(REMINDER_ID);
         Mockito.when(view.getVibrateOnly()).thenReturn(ACTIVE_REMINDER.isVibrateOnly());

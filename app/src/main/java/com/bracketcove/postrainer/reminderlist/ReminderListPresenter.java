@@ -1,7 +1,8 @@
 package com.bracketcove.postrainer.reminderlist;
 
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.data.reminder.Reminder;
+import com.bracketcove.postrainer.data.alarm.AlarmSource;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
@@ -21,30 +22,28 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
     private final ReminderListContract.View view;
     private final ReminderSource reminderSource;
+    private final AlarmSource alarmSource;
     private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable compositeDisposable;
 
     @Inject
     public ReminderListPresenter(ReminderListContract.View view,
                                  ReminderSource reminderSource,
+                                 AlarmSource alarmSource,
                                  BaseSchedulerProvider schedulerProvider) {
         this.view = view;
         this.reminderSource = reminderSource;
+        this.alarmSource = alarmSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
 
-    }
-
-    @Inject
-    void registerView() {
-        //TODO:WHAT IT DO??????
     }
 
     /**
      * Checks Repository for any existing reminders.
      * returns one of:
      * List of 1-5 Reminders : Display Reminders to User
-     * Nothing : Display create Reminder Prompt to User
+     * Nothing : Display create RealmReminder Prompt to User
      * error : Display database error
      */
     @Override
@@ -53,9 +52,9 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                 reminderSource.getReminders()
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableMaybeObserver<List<Reminder>>() {
+                        .subscribeWith(new DisposableMaybeObserver<List<RealmReminder>>() {
                             @Override
-                            public void onSuccess(List<Reminder> reminders) {
+                            public void onSuccess(List<RealmReminder> reminders) {
                                 view.setReminderListData(reminders);
                             }
 
@@ -87,7 +86,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
      * @param reminder current state of alarm in View. Assumed to be current with Repository
      */
     @Override
-    public void onReminderToggled(final boolean active, final Reminder reminder) {
+    public void onReminderToggled(final boolean active, final RealmReminder reminder) {
         if (active != reminder.isActive()) {
             reminder.setActive(active);
 
@@ -117,7 +116,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     private int getAppropriateMessage(boolean active) {
-        if (active){
+        if (active) {
             return R.string.msg_alarm_activated;
         } else {
             return R.string.msg_alarm_deactivated;
@@ -130,46 +129,49 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     @Override
-    public void onReminderSwiped(final int position, final Reminder reminder) {
+    public void onReminderSwiped(final int position, final RealmReminder reminder) {
         compositeDisposable.add(
-                reminderSource.deleteReminder(reminder)
+                reminderSource.deleteReminder(reminder.getReminderId())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        view.makeToast(R.string.msg_alarm_deleted);
-                    }
+                        .subscribeWith(new DisposableCompletableObserver() {
+                            @Override
+                            public void onComplete() {
+                                view.makeToast(R.string.msg_alarm_deleted);
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        view.makeToast(R.string.error_database_connection_failure);
-                        view.undoDeleteReminderAt(position, reminder);
-                    }
-                })
+                            @Override
+                            public void onError(Throwable e) {
+                                view.makeToast(R.string.error_database_connection_failure);
+                                view.undoDeleteReminderAt(position, reminder);
+                            }
+                        })
         );
     }
 
     @Override
-    public void onReminderIconClick(Reminder reminder) {
+    public void onReminderIconClick(RealmReminder reminder) {
         view.startReminderDetailActivity(reminder.getReminderId());
     }
 
     @Override
-    public void onCreateReminderButtonClick(int currentNumberOfReminders, String defaultName, String creationDate) {
-        if (currentNumberOfReminders < 5){
-            final Reminder reminder = new Reminder(
+    public void onCreateReminderButtonClick(
+            int currentNumberOfReminders,
+            String defaultName,
+            final String reminderId) {
+        if (currentNumberOfReminders < 5) {
+            final RealmReminder reminder = new RealmReminder(
+                    reminderId,
                     12,
                     30,
                     defaultName,
                     false,
                     true,
-                    false,
-                    creationDate
-            );
+                    false
+                    );
 
             compositeDisposable.add(
-                    reminderSource.createReminder(reminder)
+                    reminderSource.createReminder(reminderId)
                             .subscribeOn(schedulerProvider.io())
                             .observeOn(schedulerProvider.ui())
                             .subscribeWith(new DisposableCompletableObserver() {

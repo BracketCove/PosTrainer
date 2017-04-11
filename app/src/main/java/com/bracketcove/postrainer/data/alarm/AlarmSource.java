@@ -1,7 +1,6 @@
 package com.bracketcove.postrainer.data.alarm;
 
-import com.bracketcove.postrainer.baseinterfaces.BaseSource;
-import com.bracketcove.postrainer.data.reminder.Reminder;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
 
 import java.util.List;
 
@@ -15,15 +14,15 @@ import io.reactivex.Single;
  * Created by Ryan on 09/03/2017.
  */
 
-public interface AlarmSource extends BaseSource {
+public interface AlarmSource {
 
-    Completable setAlarm(Reminder reminder);
+    Completable setAlarm(RealmReminder reminder);
 
-    Completable cancelAlarm(Reminder reminder);
+    Completable cancelAlarm(RealmReminder reminder);
 
-    Completable updateAlarm(Reminder reminder);
+    void stopAlarm();
 
-    Maybe<List<Reminder>> getReminders();
+    void startAlarm(RealmReminder reminder);
 
-    Single<Reminder> getReminderById(String reminderId);
+    void releaseWakeLock();
 }

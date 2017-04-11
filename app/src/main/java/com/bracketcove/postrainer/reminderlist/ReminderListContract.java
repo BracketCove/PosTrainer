@@ -2,7 +2,7 @@ package com.bracketcove.postrainer.reminderlist;
 
 import com.bracketcove.postrainer.baseinterfaces.BasePresenter;
 import com.bracketcove.postrainer.baseinterfaces.BaseView;
-import com.bracketcove.postrainer.data.reminder.Reminder;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import java.util.List;
 public interface ReminderListContract  {
 
     interface View extends BaseView<Presenter> {
-        void setReminderListData(List<Reminder> reminderListData);
+        void setReminderListData(List<RealmReminder> reminderListData);
 
         void setNoReminderListDataFound();
 
-        void addNewReminderToListView(Reminder reminder);
+        void addNewReminderToListView(RealmReminder reminder);
 
-        void undoDeleteReminderAt(int index, Reminder reminder);
+        void undoDeleteReminderAt(int index, RealmReminder reminder);
 
         void startReminderDetailActivity(String reminderId);
 
@@ -29,13 +29,13 @@ public interface ReminderListContract  {
     }
 
     interface Presenter extends BasePresenter {
-        void onReminderToggled(boolean active, Reminder reminder);
+        void onReminderToggled(boolean active, RealmReminder reminder);
 
         void onSettingsIconClick();
 
-        void onReminderSwiped(int index, Reminder reminder);
+        void onReminderSwiped(int index, RealmReminder reminder);
 
-        void onReminderIconClick(Reminder reminder);
+        void onReminderIconClick(RealmReminder reminder);
 
         void onCreateReminderButtonClick(int currentNumberOfReminders,String defaultName, String creationDate);
     }

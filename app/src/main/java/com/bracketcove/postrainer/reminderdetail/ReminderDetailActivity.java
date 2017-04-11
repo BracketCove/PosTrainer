@@ -24,7 +24,7 @@ public class ReminderDetailActivity extends AppCompatActivity {
 
         String reminderId = getIntent().getStringExtra(REMINDER_TO_BE_EDITED);
 
-        /*I call this the oh s**t operator. If no Reminder id is found, there's nothing we can
+        /*I call this the oh s**t operator. If no RealmReminder id is found, there's nothing we can
         do in this Activity to solve that problem. Sending them back to the List is kind of a patch-
         work solution, but I think it's better than letting everything crash.
          */
