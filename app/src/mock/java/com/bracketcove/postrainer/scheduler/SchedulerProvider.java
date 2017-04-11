@@ -12,16 +12,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class SchedulerProvider implements BaseSchedulerProvider {
-    private static SchedulerProvider INSTANCE;
-
-    private SchedulerProvider() {
-    }
-
-    public static synchronized BaseSchedulerProvider getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new SchedulerProvider();
-        }
-        return INSTANCE;
+    public SchedulerProvider() {
     }
 
     @Override

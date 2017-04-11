@@ -19,6 +19,8 @@ import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverPresenterModule;
 import com.bracketcove.postrainer.alarmreceiver.DaggerAlarmReceiverComponent;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
 
 import javax.inject.Inject;
@@ -124,6 +126,21 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
     /*------------------------------- Contract -------------------------------*/
 
     @Override
+    public Reminder getViewModel() {
+        Reminder reminder = new Reminder();
+
+        reminder.setReminderId(reminderId);
+        reminder.setReminderTitle(reminderTitle.getText().toString());
+        reminder.setMinute(getPickerMinute());
+        reminder.setHourOfDay(getPickerHour());
+        reminder.setActive(false);
+        reminder.setRenewAutomatically(getRenewAutomatically());
+        reminder.setVibrateOnly(getVibrateOnly());
+
+        return reminder;
+    }
+
+    @Override
     public void setReminderTitle(String title) {
         reminderTitle.setText(title);
     }
@@ -158,7 +175,6 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
         this.currentAlarmState = active;
     }
 
-    @Override
     public String getReminderTitle() {
         return reminderTitle.getText().toString();
     }
@@ -178,17 +194,14 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
         return this.reminderId;
     }
 
-    @Override
     public boolean getVibrateOnly() {
         return vibrateOnly.isChecked();
     }
 
-    @Override
     public boolean getRenewAutomatically() {
         return autoRenew.isChecked();
     }
 
-    @Override
     public int getPickerHour() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return nosePicker.getHour();
@@ -197,7 +210,6 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
         }
     }
 
-    @Override
     public int getPickerMinute() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return nosePicker.getMinute();
@@ -206,7 +218,6 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
         }
     }
 
-    @Override
     public boolean getCurrentAlarmState() {
         return currentAlarmState;
     }

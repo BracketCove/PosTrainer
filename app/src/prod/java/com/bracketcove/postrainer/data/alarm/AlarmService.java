@@ -1,20 +1,16 @@
 package com.bracketcove.postrainer.data.alarm;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.os.Vibrator;
 
 import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverActivity;
-import com.bracketcove.postrainer.data.reminder.Reminder;
-
-import java.util.List;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
 
 /**
  * This class is intended to decouple System Services from having to be run in
@@ -40,16 +36,6 @@ public class AlarmService implements AlarmSource {
     }
 
     @Override
-    public void setReturnFail() {
-
-    }
-
-    @Override
-    public void setReturnEmpty() {
-
-    }
-
-    @Override
     public Completable setAlarm(Reminder reminder) {
         return null;
     }
@@ -60,8 +46,17 @@ public class AlarmService implements AlarmSource {
     }
 
     @Override
-    public Completable updateAlarm(Reminder reminder) {
-        return null;
+    public void stopAlarm() {
+
     }
 
+    @Override
+    public void startAlarm(Reminder reminder) {
+
+    }
+
+    @Override
+    public void releaseWakeLock() {
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.bracketcove.postrainer.data.alarm;
 
 import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import java.util.List;
 
@@ -16,13 +17,13 @@ import io.reactivex.Single;
 
 public interface AlarmSource {
 
-    Completable setAlarm(RealmReminder reminder);
+    Completable setAlarm(Reminder reminder);
 
-    Completable cancelAlarm(RealmReminder reminder);
+    Completable cancelAlarm(Reminder reminder);
 
     void stopAlarm();
 
-    void startAlarm(RealmReminder reminder);
+    void startAlarm(Reminder reminder);
 
     void releaseWakeLock();
 }

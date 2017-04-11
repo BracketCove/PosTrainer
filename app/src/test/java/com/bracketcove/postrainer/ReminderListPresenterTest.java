@@ -3,6 +3,7 @@ package com.bracketcove.postrainer;
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
 import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListContract;
 import com.bracketcove.postrainer.reminderlist.ReminderListPresenter;
 import com.bracketcove.postrainer.scheduler.SchedulerProvider;
@@ -57,24 +58,24 @@ public class ReminderListPresenterTest {
     //TODO: fix this test data to look the same as implementation would
     private static final String REMINDER_ID = "111111111111111";
 
-    private static final RealmReminder ACTIVE_REMINDER = new RealmReminder(
+    private static final Reminder ACTIVE_REMINDER = new Reminder(
             REMINDER_ID,
-            HOUR,
-            MINUTE,
             TITLE,
             true,
             false,
-            false
+            false,
+            MINUTE,
+            HOUR
     );
 
-    private static final RealmReminder INACTIVE_REMINDER = new RealmReminder(
+    private static final Reminder INACTIVE_REMINDER = new Reminder(
             REMINDER_ID,
+            TITLE,
+            false,
+            false,
+            false,
             HOUR,
-            MINUTE,
-            DEFAULT_NAME,
-            false,
-            false,
-            false
+            MINUTE
 
     );
 
@@ -82,7 +83,8 @@ public class ReminderListPresenterTest {
     public void SetUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        schedulerProvider = SchedulerProvider.getInstance();
+        schedulerProvider = new SchedulerProvider();
+
         presenter = new ReminderListPresenter(
                 view,
                 reminderSource,
@@ -96,7 +98,7 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onGetRemindersNotEmpty() {
-        List<RealmReminder> reminderList = new ArrayList<>();
+        List<Reminder> reminderList = new ArrayList<>();
         reminderList.add(INACTIVE_REMINDER);
 
         when(reminderSource.getReminders()).thenReturn(Maybe.just(reminderList));
@@ -111,7 +113,7 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onGetRemindersEmpty() {
-        when(reminderSource.getReminders()).thenReturn(Maybe.<List<RealmReminder>>empty());
+        when(reminderSource.getReminders()).thenReturn(Maybe.<List<Reminder>>empty());
 
         presenter.subscribe();
 
@@ -124,7 +126,7 @@ public class ReminderListPresenterTest {
     @Test
     public void onGetRemindersError() {
         when(reminderSource.getReminders()).thenReturn(
-                Maybe.<List<RealmReminder>>error(new Exception())
+                Maybe.<List<Reminder>>error(new Exception())
         );
 
 
@@ -228,7 +230,7 @@ public class ReminderListPresenterTest {
     public void onNewReminderCreatedSuccessfully() {
         presenter.onCreateReminderButtonClick(1, DEFAULT_NAME, REMINDER_ID);
 
-        verify(view).addNewReminderToListView(Mockito.any(RealmReminder.class));
+        verify(view).addNewReminderToListView(Mockito.any(Reminder.class));
     }
 
     @Test

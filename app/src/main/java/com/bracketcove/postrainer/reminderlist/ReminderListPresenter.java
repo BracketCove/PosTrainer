@@ -1,11 +1,15 @@
 package com.bracketcove.postrainer.reminderlist;
 
+import android.util.Log;
+
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
 import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,22 +56,24 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                 reminderSource.getReminders()
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableMaybeObserver<List<RealmReminder>>() {
-                            @Override
-                            public void onSuccess(List<RealmReminder> reminders) {
-                                view.setReminderListData(reminders);
-                            }
+                        .subscribeWith(
+                                new DisposableMaybeObserver<List<Reminder>>() {
+                                    @Override
+                                    public void onSuccess(List<Reminder> reminders) {
+                                        view.setReminderListData(reminders);
+                                    }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                view.makeToast(R.string.error_database_connection_failure);
-                            }
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.d("DATABASE", e.getMessage());
+                                        view.makeToast(R.string.error_database_connection_failure);
+                                    }
 
-                            @Override
-                            public void onComplete() {
-                                view.setNoReminderListDataFound();
-                            }
-                        })
+                                    @Override
+                                    public void onComplete() {
+                                        view.setNoReminderListDataFound();
+                                    }
+                                })
         );
     }
 
@@ -86,7 +92,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
      * @param reminder current state of alarm in View. Assumed to be current with Repository
      */
     @Override
-    public void onReminderToggled(final boolean active, final RealmReminder reminder) {
+    public void onReminderToggled(final boolean active, final Reminder reminder) {
         if (active != reminder.isActive()) {
             reminder.setActive(active);
 
@@ -129,7 +135,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     @Override
-    public void onReminderSwiped(final int position, final RealmReminder reminder) {
+    public void onReminderSwiped(final int position, final Reminder reminder) {
         compositeDisposable.add(
                 reminderSource.deleteReminder(reminder.getReminderId())
                         .subscribeOn(schedulerProvider.io())
@@ -150,41 +156,43 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     @Override
-    public void onReminderIconClick(RealmReminder reminder) {
+    public void onReminderIconClick(Reminder reminder) {
         view.startReminderDetailActivity(reminder.getReminderId());
     }
 
     @Override
-    public void onCreateReminderButtonClick(
-            int currentNumberOfReminders,
-            String defaultName,
-            final String reminderId) {
+    public void onCreateReminderButtonClick(int currentNumberOfReminders,
+                                            String defaultName,
+                                            final String reminderId) {
+
         if (currentNumberOfReminders < 5) {
-            final RealmReminder reminder = new RealmReminder(
+            final Reminder reminder = new Reminder(
                     reminderId,
-                    12,
-                    30,
                     defaultName,
                     false,
                     true,
-                    false
-                    );
+                    false,
+                    12,
+                    30
+            );
 
             compositeDisposable.add(
                     reminderSource.createReminder(reminderId)
                             .subscribeOn(schedulerProvider.io())
                             .observeOn(schedulerProvider.ui())
-                            .subscribeWith(new DisposableCompletableObserver() {
-                                @Override
-                                public void onComplete() {
-                                    view.addNewReminderToListView(reminder);
-                                }
+                            .subscribeWith(
+                                    new DisposableCompletableObserver() {
+                                        @Override
+                                        public void onComplete() {
+                                            view.addNewReminderToListView(reminder);
+                                        }
 
-                                @Override
-                                public void onError(Throwable e) {
-                                    view.makeToast(R.string.error_database_write_failure);
-                                }
-                            })
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            Log.d("DATABASE", e.getMessage());
+                                            view.makeToast(R.string.error_database_write_failure);
+                                        }
+                                    })
             );
         } else {
             view.makeToast(R.string.msg_reminder_limit_reached);

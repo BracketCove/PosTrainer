@@ -2,6 +2,7 @@ package com.bracketcove.postrainer;
 
 import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenter;
 import com.bracketcove.postrainer.scheduler.SchedulerProvider;
@@ -14,6 +15,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 
 /**
  * This is a "Unit Test", which uses Mockito to test the Apps Behaviour/Logic.
@@ -38,7 +42,6 @@ public class ReminderDetailPresenterTest {
     @Mock
     private ReminderSource reminderSource;
 
-
     private BaseSchedulerProvider schedulerProvider;
 
     private static final String TITLE = "Coffee Break";
@@ -47,7 +50,6 @@ public class ReminderDetailPresenterTest {
 
     private static final int HOUR = 10;
 
-    private static final String DEFAULT_NAME = "New Alarm";
 
     //true means active
     private static final boolean ALARM_STATE = true;
@@ -55,24 +57,24 @@ public class ReminderDetailPresenterTest {
     //TODO: fix this test data to look the same as implementation would
     private static final String REMINDER_ID = "111111111111111";
 
-    private static final RealmReminder ACTIVE_REMINDER = new RealmReminder(
+    private static final Reminder ACTIVE_REMINDER = new Reminder(
             REMINDER_ID,
-            HOUR,
-            MINUTE,
             TITLE,
             true,
             false,
-            false
+            false,
+            MINUTE,
+            HOUR
     );
 
-    private static final RealmReminder INACTIVE_REMINDER = new RealmReminder(
+    private static final Reminder INACTIVE_REMINDER = new Reminder(
             REMINDER_ID,
+            TITLE,
+            false,
+            false,
+            false,
             HOUR,
-            MINUTE,
-            DEFAULT_NAME,
-            false,
-            false,
-            false
+            MINUTE
 
     );
 
@@ -83,7 +85,7 @@ public class ReminderDetailPresenterTest {
         //In order to set up Mockito properly, we must call:
         MockitoAnnotations.initMocks(this);
 
-        schedulerProvider = SchedulerProvider.getInstance();
+        schedulerProvider = new SchedulerProvider();
 
         presenter = new ReminderDetailPresenter(
                 view,
@@ -99,7 +101,11 @@ public class ReminderDetailPresenterTest {
      */
     @Test
     public void whenReminderIdArgumentsInvalid(){
-        Mockito.when(view.getReminderId()).thenReturn(REMINDER_ID);
+        Mockito.when(view.getReminderId())
+                .thenReturn(REMINDER_ID);
+
+        Mockito.when(reminderSource.getReminderById(REMINDER_ID))
+                .thenReturn(Single.<Reminder>error(new Exception("Something Went Wrong")));
 
         presenter.subscribe();
 
@@ -112,7 +118,11 @@ public class ReminderDetailPresenterTest {
      */
     @Test
     public void whenReminderIdArgumentsValid(){
-        Mockito.when(view.getReminderId()).thenReturn(REMINDER_ID);
+        Mockito.when(view.getReminderId())
+                .thenReturn(REMINDER_ID);
+
+        Mockito.when(reminderSource.getReminderById(REMINDER_ID))
+                .thenReturn(Single.just(ACTIVE_REMINDER));
 
         presenter.subscribe();
 
@@ -148,13 +158,10 @@ public class ReminderDetailPresenterTest {
      */
     @Test
     public void whenReminderUpdatedSuccessful(){
-        Mockito.when(view.getReminderTitle()).thenReturn(TITLE);
-        Mockito.when(view.getReminderId()).thenReturn(REMINDER_ID);
-        Mockito.when(view.getVibrateOnly()).thenReturn(ACTIVE_REMINDER.isVibrateOnly());
-        Mockito.when(view.getRenewAutomatically()).thenReturn(ACTIVE_REMINDER.isRenewAutomatically());
-        Mockito.when(view.getPickerHour()).thenReturn(HOUR);
-        Mockito.when(view.getPickerMinute()).thenReturn(MINUTE);
-        Mockito.when(view.getCurrentAlarmState()).thenReturn(ALARM_STATE);
+        Mockito.when(view.getViewModel()).thenReturn(INACTIVE_REMINDER);
+
+        Mockito.when(reminderSource.updateReminder(INACTIVE_REMINDER))
+                .thenReturn(Completable.complete());
 
         presenter.onDoneIconPress();
 
@@ -167,13 +174,10 @@ public class ReminderDetailPresenterTest {
      */
     @Test
     public void whenReminderUpdatedUnsuccessful(){
-        Mockito.when(view.getReminderTitle()).thenReturn(TITLE);
-        Mockito.when(view.getReminderId()).thenReturn(REMINDER_ID);
-        Mockito.when(view.getVibrateOnly()).thenReturn(ACTIVE_REMINDER.isVibrateOnly());
-        Mockito.when(view.getRenewAutomatically()).thenReturn(ACTIVE_REMINDER.isRenewAutomatically());
-        Mockito.when(view.getPickerHour()).thenReturn(HOUR);
-        Mockito.when(view.getPickerMinute()).thenReturn(MINUTE);
-        Mockito.when(view.getCurrentAlarmState()).thenReturn(ALARM_STATE);
+        Mockito.when(view.getViewModel()).thenReturn(INACTIVE_REMINDER);
+
+        Mockito.when(reminderSource.updateReminder(INACTIVE_REMINDER))
+                .thenReturn(Completable.error(new Exception("Something went wrong")));
 
         presenter.onDoneIconPress();
 

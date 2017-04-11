@@ -1,6 +1,6 @@
 package com.bracketcove.postrainer.data.reminder;
 
-import android.content.Context;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,141 +26,153 @@ public class ReminderService implements ReminderSource {
 
     private Realm realm;
 
-    public ReminderService(Context context) {
-        //Context is ApplicationContext via Dagger 2
-        Realm.init(context);
-        realm = Realm.getDefaultInstance();
+    public ReminderService() {
+
     }
 
     @Override
     public Completable createReminder(final String reminderId) {
-        return Completable.create(new CompletableOnSubscribe() {
-            @Override
-            public void subscribe(final CompletableEmitter e) throws Exception {
-                realm.executeTransactionAsync(new Realm.Transaction() {
+        return Completable.create(
+                new CompletableOnSubscribe() {
                     @Override
-                    public void execute(Realm bgRealm) {
-                        RealmReminder rem = realm.createObject(RealmReminder.class);
+                    public void subscribe(final CompletableEmitter e) throws Exception {
+                        realm = Realm.getDefaultInstance();
 
-                        rem.setReminderId(reminderId);
+                        realm.beginTransaction();
+                        RealmReminder rem = realm.createObject(RealmReminder.class, reminderId);
+
                         rem.setHourOfDay(12);
                         rem.setMinute(0);
                         rem.setReminderTitle("New Alarm");
                         rem.setActive(false);
                         rem.setVibrateOnly(false);
                         rem.setRenewAutomatically(false);
-                    }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
+
+                        realm.commitTransaction();
+
                         e.onComplete();
                     }
-                }, new Realm.Transaction.OnError() {
+                });
+    }
+
+    @Override
+    public Completable deleteReminder(final String reminderId) {
+        return Completable.create(
+                new CompletableOnSubscribe() {
                     @Override
-                    public void onError(Throwable error) {
-                        e.onError(error);
+                    public void subscribe(final CompletableEmitter e) throws Exception {
+                        realm = Realm.getDefaultInstance();
+
+                        RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
+
+                        query.equalTo("reminderId", reminderId);
+                        RealmResults<RealmReminder> result = query.findAllAsync();
+
+                        if (result.size() == 0) {
+                            e.onError(new Exception());
+                        } else {
+                            result.deleteFromRealm(0);
+                            e.onComplete();
+                        }
                     }
                 });
+    }
 
+    @Override
+    public Completable updateReminder(final Reminder reminder) {
+        return Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(CompletableEmitter e) throws Exception {
+                realm = Realm.getDefaultInstance();
 
+                realm.beginTransaction();
+
+                RealmReminder realmReminder = new RealmReminder();
+
+                realmReminder.setReminderId(reminder.getReminderId());
+                realmReminder.setHourOfDay(reminder.getHourOfDay());
+                realmReminder.setMinute(reminder.getMinute());
+                realmReminder.setReminderTitle(reminder.getReminderTitle());
+                realmReminder.setActive(reminder.isActive());
+                realmReminder.setVibrateOnly(reminder.isVibrateOnly());
+                realmReminder.setRenewAutomatically(reminder.isRenewAutomatically());
+
+                realm.copyToRealmOrUpdate(realmReminder);
+
+                realm.commitTransaction();
+
+                e.onComplete();
             }
         });
     }
 
     @Override
-    public Completable deleteReminder(final String reminderId) {
-        return Completable.create(new CompletableOnSubscribe() {
-            @Override
-            public void subscribe(final CompletableEmitter e) throws Exception {
-                realm.executeTransactionAsync(new Realm.Transaction() {
+    public Maybe<List<Reminder>> getReminders() {
+        return Maybe.create(
+                new MaybeOnSubscribe<List<Reminder>>() {
                     @Override
-                    public void execute(Realm bgRealm) {
-                        RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
+                    public void subscribe(final MaybeEmitter<List<Reminder>> e) throws Exception {
+                        realm = Realm.getDefaultInstance();
 
+                        RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
+                        RealmResults<RealmReminder> result = query.findAll();
+
+                        List<Reminder> reminderList = new ArrayList<>();
+
+                        if (result.size() == 0) {
+                            e.onComplete();
+                        } else {
+                            for (int i = 0; i < result.size(); i++) {
+                                Reminder reminder = new Reminder();
+                                RealmReminder realmReminder = result.get(i);
+
+                                reminder.setActive(realmReminder.isActive());
+                                reminder.setRenewAutomatically(realmReminder.isRenewAutomatically());
+                                reminder.setVibrateOnly(realmReminder.isVibrateOnly());
+                                reminder.setHourOfDay(realmReminder.getHourOfDay());
+                                reminder.setMinute(realmReminder.getMinute());
+                                reminder.setReminderTitle(realmReminder.getReminderTitle());
+                                reminder.setReminderId(realmReminder.getReminderId());
+
+                                reminderList.add(
+                                        reminder
+                                );
+                            }
+                            e.onSuccess(reminderList);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public Single<Reminder> getReminderById(final String reminderId) {
+        return Single.create(
+                new SingleOnSubscribe<Reminder>() {
+                    @Override
+                    public void subscribe(SingleEmitter<Reminder> e) throws Exception {
+                        realm = Realm.getDefaultInstance();
+
+                        RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
                         query.equalTo("reminderId", reminderId);
+
                         RealmResults<RealmReminder> result = query.findAll();
 
                         if (result.size() == 0) {
                             e.onError(new Exception("ReminderNotFoundException"));
                         } else {
-                            RealmReminder rem = result.get(0);
-                            rem.deleteFromRealm();
+                            RealmReminder realmReminder = result.get(0);
+                            Reminder reminder = new Reminder();
+
+                            reminder.setActive(realmReminder.isActive());
+                            reminder.setRenewAutomatically(realmReminder.isRenewAutomatically());
+                            reminder.setVibrateOnly(realmReminder.isVibrateOnly());
+                            reminder.setHourOfDay(realmReminder.getHourOfDay());
+                            reminder.setMinute(realmReminder.getMinute());
+                            reminder.setReminderTitle(realmReminder.getReminderTitle());
+
+                            e.onSuccess(reminder);
                         }
                     }
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        e.onComplete();
-                    }
-                }, new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                        e.onError(error);
-                    }
                 });
-            }
-        });
-    }
-
-    @Override
-    public Completable updateReminder(final RealmReminder reminder) {
-        return Completable.create(new CompletableOnSubscribe() {
-            @Override
-            public void subscribe(CompletableEmitter e) throws Exception {
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        realm.copyToRealmOrUpdate(reminder);
-                    }
-                });
-
-            }
-        });
-
-    }
-
-    @Override
-    public Maybe<List<RealmReminder>> getReminders() {
-        return Maybe.create(new MaybeOnSubscribe<List<RealmReminder>>() {
-            @Override
-            public void subscribe(MaybeEmitter<List<RealmReminder>> e) throws Exception {
-                RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
-                RealmResults<RealmReminder> result = query.findAll();
-
-                List<RealmReminder> reminderList = new ArrayList<RealmReminder>();
-
-                if (result.size() == 0) {
-                    e.onComplete();
-                } else {
-                    for (int i = 0; i < result.size(); i++) {
-                        reminderList.add(
-                                result.get(i)
-                        );
-                    }
-                    e.onSuccess(reminderList);
-                }
-            }
-        });
-    }
-
-    @Override
-    public Single<RealmReminder> getReminderById(final String reminderId) {
-        return Single.create(new SingleOnSubscribe<RealmReminder>() {
-            @Override
-            public void subscribe(SingleEmitter<RealmReminder> e) throws Exception {
-                RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
-
-                query.equalTo("reminderId", reminderId);
-                RealmResults<RealmReminder> result = query.findAll();
-
-                if (result.size() == 0){
-                    e.onError(new Exception("ReminderNotFoundException"));
-                } else {
-                    e.onSuccess(
-                            result.get(0)
-                    );
-                }
-            }
-        });
     }
 }

@@ -1,5 +1,7 @@
 package com.bracketcove.postrainer.data.reminder;
 
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
+
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -23,7 +25,7 @@ public interface ReminderSource {
 
     Completable deleteReminder(String reminderId);
 
-    Completable updateReminder(RealmReminder reminder);
+    Completable updateReminder(Reminder reminder);
 
     /**
      * Maybe: RxJava Observable which has three possible outcomes:
@@ -31,12 +33,12 @@ public interface ReminderSource {
      * 2. It can return nothing.
      * 3. It can throw an error
      */
-    Maybe<List<RealmReminder>> getReminders();
+    Maybe<List<Reminder>> getReminders();
 
     /**
      * Single: RxJava Observable which has two possible outcomes:
      * 1. It can return single object (in this case a RealmReminder)
      * 2. It can throw an error
      */
-    Single<RealmReminder> getReminderById(String reminderId);
+    Single<Reminder> getReminderById(String reminderId);
 }

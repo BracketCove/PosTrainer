@@ -7,6 +7,7 @@ package com.bracketcove.postrainer.data.viewmodel;
 
 public class Reminder {
 
+    private String reminderId;
     private String reminderTitle;
     private boolean active;
     private boolean vibrateOnly;
@@ -15,6 +16,24 @@ public class Reminder {
     private int hourOfDay;
 
     public Reminder() {
+    }
+
+    public Reminder(String reminderId, String reminderTitle, boolean active, boolean vibrateOnly, boolean renewAutomatically, int minute, int hourOfDay) {
+        this.reminderId = reminderId;
+        this.reminderTitle = reminderTitle;
+        this.active = active;
+        this.vibrateOnly = vibrateOnly;
+        this.renewAutomatically = renewAutomatically;
+        this.minute = minute;
+        this.hourOfDay = hourOfDay;
+    }
+
+    public String getReminderId() {
+        return reminderId;
+    }
+
+    public void setReminderId(String reminderId) {
+        this.reminderId = reminderId;
     }
 
     public String getReminderTitle() {

@@ -2,6 +2,8 @@ package com.bracketcove.postrainer.reminderdetail;
 
 import com.bracketcove.postrainer.baseinterfaces.BasePresenter;
 import com.bracketcove.postrainer.baseinterfaces.BaseView;
+import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 /**
  * Created by Ryan on 06/03/2017.
@@ -9,6 +11,8 @@ import com.bracketcove.postrainer.baseinterfaces.BaseView;
 
 public interface ReminderDetailContract {
     interface View extends BaseView<Presenter> {
+        Reminder getViewModel();
+
         void setReminderTitle(String title);
 
         void setVibrateOnly(boolean active);
@@ -19,19 +23,7 @@ public interface ReminderDetailContract {
 
         void setCurrentAlarmState(boolean active);
 
-        String getReminderTitle();
-
         String getReminderId();
-
-        boolean getVibrateOnly();
-
-        boolean getRenewAutomatically();
-
-        int getPickerHour();
-
-        int getPickerMinute();
-
-        boolean getCurrentAlarmState();
 
         void startReminderListActivity();
 

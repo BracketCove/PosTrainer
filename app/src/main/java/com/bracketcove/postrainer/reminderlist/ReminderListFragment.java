@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailActivity;
 import com.bracketcove.postrainer.settings.SettingsActivity;
 import com.bracketcove.postrainer.util.TimeConverter;
@@ -32,6 +33,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static android.R.attr.data;
+
 /**
  * Created by Ryan on 08/08/2016.
  */
@@ -42,7 +45,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     private FloatingActionButton fabulous;
     private TextView prompt;
     private ReminderListAdapter adapter;
-    private ArrayList<RealmReminder> reminders;
+    private ArrayList<Reminder> reminders;
     private ImageButton settings;
 
     @Inject
@@ -79,7 +82,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         prompt = (TextView) v.findViewById(R.id.lbl_reminder_prompt);
 
-        settings = (ImageButton)v.findViewById(R.id.btn_reminder_list_settings);
+        settings = (ImageButton) v.findViewById(R.id.btn_reminder_list_settings);
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +144,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     during tests.
      */
     @Override
-    public void setReminderListData(List<RealmReminder> reminders) {
+    public void setReminderListData(List<Reminder> reminders) {
         prompt.setVisibility(View.INVISIBLE);
         reminderList.setVisibility(View.VISIBLE);
         //if reminderListData isn't empty
@@ -150,7 +153,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
             adapter.notifyDataSetChanged();
         }
 
-        for (RealmReminder reminder : reminders) {
+        for (Reminder reminder : reminders) {
             //add reminder to fragments list, and inform adapter of this change
             this.reminders.add(reminder);
             adapter.notifyItemInserted(this.reminders.lastIndexOf(reminder));
@@ -169,13 +172,13 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
      * @param reminder new RealmReminder to be added
      */
     @Override
-    public void addNewReminderToListView(RealmReminder reminder) {
+    public void addNewReminderToListView(Reminder reminder) {
         reminders.add(reminder);
         adapter.notifyItemInserted(this.reminders.lastIndexOf(reminder));
     }
 
     @Override
-    public void undoDeleteReminderAt(int index, RealmReminder reminder) {
+    public void undoDeleteReminderAt(int index, Reminder reminder) {
         reminders.add(index, reminder);
         adapter.notifyItemInserted(index);
     }
@@ -214,7 +217,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
     private void initializeRecyclerView() {
         reminders = new ArrayList<>();
-        adapter = new ReminderListAdapter(getActivity(), reminders);
+        adapter = new ReminderListAdapter(getActivity());
         reminderList.setLayoutManager(new LinearLayoutManager(getActivity()));
         reminderList.setAdapter(adapter);
 
@@ -226,17 +229,13 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
     private class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapter.ViewHolder> {
         private LayoutInflater inflater;
-        private List<RealmReminder> data = Collections.emptyList();
 
         /**
          * @param context - Context of Activity which contains contains the fragment which manages
          *                this class
-         * @param data    - List of NavListItems which contain a title and icon resource id, to be
-         *                passed to bound to ViewHolder objects appropriately.
          */
-        public ReminderListAdapter(Context context, List<RealmReminder> data) {
+        public ReminderListAdapter(Context context) {
             inflater = LayoutInflater.from(context);
-            this.data = data;
         }
 
         @Override
@@ -247,7 +246,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         @Override
         public void onBindViewHolder(ReminderListAdapter.ViewHolder holder, final int position) {
-            RealmReminder item = data.get(position);
+            Reminder item = reminders.get(position);
             holder.alarmTitle.setText(item.getReminderTitle());
 
             holder.alarmTime.setText(
@@ -264,7 +263,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         @Override
         public int getItemCount() {
-            return data.size();
+            return reminders.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

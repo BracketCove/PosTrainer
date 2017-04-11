@@ -1,16 +1,15 @@
 package com.bracketcove.postrainer.data.reminder;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import io.realm.RealmObject;
+import io.realm.RealmModel;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * POJO for Realm
  * Created by Ryan on 10/04/2016.
  */
-public class RealmReminder extends RealmObject {
+@RealmClass
+public class RealmReminder implements RealmModel {
 
     @PrimaryKey
     private String reminderId;
@@ -26,31 +25,22 @@ public class RealmReminder extends RealmObject {
         //blank constructor for realm?
     }
 
-    /**
-     * General Purpose Constructor
-     *
-     * @param hourOfDay
-     * @param minute
-     * @param reminderTitle
-     * @param active
-     * @param vibrateOnly
-     * @param renewAutomatically
-     */
     public RealmReminder(String reminderId,
-                         int hourOfDay,
-                         int minute,
                          String reminderTitle,
                          boolean active,
                          boolean vibrateOnly,
-                         boolean renewAutomatically
+                         boolean renewAutomatically,
+                         int minute,
+                         int hourOfDay
     ) {
+
         this.reminderId = reminderId;
-        this.hourOfDay = hourOfDay;
-        this.minute = minute;
         this.reminderTitle = reminderTitle;
         this.active = active;
         this.vibrateOnly = vibrateOnly;
         this.renewAutomatically = renewAutomatically;
+        this.minute = minute;
+        this.hourOfDay = hourOfDay;
     }
 
     /**

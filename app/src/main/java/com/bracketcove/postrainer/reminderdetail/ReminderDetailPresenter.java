@@ -1,9 +1,12 @@
 package com.bracketcove.postrainer.reminderdetail;
 
 
+import android.util.Log;
+
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import javax.inject.Inject;
@@ -36,26 +39,30 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     @Override
     public void subscribe() {
         compositeDisposable.add(
-              reminderSource.getReminderById(
-                      view.getReminderId())
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableSingleObserver<RealmReminder>() {
-                    @Override
-                    public void onSuccess(RealmReminder reminder) {
-                        view.setReminderTitle(reminder.getReminderTitle());
-                        view.setVibrateOnly(reminder.isVibrateOnly());
-                        view.setRenewAutomatically(reminder.isRenewAutomatically());
-                        view.setPickerTime(reminder.getHourOfDay(), reminder.getMinute());
-                        view.setCurrentAlarmState(reminder.isActive());
-                    }
+                reminderSource.getReminderById(
+                        view.getReminderId()
+                )
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(
+                                new DisposableSingleObserver<Reminder>() {
+                                    @Override
+                                    public void onSuccess(Reminder reminder) {
 
-                    @Override
-                    public void onError(Throwable e) {
-                        view.makeToast(R.string.error_invalid_reminder_id);
-                        view.startReminderListActivity();
-                    }
-                })
+                                        view.setReminderTitle(reminder.getReminderTitle());
+                                        view.setVibrateOnly(reminder.isVibrateOnly());
+                                        view.setRenewAutomatically(reminder.isRenewAutomatically());
+                                        view.setPickerTime(reminder.getHourOfDay(), reminder.getMinute());
+                                        view.setCurrentAlarmState(reminder.isActive());
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.d("DATABASE", e.getMessage());
+                                        view.makeToast(R.string.error_invalid_reminder_id);
+                                        view.startReminderListActivity();
+                                    }
+                                })
         );
     }
 
@@ -74,32 +81,25 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
      */
     @Override
     public void onDoneIconPress() {
-        RealmReminder reminder = new RealmReminder(
-                view.getReminderId(),
-                view.getPickerHour(),
-                view.getPickerMinute(),
-                view.getReminderTitle(),
-                view.getCurrentAlarmState(),
-                view.getVibrateOnly(),
-                view.getRenewAutomatically()
-        );
-
+        Reminder reminder = view.getViewModel();
+        reminder.setReminderId(view.getReminderId());
         compositeDisposable.add(
                 reminderSource.updateReminder(reminder)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableCompletableObserver() {
-                            @Override
-                            public void onComplete() {
-                                view.makeToast(R.string.message_database_write_successful);
-                                view.startReminderListActivity();
-                            }
+                        .subscribeWith(
+                                new DisposableCompletableObserver() {
+                                    @Override
+                                    public void onComplete() {
+                                        view.makeToast(R.string.message_database_write_successful);
+                                        view.startReminderListActivity();
+                                    }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                view.makeToast(R.string.error_database_write_failure);
-                            }
-                        })
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        view.makeToast(R.string.error_database_write_failure);
+                                    }
+                                })
         );
     }
 }
