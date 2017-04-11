@@ -63,15 +63,19 @@ public class ReminderService implements ReminderSource {
                     public void subscribe(final CompletableEmitter e) throws Exception {
                         realm = Realm.getDefaultInstance();
 
+                        realm.beginTransaction();
+
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
 
                         query.equalTo("reminderId", reminderId);
-                        RealmResults<RealmReminder> result = query.findAllAsync();
+                        RealmResults<RealmReminder> result = query.findAll();
 
                         if (result.size() == 0) {
+                            realm.cancelTransaction();
                             e.onError(new Exception());
                         } else {
                             result.deleteFromRealm(0);
+                            realm.commitTransaction();
                             e.onComplete();
                         }
                     }

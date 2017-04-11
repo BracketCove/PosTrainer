@@ -92,6 +92,8 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         reminderList = (RecyclerView) v.findViewById(R.id.lst_reminder_list);
 
+        reminders = new ArrayList<>();
+
         initializeRecyclerView();
 
         fabulous = (FloatingActionButton) v.findViewById(R.id.fab_reminders);
@@ -173,6 +175,12 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
      */
     @Override
     public void addNewReminderToListView(Reminder reminder) {
+        if (reminders.size() == 0){
+            initializeRecyclerView();
+            reminderList.setVisibility(View.VISIBLE);
+            prompt.setVisibility(View.INVISIBLE);
+        }
+
         reminders.add(reminder);
         adapter.notifyItemInserted(this.reminders.lastIndexOf(reminder));
     }
@@ -216,7 +224,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     /*------------------------------- RecView Boilerplate -------------------------------*/
 
     private void initializeRecyclerView() {
-        reminders = new ArrayList<>();
         adapter = new ReminderListAdapter(getActivity());
         reminderList.setLayoutManager(new LinearLayoutManager(getActivity()));
         reminderList.setAdapter(adapter);
@@ -263,7 +270,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         @Override
         public int getItemCount() {
-            return reminders.size();
+                return reminders.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -148,6 +148,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
                             @Override
                             public void onError(Throwable e) {
+                                Log.d("DATABASE", e.getMessage());
                                 view.makeToast(R.string.error_database_connection_failure);
                                 view.undoDeleteReminderAt(position, reminder);
                             }

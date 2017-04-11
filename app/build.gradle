@@ -67,6 +67,10 @@ dependencies {
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
     provided "javax.annotation:jsr250-api:$rootProject.jsr250Version"
 
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
