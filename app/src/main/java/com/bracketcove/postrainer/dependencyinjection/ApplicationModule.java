@@ -59,11 +59,7 @@ public final class ApplicationModule {
     @Provides
     @Singleton
     AlarmSource provideAlarmSource() {
-        return new AlarmService(
-                provideWakeLock(),
-                provideAudioManager(),
-                provideVibrator()
-                );
+        return new AlarmService(applicationContext);
     }
 
     @Singleton

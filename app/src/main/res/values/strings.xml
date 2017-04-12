@@ -100,6 +100,7 @@
     <string name="def_reminder_name">New Alarm</string>
     <string name="msg_reminder_limit_reached">Maximun Reminders per Day is 5.</string>
     <string name="error_invalid_reminder_id">That\'s not supposed to happen. Contact the Dev. if this message keeps appearing.</string>
+    <string name="error_managing_alarm">Error Managing Alarm</string>
 
 
 </resources>

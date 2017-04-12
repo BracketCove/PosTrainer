@@ -1,12 +1,21 @@
 package com.bracketcove.postrainer.reminderlist;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.util.ActivityUtils;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -24,7 +33,7 @@ public class ReminderListActivity extends AppCompatActivity {
        // setSupportActionBar(toolbar);
         manager = getSupportFragmentManager();
 
-        ReminderListFragment fragment =  (ReminderListFragment) manager.findFragmentByTag(FRAG_REMINDER_LIST);
+        ReminderListFragment fragment = (ReminderListFragment) manager.findFragmentByTag(FRAG_REMINDER_LIST);
 
         if (fragment == null){
             fragment = ReminderListFragment.newInstance();
@@ -36,16 +45,25 @@ public class ReminderListActivity extends AppCompatActivity {
                 FRAG_REMINDER_LIST
         );
 
-        /*
-        Dagger 2 Notes
-         */
-//        DaggerReminderListComponent.builder()
-//                .reminderListPresenterModule(new ReminderListPresenterModule(fragment))
-//                .reminderComponent(
-//                        ((PostrainerApplication) getApplication())
-//                                .getReminderComponent()
-//                )
-//                .build().inject(this);
-    }
+        new TedPermission(this)
+                .setPermissionListener(
+                        new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted() {
 
+                            }
+
+                            @Override
+                            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+
+                            }
+                        }
+                )
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(
+                        Manifest.permission.WAKE_LOCK,
+                        Manifest.permission.VIBRATE
+                )
+                .check();
+    }
 }

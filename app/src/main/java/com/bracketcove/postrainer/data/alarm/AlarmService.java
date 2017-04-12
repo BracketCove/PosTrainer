@@ -31,13 +31,13 @@ public class AlarmService implements AlarmSource {
     private Context context;
 
     public AlarmService(Context applicationContext) {
-        //TODO: handle this s**t in Dagger 2 somehow
-        PowerManager powerManager = (PowerManager) applicationContext.getSystemService(POWER_SERVICE);
+        this.context = applicationContext;
+
         this.wakeLock = ((PowerManager) applicationContext
                 .getSystemService(POWER_SERVICE))
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Alarm");
 
-        audioManager =  ((AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE));
+        audioManager = ((AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE));
 
         mediaPlayer = new MediaPlayer();
 
@@ -58,12 +58,13 @@ public class AlarmService implements AlarmSource {
 
         Intent intent = new Intent(context, AlarmReceiverActivity.class);
         intent.putExtra(ALARM_ID, reminder.getReminderId());
-        PendingIntent alarmIntent = PendingIntent.getActivity(context,
+        PendingIntent alarmIntent = PendingIntent.getActivity(
+                context,
                 Integer.parseInt(reminder.getReminderId()),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (reminder.isRenewAutomatically()){
+        if (reminder.isRenewAutomatically()) {
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarm.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
         } else {
@@ -71,13 +72,12 @@ public class AlarmService implements AlarmSource {
                     alarmIntent);
         }
 
-        //TODO: make sure that we set Reminder state to Active at some point
         return Completable.complete();
     }
 
-    private void checkAlarm(Calendar alarm){
+    private void checkAlarm(Calendar alarm) {
         Calendar now = Calendar.getInstance();
-        if (alarm.before(now)){
+        if (alarm.before(now)) {
             long alarmForFollowingDay = alarm.getTimeInMillis() + 86400000L;
             alarm.setTimeInMillis(alarmForFollowingDay);
         }
@@ -117,11 +117,10 @@ public class AlarmService implements AlarmSource {
     public void startAlarm(Reminder reminder) {
         wakeLock.acquire();
 
-        if (reminder.isVibrateOnly()){
+        if (reminder.isVibrateOnly()) {
             vibratePhone();
         } else {
             vibratePhone();
-
             try {
                 playAlarmSound();
             } catch (java.io.IOException e) {
@@ -132,7 +131,7 @@ public class AlarmService implements AlarmSource {
 
     @Override
     public void releaseWakeLock() {
-        if (wakeLock != null){
+        if (wakeLock != null) {
             wakeLock.release();
         }
     }

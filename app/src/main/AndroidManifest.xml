@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+
     <supports-screens
         android:smallScreens="false"
         android:xlargeScreens="false" />

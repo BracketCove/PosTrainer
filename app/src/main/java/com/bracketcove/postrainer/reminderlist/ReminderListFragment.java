@@ -217,7 +217,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         date += "" + calendar.get(Calendar.HOUR_OF_DAY);
         date += "" + calendar.get(Calendar.MINUTE);
         date += "" + calendar.get(Calendar.SECOND);
-        date += "" + calendar.get(Calendar.MILLISECOND);
         return date;
     }
 

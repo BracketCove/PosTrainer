@@ -4,12 +4,10 @@ import android.util.Log;
 
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
-import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -109,9 +107,9 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                                 @Override
                                 public void onComplete() {
                                     if (active) {
-                                        view.makeToast(R.string.msg_alarm_activated);
+                                        onAlarmSet(reminder);
                                     } else {
-                                        view.makeToast(R.string.msg_alarm_deactivated);
+                                        onAlarmCancelled(reminder);
                                     }
 
                                 }
@@ -128,6 +126,52 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
             return R.string.msg_alarm_deactivated;
         }
     }
+
+    private void onAlarmSet(Reminder reminder) {
+        view.makeToast(R.string.msg_alarm_activated);
+        compositeDisposable.add(
+                alarmSource.setAlarm(reminder)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(
+                                new DisposableCompletableObserver() {
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.d("ALARM", e.getMessage());
+                                        view.makeToast(R.string.error_managing_alarm);
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        view.makeToast(R.string.msg_alarm_activated);
+                                    }
+                                })
+        );
+
+
+    }
+
+    private void onAlarmCancelled(Reminder reminder) {
+        compositeDisposable.add(
+                alarmSource.cancelAlarm(reminder)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(
+                                new DisposableCompletableObserver() {
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.d("ALARM", e.getMessage());
+                                        view.makeToast(R.string.error_managing_alarm);
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+                                        view.makeToast(R.string.msg_alarm_deactivated);
+                                    }
+                                })
+        );
+    }
+
 
     @Override
     public void onSettingsIconClick() {

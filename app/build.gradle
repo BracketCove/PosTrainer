@@ -71,6 +71,8 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
+    compile 'gun0912.ted:tedpermission:1.0.3'
+
     provided "javax.annotation:jsr250-api:$rootProject.jsr250Version"
 
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
