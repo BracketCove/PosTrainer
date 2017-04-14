@@ -50,6 +50,11 @@ android {
             events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
     }
+    sourceSets {
+        prod {
+            java.srcDirs = ['src/prod/java', 'src/prod/java/com/bracketcove/postrainer/scheduler']
+        }
+    }
 }
 
 dependencies {

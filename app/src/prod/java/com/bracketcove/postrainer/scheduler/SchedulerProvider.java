@@ -17,16 +17,16 @@ public class SchedulerProvider implements BaseSchedulerProvider {
 
     @Override
     public Scheduler computation() {
-        return Schedulers.computation();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler io() {
-        return Schedulers.io();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler ui() {
-        return AndroidSchedulers.mainThread();
+        return Schedulers.trampoline();
     }
 }
