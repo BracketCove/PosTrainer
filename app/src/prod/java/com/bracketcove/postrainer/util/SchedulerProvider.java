@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer.scheduler;
+package com.bracketcove.postrainer.util;
 
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 

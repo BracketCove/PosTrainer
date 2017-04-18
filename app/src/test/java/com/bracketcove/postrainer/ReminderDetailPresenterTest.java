@@ -1,11 +1,10 @@
 package com.bracketcove.postrainer;
 
-import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenter;
-import com.bracketcove.postrainer.scheduler.SchedulerProvider;
+import com.bracketcove.postrainer.util.SchedulerProvider;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import org.junit.Before;
