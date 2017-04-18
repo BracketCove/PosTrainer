@@ -25,6 +25,7 @@ public class PostrainerApplication extends Application {
                 .applicationModule(new ApplicationModule(getApplicationContext()))
                 .build();
 
+        initializeRealm();
     }
 
     private void initializeRealm(){

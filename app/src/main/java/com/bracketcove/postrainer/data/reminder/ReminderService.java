@@ -43,7 +43,7 @@ public class ReminderService implements ReminderSource {
                                 RealmReminder.class, reminderId);
 
                         rem.setHourOfDay(12);
-                        rem.setMinute(0);
+                        rem.setMinute(30);
                         rem.setReminderTitle("New Alarm");
                         rem.setActive(false);
                         rem.setVibrateOnly(false);

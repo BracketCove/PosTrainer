@@ -14,13 +14,18 @@ public class SettingsPresenter implements SettingsContract.Presenter {
         this.view = view;
     }
 
+    @Inject
+    void setPresenter() {
+        view.setPresenter(this);
+    }
+
     @Override
     public void subscribe() {
 
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
 
     }
 

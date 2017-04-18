@@ -38,7 +38,11 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
         this.alarmSource = alarmSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
+    }
 
+    @Inject
+    void setPresenter() {
+        view.setPresenter(this);
     }
 
     /**
@@ -76,7 +80,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
         compositeDisposable.clear();
     }
 
@@ -217,8 +221,8 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                     false,
                     true,
                     false,
-                    12,
-                    30
+                    30,
+                    12
             );
 
             compositeDisposable.add(

@@ -70,7 +70,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
 
     @Override
     public void onDestroy() {
-        presenter.unsubscribe();
+        presenter.unSubscribe();
         super.onDestroy();
     }
 

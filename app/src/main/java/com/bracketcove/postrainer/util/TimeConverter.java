@@ -12,8 +12,6 @@ import java.util.Date;
 public class TimeConverter {
 
     public static String convertTime (int hour, int minute){
-
-
         String unformattedTime = Integer.toString(hour) + ":" + Integer.toString(minute);
         DateFormat f1 = new SimpleDateFormat("HH:mm"); //HH for hour of the day (0 - 23)
 

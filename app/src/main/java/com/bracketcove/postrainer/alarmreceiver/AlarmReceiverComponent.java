@@ -14,7 +14,7 @@ import dagger.Component;
  */
 @FragmentScoped
 @Component(dependencies = ReminderComponent.class,
-       modules = AlarmReceiverPresenterModule.class)
+        modules = AlarmReceiverPresenterModule.class)
 public interface AlarmReceiverComponent {
 
     void inject(AlarmReceiverActivity alarmReceiverActivity);

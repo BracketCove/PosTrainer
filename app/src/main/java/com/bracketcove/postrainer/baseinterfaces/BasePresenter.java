@@ -7,5 +7,5 @@ package com.bracketcove.postrainer.baseinterfaces;
 public interface BasePresenter {
     void subscribe();
 
-    void unsubscribe();
+    void unSubscribe();
 }

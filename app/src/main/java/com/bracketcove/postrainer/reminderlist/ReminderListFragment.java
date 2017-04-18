@@ -267,7 +267,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
         @Override
         public int getItemCount() {
-                return reminders.size();
+            return reminders.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

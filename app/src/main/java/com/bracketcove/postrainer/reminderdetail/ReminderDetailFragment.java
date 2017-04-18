@@ -224,5 +224,4 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
                 Toast.LENGTH_SHORT)
                 .show();
     }
-
 }

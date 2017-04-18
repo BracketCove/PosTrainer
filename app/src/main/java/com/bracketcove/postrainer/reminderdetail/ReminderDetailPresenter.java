@@ -36,6 +36,11 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
         this.compositeDisposable = new CompositeDisposable();
     }
 
+    @Inject
+    void setPresenter() {
+        view.setPresenter(this);
+    }
+
     @Override
     public void subscribe() {
         compositeDisposable.add(
@@ -67,7 +72,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
 
     }
 

@@ -12,13 +12,14 @@ public class Reminder {
     private boolean active;
     private boolean vibrateOnly;
     private boolean renewAutomatically;
-    private int minute;
     private int hourOfDay;
+    private int minute;
+
 
     public Reminder() {
     }
 
-    public Reminder(String reminderId, String reminderTitle, boolean active, boolean vibrateOnly, boolean renewAutomatically, int minute, int hourOfDay) {
+    public Reminder(String reminderId, String reminderTitle, boolean active, boolean vibrateOnly, boolean renewAutomatically, int hourOfDay, int minute) {
         this.reminderId = reminderId;
         this.reminderTitle = reminderTitle;
         this.active = active;

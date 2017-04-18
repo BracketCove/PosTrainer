@@ -46,7 +46,7 @@ public class ReminderDetailActivity extends AppCompatActivity {
                 fragment,
                 R.id.cont_reminder_detail_fragment,
                 FRAG_REMINDER_DETAIL
-                );
+        );
 
         DaggerReminderDetailComponent.builder()
                 .reminderDetailPresenterModule(new ReminderDetailPresenterModule(fragment))

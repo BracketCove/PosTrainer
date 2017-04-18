@@ -3,6 +3,8 @@ package com.bracketcove.postrainer.alarmreceiver;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.WindowManager;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;

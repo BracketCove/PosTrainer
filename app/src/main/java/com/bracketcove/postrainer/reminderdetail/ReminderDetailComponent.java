@@ -18,3 +18,4 @@ import dagger.Component;
 public interface ReminderDetailComponent {
     void inject(ReminderDetailActivity reminderDetailActivity);
 }
+

@@ -57,7 +57,7 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
 
     @Override
     public void onDestroy() {
-        presenter.unsubscribe();
+        presenter.unSubscribe();
         super.onDestroy();
     }
 

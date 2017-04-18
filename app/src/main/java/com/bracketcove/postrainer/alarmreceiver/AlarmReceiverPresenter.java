@@ -32,13 +32,18 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
         this.compositeDisposable = new CompositeDisposable();
     }
 
+    @Inject
+    void setPresenter() {
+        view.setPresenter(this);
+    }
+
     @Override
     public void subscribe() {
 
     }
 
     @Override
-    public void unsubscribe() {
+    public void unSubscribe() {
 
     }
 

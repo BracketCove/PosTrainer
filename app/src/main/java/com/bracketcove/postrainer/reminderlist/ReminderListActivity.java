@@ -24,13 +24,15 @@ public class ReminderListActivity extends AppCompatActivity {
 
     private FragmentManager manager;
 
+    @Inject ReminderListPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_list);
         //Toolbar
-       // toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
+        // toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setSupportActionBar(toolbar);
         manager = getSupportFragmentManager();
 
         ReminderListFragment fragment = (ReminderListFragment) manager.findFragmentByTag(FRAG_REMINDER_LIST);
