@@ -36,10 +36,7 @@ import dagger.Component;
 public interface ApplicationComponent {
 
   Context context();
-  ReminderSource reminderSource();
-  AlarmSource alarmSource();
   PowerManager.WakeLock wakeLock();
   AudioManager audioManager();
   Vibrator vibrator();
-  BaseSchedulerProvider scheduler();
 }

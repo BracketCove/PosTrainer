@@ -39,7 +39,8 @@ public class ReminderService implements ReminderSource {
                         realm = Realm.getDefaultInstance();
 
                         realm.beginTransaction();
-                        RealmReminder rem = realm.createObject(RealmReminder.class, reminderId);
+                        RealmReminder rem = realm.createObject(
+                                RealmReminder.class, reminderId);
 
                         rem.setHourOfDay(12);
                         rem.setMinute(0);

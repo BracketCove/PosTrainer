@@ -20,8 +20,7 @@ import javax.inject.Inject;
 
 public class SettingsFragment extends Fragment implements SettingsContract.View {
 
-    @Inject
-    SettingsPresenter presenter;
+    SettingsContract.Presenter presenter;
 
     public SettingsFragment() {
 
@@ -36,9 +35,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        DaggerSettingsComponent.builder()
-                .settingsPresenterModule(new SettingsPresenterModule(this))
-                .build().inject(this);
+
 
     }
 
@@ -75,6 +72,11 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     public void onDestroy() {
         presenter.unsubscribe();
         super.onDestroy();
+    }
+
+    @Override
+    public void setPresenter(SettingsContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override

@@ -9,20 +9,21 @@ import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailFragment;
 import com.bracketcove.postrainer.util.ActivityUtils;
 
+import javax.inject.Inject;
+
 public class SettingsActivity extends AppCompatActivity {
     private static final String FRAG_SETTINGS = "FRAG_SETTINGS";
 
     private Toolbar toolbar;
     private FragmentManager manager;
 
+    @Inject
+    SettingsPresenter settingsPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        getSupportActionBar().setTitle(R.string.settings_title);
 
         manager = getSupportFragmentManager();
 
@@ -37,5 +38,9 @@ public class SettingsActivity extends AppCompatActivity {
                 R.id.cont_settings_fragment,
                 FRAG_SETTINGS
         );
+
+        DaggerSettingsComponent.builder()
+                .settingsPresenterModule(new SettingsPresenterModule(fragment))
+                .build().inject(this);
     }
 }

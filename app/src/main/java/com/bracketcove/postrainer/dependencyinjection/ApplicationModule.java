@@ -32,7 +32,7 @@ import static android.content.Context.POWER_SERVICE;
 public final class ApplicationModule {
     private final Context applicationContext;
 
-    public ApplicationModule(Application application) {
+    public ApplicationModule(Context application) {
         this.applicationContext = application;
     }
 
@@ -50,18 +50,6 @@ public final class ApplicationModule {
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Alarm");
     }
 
-    @Provides
-    @Singleton
-    ReminderSource provideReminderSource() {
-        return new ReminderService();
-    }
-
-    @Provides
-    @Singleton
-    AlarmSource provideAlarmSource() {
-        return new AlarmService(applicationContext);
-    }
-
     @Singleton
     @Provides
     AudioManager provideAudioManager() {
@@ -74,9 +62,4 @@ public final class ApplicationModule {
         return ((Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE));
     }
 
-    @Provides
-    @Singleton
-    BaseSchedulerProvider provideScheduler() {
-        return new SchedulerProvider();
-    }
 }

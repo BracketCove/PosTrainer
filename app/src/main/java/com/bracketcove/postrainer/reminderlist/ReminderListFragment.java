@@ -48,8 +48,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     private ArrayList<Reminder> reminders;
     private ImageButton settings;
 
-    @Inject
-    ReminderListPresenter presenter;
+    ReminderListContract.Presenter presenter;
 
     public ReminderListFragment() {
 
@@ -66,13 +65,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        DaggerReminderListComponent.builder()
-                .reminderListPresenterModule(new ReminderListPresenterModule(this))
-                .applicationComponent(
-                        ((PostrainerApplication) getActivity().getApplication())
-                                .getApplicationComponent()
-                )
-                .build().inject(this);
+
     }
 
     @Override
@@ -132,6 +125,11 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     }
 
     /*------------------------------- Contract -------------------------------*/
+
+    @Override
+    public void setPresenter(ReminderListContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
 
     @Override
     public void makeToast(@StringRes int message) {

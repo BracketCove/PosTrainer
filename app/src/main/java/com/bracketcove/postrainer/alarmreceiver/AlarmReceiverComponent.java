@@ -2,6 +2,7 @@ package com.bracketcove.postrainer.alarmreceiver;
 
 import com.bracketcove.postrainer.dependencyinjection.ApplicationComponent;
 import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
+import com.bracketcove.postrainer.dependencyinjection.ReminderComponent;
 import com.bracketcove.postrainer.util.FragmentScoped;
 
 import dagger.Component;
@@ -12,8 +13,9 @@ import dagger.Component;
  * Created by Ryan on 16/03/2017.
  */
 @FragmentScoped
-@Component(dependencies = ApplicationComponent.class,
+@Component(dependencies = ReminderComponent.class,
        modules = AlarmReceiverPresenterModule.class)
 public interface AlarmReceiverComponent {
-    void inject(AlarmReceiverFragment alarmReceiverFragment);
+
+    void inject(AlarmReceiverActivity alarmReceiverActivity);
 }

@@ -17,9 +17,6 @@ import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverPresenterModule;
-import com.bracketcove.postrainer.alarmreceiver.DaggerAlarmReceiverComponent;
-import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
 
@@ -32,8 +29,7 @@ import javax.inject.Inject;
 public class ReminderDetailFragment extends Fragment implements ReminderDetailContract.View {
     private static final String REMINDER_TO_BE_EDITED = "REMINDER_TO_BE_EDITED";
 
-    @Inject
-    ReminderDetailPresenter presenter;
+    ReminderDetailContract.Presenter presenter;
 
     private AppCompatEditText reminderTitle;
     private AppCompatCheckBox vibrateOnly, autoRenew;
@@ -64,13 +60,7 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
 
         this.reminderId = getArguments().getString(REMINDER_TO_BE_EDITED);
 
-        DaggerReminderDetailComponent.builder()
-                .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
-                .applicationComponent(
-                        ((PostrainerApplication) getActivity().getApplication())
-                                .getApplicationComponent()
-                )
-                .build().inject(this);
+
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -220,6 +210,11 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
 
     public boolean getCurrentAlarmState() {
         return currentAlarmState;
+    }
+
+    @Override
+    public void setPresenter(ReminderDetailContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override

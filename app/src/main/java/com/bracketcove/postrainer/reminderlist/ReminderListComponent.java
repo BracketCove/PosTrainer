@@ -1,7 +1,6 @@
 package com.bracketcove.postrainer.reminderlist;
 
-import com.bracketcove.postrainer.dependencyinjection.ApplicationComponent;
-import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
+import com.bracketcove.postrainer.dependencyinjection.ReminderComponent;
 import com.bracketcove.postrainer.util.FragmentScoped;
 
 import dagger.Component;
@@ -12,10 +11,10 @@ import dagger.Component;
  * Created by Ryan on 16/03/2017.
  */
 @FragmentScoped
-@Component(dependencies = ApplicationComponent.class,
+@Component(dependencies = {ReminderComponent.class},
         modules = ReminderListPresenterModule.class)
 public interface ReminderListComponent {
 
-    void inject(ReminderListFragment reminderListFragment);
+    void inject(ReminderListActivity reminderListActivity);
 
 }

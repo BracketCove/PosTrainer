@@ -21,7 +21,7 @@ import javax.inject.Inject;
 
 public class AlarmReceiverFragment extends Fragment implements AlarmReceiverContract.View {
 
-    @Inject AlarmReceiverPresenter presenter;
+    AlarmReceiverContract.Presenter presenter;
 
     public AlarmReceiverFragment() {
 
@@ -36,16 +36,6 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
         super.onCreate(savedInstanceState);
         //This is important for Orientation Change handling!!!
         setRetainInstance(true);
-
-
-        DaggerAlarmReceiverComponent.builder()
-                .alarmReceiverPresenterModule(new AlarmReceiverPresenterModule(this))
-                .applicationComponent(
-                        ((PostrainerApplication) getActivity().getApplication())
-                                .getApplicationComponent()
-                )
-                .build().inject(this);
-
     }
 
     @Override
@@ -65,6 +55,11 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void setPresenter(AlarmReceiverContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override

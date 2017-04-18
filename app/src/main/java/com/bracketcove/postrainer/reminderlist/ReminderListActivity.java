@@ -65,5 +65,13 @@ public class ReminderListActivity extends AppCompatActivity {
                         Manifest.permission.VIBRATE
                 )
                 .check();
+
+        DaggerReminderListComponent.builder()
+                .reminderListPresenterModule(new ReminderListPresenterModule(fragment))
+                .reminderComponent(
+                        ((PostrainerApplication) getApplication())
+                                .getReminderComponent()
+                )
+                .build().inject(this);
     }
 }

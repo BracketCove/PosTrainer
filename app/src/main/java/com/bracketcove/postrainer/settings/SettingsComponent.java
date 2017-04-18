@@ -15,6 +15,6 @@ import dagger.Component;
         modules = SettingsPresenterModule.class)
 public interface SettingsComponent {
 
-    void inject(SettingsFragment settingsFragment);
+    void inject(SettingsActivity settingsActivity);
 
 }

@@ -8,11 +8,8 @@ import android.support.annotation.StringRes;
 
 
 public interface BaseView<T> {
-
-    /* Probably not necessary anymore due to DI
     void setPresenter(T presenter);
-    */
 
-    void makeToast(@StringRes int message);
+    void makeToast(int message);
 
 }
