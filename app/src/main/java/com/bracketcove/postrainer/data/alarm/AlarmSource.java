@@ -21,9 +21,9 @@ public interface AlarmSource {
 
     Completable cancelAlarm(Reminder reminder);
 
-    void stopAlarm();
+    Completable stopMediaPlayerAndVibrator();
 
-    void startAlarm(Reminder reminder);
+    Completable startAlarm(Reminder reminder);
 
-    void releaseWakeLock();
+    Completable releaseWakeLock();
 }

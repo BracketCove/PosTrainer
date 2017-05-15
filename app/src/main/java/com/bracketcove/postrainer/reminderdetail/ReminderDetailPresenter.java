@@ -26,6 +26,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable compositeDisposable;
 
+    //Constructor Injection: What is a use case for Constructor Injection?
     @Inject
     public ReminderDetailPresenter(ReminderDetailContract.View view,
                                    ReminderSource reminderSource,
@@ -36,6 +37,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
         this.compositeDisposable = new CompositeDisposable();
     }
 
+    //Method Injection
     @Inject
     void setPresenter() {
         view.setPresenter(this);

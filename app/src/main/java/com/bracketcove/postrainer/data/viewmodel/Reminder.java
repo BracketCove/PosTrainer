@@ -19,14 +19,20 @@ public class Reminder {
     public Reminder() {
     }
 
-    public Reminder(String reminderId, String reminderTitle, boolean active, boolean vibrateOnly, boolean renewAutomatically, int hourOfDay, int minute) {
+    public Reminder(String reminderId,
+                    String reminderTitle,
+                    boolean active,
+                    boolean vibrateOnly,
+                    boolean renewAutomatically,
+                    int hourOfDay,
+                    int minute) {
         this.reminderId = reminderId;
         this.reminderTitle = reminderTitle;
         this.active = active;
         this.vibrateOnly = vibrateOnly;
         this.renewAutomatically = renewAutomatically;
-        this.minute = minute;
         this.hourOfDay = hourOfDay;
+        this.minute = minute;
     }
 
     public String getReminderId() {

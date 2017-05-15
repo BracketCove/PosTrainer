@@ -94,6 +94,8 @@ public class ReminderDetailPresenterTest {
     }
 
 
+
+
     /**
      * Edge case where RealmReminder Id isn't valid to retrieve a RealmReminder from storage. In this case,
      * not much to do but start the List Activity Again and inform the user of an error
@@ -164,6 +166,7 @@ public class ReminderDetailPresenterTest {
 
         presenter.onDoneIconPress();
 
+        //[4]
         Mockito.verify(view).makeToast(R.string.message_database_write_successful);
         Mockito.verify(view).startReminderListActivity();
     }

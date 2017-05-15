@@ -9,10 +9,13 @@ import com.bracketcove.postrainer.baseinterfaces.BaseView;
 
 public interface AlarmReceiverContract {
     interface View extends BaseView<Presenter> {
+            String getReminderId();
 
+            void finishActivity();
     }
 
     interface Presenter extends BasePresenter {
         void onAlarmDismissClick();
+
     }
 }

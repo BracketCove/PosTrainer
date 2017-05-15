@@ -214,6 +214,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                                             String defaultName,
                                             final String reminderId) {
 
+        //only allow up to 5 Reminders at a time
         if (currentNumberOfReminders < 5) {
             final Reminder reminder = new Reminder(
                     reminderId,
@@ -221,8 +222,8 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                     false,
                     true,
                     false,
-                    30,
-                    12
+                    12,
+                    30
             );
 
             compositeDisposable.add(

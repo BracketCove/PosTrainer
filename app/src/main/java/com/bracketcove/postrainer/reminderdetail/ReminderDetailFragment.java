@@ -10,6 +10,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TimePicker;
@@ -31,8 +33,8 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
 
     ReminderDetailContract.Presenter presenter;
 
-    private AppCompatEditText reminderTitle;
-    private AppCompatCheckBox vibrateOnly, autoRenew;
+    private EditText reminderTitle;
+    private CheckBox vibrateOnly, autoRenew;
     private TimePicker nosePicker;
     private ImageView back, proceed;
 

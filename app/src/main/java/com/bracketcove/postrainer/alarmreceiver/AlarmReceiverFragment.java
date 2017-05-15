@@ -1,5 +1,6 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -9,17 +10,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 
-import javax.inject.Inject;
-
 /**
- *
  * Created by Ryan on 05/03/2017.
  */
 
 public class AlarmReceiverFragment extends Fragment implements AlarmReceiverContract.View {
+
+    private static final String REMINDER_ID = "REMINDER_ID";
+    private String reminderId;
 
     AlarmReceiverContract.Presenter presenter;
 
@@ -27,14 +27,19 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
 
     }
 
-    public static AlarmReceiverFragment newInstance() {
-        return new AlarmReceiverFragment();
+    public static AlarmReceiverFragment newInstance(String reminderId) {
+        AlarmReceiverFragment fragment = new AlarmReceiverFragment();
+        Bundle args = new Bundle();
+        args.putString(REMINDER_ID, reminderId);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //This is important for Orientation Change handling!!!
+        this.reminderId = getArguments().getString(REMINDER_ID);
         setRetainInstance(true);
     }
 
@@ -68,5 +73,31 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
                 message,
                 Toast.LENGTH_SHORT)
                 .show();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*
+                In order to set up the Presenter properly, it must be supplied with the Id of the
+                Alarm which just went off.
+                 */
+        presenter.subscribe();
+    }
+
+    @Override
+    public String getReminderId() {
+        return this.reminderId;
+    }
+
+    @Override
+    public void finishActivity() {
+        Activity activity = getActivity();
+
+        //null check to avoid cases where Act is destroyed. Not sure if necessary at this point.
+        if (activity != null) {
+            activity.finish();
+        }
     }
 }

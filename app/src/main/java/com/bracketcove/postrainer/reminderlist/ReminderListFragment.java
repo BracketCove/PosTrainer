@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.bracketcove.postrainer.reminderdetail.ReminderDetailActivity;
 import com.bracketcove.postrainer.settings.SettingsActivity;
 import com.bracketcove.postrainer.util.TimeConverter;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -93,10 +95,12 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         fabulous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 presenter.onCreateReminderButtonClick(reminders.size(),
                         getString(R.string.def_reminder_name),
                         getDate()
                 );
+
             }
         });
         return v;
@@ -173,7 +177,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
      */
     @Override
     public void addNewReminderToListView(Reminder reminder) {
-        if (reminders.size() == 0){
+        if (reminders.size() == 0) {
             initializeRecyclerView();
             reminderList.setVisibility(View.VISIBLE);
             prompt.setVisibility(View.INVISIBLE);
@@ -211,10 +215,12 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
      */
     public String getDate() {
         Calendar calendar = Calendar.getInstance();
-        String date = "" + calendar.get(Calendar.DAY_OF_YEAR);
-        date += "" + calendar.get(Calendar.HOUR_OF_DAY);
-        date += "" + calendar.get(Calendar.MINUTE);
-        date += "" + calendar.get(Calendar.SECOND);
+        String date =
+                "" + calendar.get(Calendar.DAY_OF_YEAR) +
+                "" + calendar.get(Calendar.HOUR_OF_DAY) +
+                "" + calendar.get(Calendar.MINUTE) +
+                "" + calendar.get(Calendar.SECOND);
+
         return date;
     }
 
@@ -253,9 +259,15 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
             Reminder item = reminders.get(position);
             holder.alarmTitle.setText(item.getReminderTitle());
 
-            holder.alarmTime.setText(
-                    TimeConverter.convertTime(item.getHourOfDay(), item.getMinute())
-            );
+            try {
+                holder.alarmTime.setText(
+                        TimeConverter.convertTime(item.getHourOfDay(), item.getMinute())
+                );
+            } catch (ParseException e) {
+                //todo: handle this error case better if necessary
+                holder.alarmTime.setText("12:00pm");
+            }
+
             if (item.isActive()) {
                 holder.alarmStateLabel.setText(R.string.on);
             } else {

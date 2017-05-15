@@ -12,13 +12,19 @@ import com.bracketcove.postrainer.util.ActivityUtils;
 
 import javax.inject.Inject;
 
-
+/**
+ * I kind of treat Activites, like Containers:
+ * - A Container is both an Entry Point, and kind of a Manager of the things within it.
+ */
 public class ReminderDetailActivity extends AppCompatActivity {
     private static final String FRAG_REMINDER_DETAIL = "FRAG_REMINDER_DETAIL";
     private static final String REMINDER_TO_BE_EDITED = "REMINDER_TO_BE_EDITED";
 
     private FragmentManager manager;
 
+    //Field Injection
+
+    //Member Variable Injection
     @Inject
     ReminderDetailPresenter presenter;
 
@@ -39,7 +45,6 @@ public class ReminderDetailActivity extends AppCompatActivity {
 
         if (fragment == null){
             fragment = ReminderDetailFragment.newInstance(reminderId);
-
         }
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),

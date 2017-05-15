@@ -5,9 +5,6 @@
     android:id="@+id/root_alarm"
     >
 
-        <FrameLayout
-            android:id="@+id/cont_alarm_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
 
 </FrameLayout>

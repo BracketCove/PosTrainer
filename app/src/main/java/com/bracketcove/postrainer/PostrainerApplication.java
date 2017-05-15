@@ -26,6 +26,7 @@ public class PostrainerApplication extends Application {
                 .build();
 
         initializeRealm();
+        initializeLeakCanary();
     }
 
     private void initializeRealm(){

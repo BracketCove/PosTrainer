@@ -8,20 +8,21 @@ import android.view.WindowManager;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.util.ActivityUtils;
 
 import javax.inject.Inject;
 
 /**
  * This Activity is fired when an Alarm goes off. Once it is active, it handles the Alarm based on
- * the Alarm's configuration (such as Vibrate Only, etc.). It also serves as the method for stopping
+ * the Alarm's configuration (such as Vibrate Only, etc.). It also allows the user to stop
  * an Alarm which is going off.
  * Created by Ryan on 17/04/2016.
  */
 public class AlarmReceiverActivity extends AppCompatActivity {
 
     private static final String ALARM_FRAGMENT = "ALARM_FRAGMENT";
-    private static final String BUNDLE_ALARM_DATA = "BUNDLE_ALARM_DATA";
+    private static final String REMINDER_ID = "REMINDER_ID";
 
     @Inject
     AlarmReceiverPresenter presenter;
@@ -29,18 +30,21 @@ public class AlarmReceiverActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_alarm_receiver);
+
+        String reminderId = getIntent().getStringExtra(REMINDER_ID);
 
         FragmentManager manager = this.getSupportFragmentManager();
 
         AlarmReceiverFragment fragment = (AlarmReceiverFragment) manager.findFragmentByTag(ALARM_FRAGMENT);
 
         if (fragment == null) {
-            fragment = AlarmReceiverFragment.newInstance();
+            fragment = AlarmReceiverFragment.newInstance(reminderId);
         }
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                 fragment,
-                R.id.cont_alarm_fragment,
+                R.id.root_alarm,
                 ALARM_FRAGMENT
         );
 

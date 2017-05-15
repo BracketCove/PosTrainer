@@ -28,20 +28,20 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_done_white_24dp" />
 
-    <android.support.v7.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_reminder_title"
         style="@style/InputField.ReminderName"
         android:theme="@style/Postrainer.Inverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imb_reminder_detail_proceed"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="@dimen/standard_horizontal_margin"
+        android:layout_marginRight="@dimen/standard_horizontal_margin"
         android:layout_marginTop="8dp"
-        android:autoText="false"
+        android:inputType="textCapWords"
         android:hint="@string/manage_alarm_title_hint" />
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/chb_vibrate_only"
         style="@style/CheckBox_White_Border"
         android:theme="@style/Postrainer.Inverse"
@@ -52,7 +52,7 @@
 
         />
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/chb_renew_automatically"
         style="@style/CheckBox_White_Border"
         android:theme="@style/Postrainer.Inverse"

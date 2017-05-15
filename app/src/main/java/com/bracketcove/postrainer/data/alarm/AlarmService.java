@@ -21,7 +21,7 @@ import io.reactivex.Completable;
 import static android.content.Context.POWER_SERVICE;
 
 public class AlarmService implements AlarmSource {
-    private static final String ALARM_ID = "ALARM_ID";
+    private static final String REMINDER_ID = "REMINDER_ID";
 
     private final PowerManager.WakeLock wakeLock;
     private MediaPlayer mediaPlayer;
@@ -57,7 +57,7 @@ public class AlarmService implements AlarmSource {
         checkAlarm(alarm);
 
         Intent intent = new Intent(context, AlarmReceiverActivity.class);
-        intent.putExtra(ALARM_ID, reminder.getReminderId());
+        intent.putExtra(REMINDER_ID, reminder.getReminderId());
         PendingIntent alarmIntent = PendingIntent.getActivity(
                 context,
                 Integer.parseInt(reminder.getReminderId()),
@@ -99,7 +99,7 @@ public class AlarmService implements AlarmSource {
     }
 
     @Override
-    public void stopAlarm() {
+    public Completable stopMediaPlayerAndVibrator() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
@@ -108,13 +108,15 @@ public class AlarmService implements AlarmSource {
         if (vibe != null) {
             vibe.cancel();
         }
+
+        return Completable.complete();
     }
 
     /**
      * Starts an Alarm with the Requisite Parameters:
      */
     @Override
-    public void startAlarm(Reminder reminder) {
+    public Completable startAlarm(Reminder reminder) {
         wakeLock.acquire();
 
         if (reminder.isVibrateOnly()) {
@@ -127,13 +129,22 @@ public class AlarmService implements AlarmSource {
                 e.printStackTrace();
             }
         }
+
+        return Completable.complete();
     }
 
+
     @Override
-    public void releaseWakeLock() {
-        if (wakeLock != null) {
+    public Completable releaseWakeLock() {
+        /*
+        a recent bug appears to cause crashes by calling release on wakeLocks that don't
+        pass WakeLock.isHeld(). important to note.
+         */
+        if (wakeLock != null && wakeLock.isHeld()) {
             wakeLock.release();
         }
+
+        return Completable.complete();
     }
 
     private void playAlarmSound() throws java.io.IOException {
