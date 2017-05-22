@@ -5,6 +5,8 @@ import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.CompletableOnSubscribe;
@@ -26,8 +28,9 @@ public class ReminderService implements ReminderSource {
 
     private Realm realm;
 
-    public ReminderService() {
-
+    @Inject
+    public ReminderService(Realm realm) {
+        this.realm = realm;
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
 import android.os.Vibrator;
@@ -15,6 +16,8 @@ import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverActivity;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import io.reactivex.Completable;
 
@@ -28,22 +31,35 @@ public class AlarmService implements AlarmSource {
     private final AudioManager audioManager;
     private final Vibrator vibe;
     private final AlarmManager alarmManager;
-    private Context context;
+    private final Context applicationContext;
 
-    public AlarmService(Context applicationContext) {
-        this.context = applicationContext;
+    /**
+     * One unfortunate consequence of AlarmManager is that it requires Context in order to create
+     * Intents. Ideally, I wouldn't be passing in any kind of Context here, but the Framework makes
+     * this a necessity (until a better solution becomes apparent to me). I'll be monitoring
+     * this Context object for Memory Leaks, as this is a possible scenario for such things to occur,
+     * as I'm passing in ApplicationContext.
+     * @param wakeLock
+     * @param mediaPlayer
+     * @param audioManager
+     * @param vibe
+     * @param alarmManager
+     * @param applicationContext
+     */
+    @Inject
+    public AlarmService(PowerManager.WakeLock wakeLock,
+                        MediaPlayer mediaPlayer,
+                        AudioManager audioManager,
+                        Vibrator vibe,
+                        AlarmManager alarmManager,
+                        Context applicationContext) {
 
-        this.wakeLock = ((PowerManager) applicationContext
-                .getSystemService(POWER_SERVICE))
-                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Alarm");
-
-        audioManager = ((AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE));
-
-        mediaPlayer = new MediaPlayer();
-
-        vibe = ((Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE));
-
-        alarmManager = (AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE);
+        this.wakeLock = wakeLock;
+        this.mediaPlayer = mediaPlayer;
+        this.audioManager = audioManager;
+        this.vibe = vibe;
+        this.alarmManager = alarmManager;
+        this.applicationContext = applicationContext;
     }
 
 
@@ -56,10 +72,10 @@ public class AlarmService implements AlarmSource {
 
         checkAlarm(alarm);
 
-        Intent intent = new Intent(context, AlarmReceiverActivity.class);
+        Intent intent = new Intent(applicationContext, AlarmReceiverActivity.class);
         intent.putExtra(REMINDER_ID, reminder.getReminderId());
         PendingIntent alarmIntent = PendingIntent.getActivity(
-                context,
+                applicationContext,
                 Integer.parseInt(reminder.getReminderId()),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
@@ -86,9 +102,9 @@ public class AlarmService implements AlarmSource {
     @Override
     public Completable cancelAlarm(Reminder reminder) {
 
-        Intent intent = new Intent(context, AlarmReceiverActivity.class);
+        Intent intent = new Intent(applicationContext, AlarmReceiverActivity.class);
 
-        PendingIntent alarmIntent = PendingIntent.getActivity(context,
+        PendingIntent alarmIntent = PendingIntent.getActivity(applicationContext,
                 Integer.parseInt(reminder.getReminderId()),
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
@@ -148,32 +164,20 @@ public class AlarmService implements AlarmSource {
     }
 
     private void playAlarmSound() throws java.io.IOException {
-        mediaPlayer.setDataSource(getAlarmUri());
+        new CountDownTimer(30000, 1000) {
+            public void onTick(long millisUntilFinished) {
 
-        if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-            new CountDownTimer(30000, 1000) {
-                public void onTick(long millisUntilFinished) {
+            }
 
+            public void onFinish() {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
                 }
+            }
+        };
 
-                public void onFinish() {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.stop();
-                        mediaPlayer.release();
-                    }
-                }
-            };
-
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mp.start();
-                }
-            });
-
-            mediaPlayer.prepare();
-        }
+        mediaPlayer.start();
     }
 
     private void vibratePhone() {

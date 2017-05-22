@@ -1,5 +1,6 @@
 package com.bracketcove.postrainer.dependencyinjection;
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.PowerManager;
@@ -52,6 +53,12 @@ public final class ApplicationModule {
     @Provides
     Vibrator provideVibrator() {
         return ((Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE));
+    }
+
+    @Singleton
+    @Provides
+    AlarmManager provideAlarmManager() {
+        return ((AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE));
     }
 
 }
