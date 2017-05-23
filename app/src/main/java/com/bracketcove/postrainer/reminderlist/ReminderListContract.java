@@ -1,8 +1,7 @@
 package com.bracketcove.postrainer.reminderlist;
 
-import com.bracketcove.postrainer.baseinterfaces.BasePresenter;
-import com.bracketcove.postrainer.baseinterfaces.BaseView;
-import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.base.BasePresenter;
+import com.bracketcove.postrainer.base.BaseView;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import java.util.List;

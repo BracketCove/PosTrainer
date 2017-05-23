@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer.dependencyinjection;
+package com.bracketcove.postrainer.dependencyinjection.modules;
 
 import android.app.AlarmManager;
 import android.content.Context;
@@ -7,13 +7,8 @@ import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.os.Vibrator;
 
-import com.bracketcove.postrainer.data.alarm.Alarm;
 import com.bracketcove.postrainer.data.alarm.AlarmService;
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
-import com.bracketcove.postrainer.data.reminder.ReminderService;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.util.BaseSchedulerProvider;
-import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -46,7 +41,7 @@ public class AlarmModule {
 
     @Singleton
     @Provides
-    AlarmSource provideAlarmSource(Context context) {
+    AlarmSource provideAlarmSource() {
         return alarmService;
     }
 

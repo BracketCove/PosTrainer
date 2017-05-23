@@ -21,6 +21,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
 
+    //TODO refactor to Inject Use Cases instead of Data Sources (AlarmReceiver)
     private final AlarmReceiverContract.View view;
     private final ReminderSource reminderSource;
     private final AlarmSource alarmSource;

@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer.dependencyinjection;
+package com.bracketcove.postrainer.dependencyinjection.modules;
 
 import android.content.Context;
 

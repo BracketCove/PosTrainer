@@ -1,7 +1,6 @@
 package com.bracketcove.postrainer.settings;
 
-import com.bracketcove.postrainer.dependencyinjection.ApplicationComponent;
-import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
+import com.bracketcove.postrainer.dependencyinjection.components.ApplicationComponent;
 import com.bracketcove.postrainer.util.FragmentScoped;
 
 import dagger.Component;

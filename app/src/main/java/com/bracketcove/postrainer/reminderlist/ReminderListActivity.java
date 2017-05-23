@@ -70,9 +70,9 @@ public class ReminderListActivity extends AppCompatActivity {
 
         DaggerReminderListComponent.builder()
                 .reminderListPresenterModule(new ReminderListPresenterModule(fragment))
-                .reminderComponent(
+                .applicationComponent(
                         ((PostrainerApplication) getApplication())
-                                .getReminderComponent()
+                                .getApplicationComponent()
                 )
                 .build().inject(this);
     }

@@ -1,13 +1,8 @@
 package com.bracketcove.postrainer.data.alarm;
 
-import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
-import java.util.List;
-
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
-import io.reactivex.Single;
 
 /**
  * This interface describes the responsibilities and interactions between

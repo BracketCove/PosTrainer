@@ -55,9 +55,9 @@ public class ReminderDetailActivity extends AppCompatActivity {
 
         DaggerReminderDetailComponent.builder()
                 .reminderDetailPresenterModule(new ReminderDetailPresenterModule(fragment))
-                .reminderComponent(
+                .applicationComponent(
                         ((PostrainerApplication) getApplication())
-                                .getReminderComponent()
+                                .getApplicationComponent()
                 )
                 .build().inject(this);
     }

@@ -4,7 +4,6 @@ package com.bracketcove.postrainer.reminderdetail;
 import android.util.Log;
 
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.data.reminder.RealmReminder;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
@@ -21,6 +20,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 public class ReminderDetailPresenter implements ReminderDetailContract.Presenter {
 
+    //TODO refactor to Inject Use Cases instead of Data Sources (AlarmReceiver)
     private final ReminderDetailContract.View view;
     private final ReminderSource reminderSource;
     private final BaseSchedulerProvider schedulerProvider;

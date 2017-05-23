@@ -1,5 +1,6 @@
 package com.bracketcove.postrainer.data.reminder;
 
+import com.bracketcove.postrainer.data.realmmodel.RealmReminder;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ public class ReminderService implements ReminderSource {
                 new CompletableOnSubscribe() {
                     @Override
                     public void subscribe(final CompletableEmitter e) throws Exception {
-                        realm = Realm.getDefaultInstance();
+                        //Pretty sure this is pointless. Either use DI or Don't lol
+                        //realm = Realm.getDefaultInstance();
 
                         realm.beginTransaction();
                         RealmReminder rem = realm.createObject(

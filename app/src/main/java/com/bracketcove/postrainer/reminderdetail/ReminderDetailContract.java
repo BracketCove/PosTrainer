@@ -1,15 +1,14 @@
 package com.bracketcove.postrainer.reminderdetail;
 
-import com.bracketcove.postrainer.baseinterfaces.BasePresenter;
-import com.bracketcove.postrainer.baseinterfaces.BaseView;
-import com.bracketcove.postrainer.data.reminder.RealmReminder;
+import com.bracketcove.postrainer.base.BasePresenter;
+import com.bracketcove.postrainer.base.BaseView;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 /**
  * Created by Ryan on 06/03/2017.
  */
 
-public interface ReminderDetailContract {
+public class ReminderDetailContract {
     interface View extends BaseView<Presenter> {
         Reminder getViewModel();
 

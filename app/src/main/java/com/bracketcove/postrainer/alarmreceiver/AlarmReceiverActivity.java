@@ -63,9 +63,9 @@ public class AlarmReceiverActivity extends AppCompatActivity {
 
         DaggerAlarmReceiverComponent.builder()
                 .alarmReceiverPresenterModule(new AlarmReceiverPresenterModule(fragment))
-                .reminderComponent(
+                .applicationComponent(
                         ((PostrainerApplication) getApplication())
-                                .getReminderComponent()
+                                .getApplicationComponent()
                 )
                 .build().inject(this);
     }

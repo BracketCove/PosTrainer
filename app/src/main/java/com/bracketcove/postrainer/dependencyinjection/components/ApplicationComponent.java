@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bracketcove.postrainer.dependencyinjection;
+package com.bracketcove.postrainer.dependencyinjection.components;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -22,14 +22,14 @@ import android.os.Vibrator;
 
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
-import com.bracketcove.postrainer.util.BaseSchedulerProvider;
+import com.bracketcove.postrainer.dependencyinjection.modules.ApplicationModule;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 
 /**
- * A component whose lifetime is the life of the application.
+ *The Application Component Provides
  */
 @Singleton
 @Component(modules = ApplicationModule.class)
@@ -39,4 +39,6 @@ public interface ApplicationComponent {
   PowerManager.WakeLock wakeLock();
   AudioManager audioManager();
   Vibrator vibrator();
+  AlarmSource alarmSource();
+  ReminderSource reminderSource();
 }

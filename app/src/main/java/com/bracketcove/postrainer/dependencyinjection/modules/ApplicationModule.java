@@ -1,10 +1,16 @@
-package com.bracketcove.postrainer.dependencyinjection;
+package com.bracketcove.postrainer.dependencyinjection.modules;
 
 import android.app.AlarmManager;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.PowerManager;
 import android.os.Vibrator;
+
+import com.bracketcove.postrainer.data.alarm.AlarmService;
+import com.bracketcove.postrainer.data.alarm.AlarmSource;
+import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.util.BaseSchedulerProvider;
+import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -59,6 +65,24 @@ public final class ApplicationModule {
     @Provides
     AlarmManager provideAlarmManager() {
         return ((AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE));
+    }
+
+    @Singleton
+    @Provides
+    BaseSchedulerProvider provideScheduler() {
+        return new SchedulerProvider();
+    }
+
+    @Singleton
+    @Provides
+    AlarmSource provideAlarmSource(AlarmSource alarmSource) {
+        return alarmSource;
+    }
+
+    @Singleton
+    @Provides
+    ReminderSource provideReminderSource(ReminderSource reminderSource) {
+        return reminderSource;
     }
 
 }

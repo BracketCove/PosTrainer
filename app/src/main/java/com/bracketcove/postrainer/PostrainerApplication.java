@@ -2,10 +2,12 @@ package com.bracketcove.postrainer;
 
 import android.app.Application;
 
-import com.bracketcove.postrainer.dependencyinjection.ApplicationComponent;
-import com.bracketcove.postrainer.dependencyinjection.ApplicationModule;
-import com.bracketcove.postrainer.dependencyinjection.DaggerReminderComponent;
-import com.bracketcove.postrainer.dependencyinjection.ReminderComponent;
+import com.bracketcove.postrainer.dependencyinjection.components.AlarmComponent;
+import com.bracketcove.postrainer.dependencyinjection.components.ApplicationComponent;
+import com.bracketcove.postrainer.dependencyinjection.components.DaggerAlarmComponent;
+import com.bracketcove.postrainer.dependencyinjection.components.DaggerReminderComponent;
+import com.bracketcove.postrainer.dependencyinjection.components.ReminderComponent;
+import com.bracketcove.postrainer.dependencyinjection.modules.ApplicationModule;
 import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
@@ -15,15 +17,24 @@ import io.realm.RealmConfiguration;
 public class PostrainerApplication extends Application {
     private ApplicationComponent applicationComponent;
     private ReminderComponent reminderComponent;
+    private AlarmComponent alarmComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        ApplicationModule applicationModule = new ApplicationModule(getApplicationContext());
+
         reminderComponent = DaggerReminderComponent
                 .builder()
-                .applicationModule(new ApplicationModule(getApplicationContext()))
+                .applicationModule(applicationModule)
                 .build();
+
+        alarmComponent = DaggerAlarmComponent
+                .builder()
+                .applicationModule(applicationModule)
+                .build();
+
 
         initializeRealm();
         initializeLeakCanary();
@@ -44,6 +55,10 @@ public class PostrainerApplication extends Application {
 
     public ReminderComponent getReminderComponent(){
         return reminderComponent;
+    }
+
+    public AlarmComponent getAlarmComponent(){
+        return alarmComponent;
     }
 
     public ApplicationComponent getApplicationComponent() {

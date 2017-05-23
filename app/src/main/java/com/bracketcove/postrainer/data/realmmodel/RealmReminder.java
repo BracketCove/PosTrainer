@@ -1,4 +1,4 @@
-package com.bracketcove.postrainer.data.reminder;
+package com.bracketcove.postrainer.data.realmmodel;
 
 import io.realm.RealmModel;
 import io.realm.annotations.PrimaryKey;
