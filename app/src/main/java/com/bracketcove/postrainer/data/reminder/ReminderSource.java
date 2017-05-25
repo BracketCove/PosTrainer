@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -21,9 +22,9 @@ public interface ReminderSource {
      * 1. It tells me that the operation completed
      * 2. It throws an error
      */
-    Completable createReminder(String reminderId);
+    Completable createReminder(Reminder reminder);
 
-    Completable deleteReminder(String reminderId);
+    Completable deleteReminder(Reminder reminder);
 
     Completable updateReminder(Reminder reminder);
 
@@ -33,12 +34,12 @@ public interface ReminderSource {
      * 2. It can return nothing.
      * 3. It can throw an error
      */
-    Maybe<List<Reminder>> getReminders();
+    Observable<List<Reminder>> getReminders();
 
     /**
      * Single: RxJava Observable which has two possible outcomes:
      * 1. It can return single object (in this case a RealmReminder)
      * 2. It can throw an error
      */
-    Single<Reminder> getReminderById(String reminderId);
+    Observable<Reminder> getReminderById(Reminder reminder);
 }

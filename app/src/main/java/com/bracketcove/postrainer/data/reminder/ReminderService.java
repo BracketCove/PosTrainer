@@ -14,6 +14,9 @@ import io.reactivex.CompletableOnSubscribe;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
 import io.reactivex.MaybeOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
@@ -35,7 +38,7 @@ public class ReminderService implements ReminderSource {
     }
 
     @Override
-    public Completable createReminder(final String reminderId) {
+    public Completable createReminder(final Reminder reminder) {
         return Completable.create(
                 new CompletableOnSubscribe() {
                     @Override
@@ -45,7 +48,7 @@ public class ReminderService implements ReminderSource {
 
                         realm.beginTransaction();
                         RealmReminder rem = realm.createObject(
-                                RealmReminder.class, reminderId);
+                                RealmReminder.class, reminder.getReminderId());
 
                         rem.setHourOfDay(12);
                         rem.setMinute(30);
@@ -62,7 +65,7 @@ public class ReminderService implements ReminderSource {
     }
 
     @Override
-    public Completable deleteReminder(final String reminderId) {
+    public Completable deleteReminder(final Reminder reminder) {
         return Completable.create(
                 new CompletableOnSubscribe() {
                     @Override
@@ -73,7 +76,7 @@ public class ReminderService implements ReminderSource {
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
 
-                        query.equalTo("reminderId", reminderId);
+                        query.equalTo("reminderId", reminder.getReminderId());
                         RealmResults<RealmReminder> result = query.findAll();
 
                         if (result.size() == 0) {
@@ -117,11 +120,11 @@ public class ReminderService implements ReminderSource {
     }
 
     @Override
-    public Maybe<List<Reminder>> getReminders() {
-        return Maybe.create(
-                new MaybeOnSubscribe<List<Reminder>>() {
+    public Observable<List<Reminder>> getReminders() {
+        return Observable.create(
+                new ObservableOnSubscribe<List<Reminder>>() {
                     @Override
-                    public void subscribe(final MaybeEmitter<List<Reminder>> e) throws Exception {
+                    public void subscribe(ObservableEmitter<List<Reminder>> e) throws Exception {
                         realm = Realm.getDefaultInstance();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
@@ -148,22 +151,23 @@ public class ReminderService implements ReminderSource {
                                         reminder
                                 );
                             }
-                            e.onSuccess(reminderList);
+                            e.onNext(reminderList);
                         }
                     }
+
                 });
     }
 
     @Override
-    public Single<Reminder> getReminderById(final String reminderId) {
-        return Single.create(
-                new SingleOnSubscribe<Reminder>() {
+    public Observable<Reminder> getReminderById(final Reminder reminder) {
+        return Observable.create(
+                new ObservableOnSubscribe<Reminder>() {
                     @Override
-                    public void subscribe(SingleEmitter<Reminder> e) throws Exception {
+                    public void subscribe(ObservableEmitter<Reminder> e) throws Exception {
                         realm = Realm.getDefaultInstance();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
-                        query.equalTo("reminderId", reminderId);
+                        query.equalTo("reminderId", reminder.getReminderId());
 
                         RealmResults<RealmReminder> result = query.findAll();
 
@@ -180,7 +184,7 @@ public class ReminderService implements ReminderSource {
                             reminder.setMinute(realmReminder.getMinute());
                             reminder.setReminderTitle(realmReminder.getReminderTitle());
 
-                            e.onSuccess(reminder);
+                            e.onNext(reminder);
                         }
                     }
                 });
