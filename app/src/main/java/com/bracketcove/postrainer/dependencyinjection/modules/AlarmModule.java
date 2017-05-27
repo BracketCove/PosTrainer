@@ -41,7 +41,7 @@ public class AlarmModule {
 
     @Singleton
     @Provides
-    AlarmSource provideAlarmSource() {
+    AlarmService provideAlarmService() {
         return alarmService;
     }
 

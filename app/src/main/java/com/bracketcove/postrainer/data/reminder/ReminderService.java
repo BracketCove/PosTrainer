@@ -30,7 +30,7 @@ import io.realm.RealmResults;
 
 public class ReminderService implements ReminderSource {
 
-    private Realm realm;
+    private final Realm realm;
 
     @Inject
     public ReminderService(Realm realm) {
@@ -38,11 +38,11 @@ public class ReminderService implements ReminderSource {
     }
 
     @Override
-    public Completable createReminder(final Reminder reminder) {
-        return Completable.create(
-                new CompletableOnSubscribe() {
+    public Observable createReminder(final Reminder reminder) {
+        return Observable.create(
+                new ObservableOnSubscribe() {
                     @Override
-                    public void subscribe(final CompletableEmitter e) throws Exception {
+                    public void subscribe(final ObservableEmitter e) throws Exception {
                         //Pretty sure this is pointless. Either use DI or Don't lol
                         //realm = Realm.getDefaultInstance();
 
@@ -65,13 +65,11 @@ public class ReminderService implements ReminderSource {
     }
 
     @Override
-    public Completable deleteReminder(final Reminder reminder) {
-        return Completable.create(
-                new CompletableOnSubscribe() {
+    public Observable deleteReminder(final Reminder reminder) {
+        return Observable.create(
+                new ObservableOnSubscribe() {
                     @Override
-                    public void subscribe(final CompletableEmitter e) throws Exception {
-                        realm = Realm.getDefaultInstance();
-
+                    public void subscribe(final ObservableEmitter e) throws Exception {
                         realm.beginTransaction();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
@@ -92,12 +90,11 @@ public class ReminderService implements ReminderSource {
     }
 
     @Override
-    public Completable updateReminder(final Reminder reminder) {
-        return Completable.create(new CompletableOnSubscribe() {
-            @Override
-            public void subscribe(CompletableEmitter e) throws Exception {
-                realm = Realm.getDefaultInstance();
-
+    public Observable updateReminder(final Reminder reminder) {
+        return Observable.create(
+                new ObservableOnSubscribe() {
+                    @Override
+                    public void subscribe(final ObservableEmitter e) throws Exception {
                 realm.beginTransaction();
 
                 RealmReminder realmReminder = new RealmReminder();
@@ -125,7 +122,6 @@ public class ReminderService implements ReminderSource {
                 new ObservableOnSubscribe<List<Reminder>>() {
                     @Override
                     public void subscribe(ObservableEmitter<List<Reminder>> e) throws Exception {
-                        realm = Realm.getDefaultInstance();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
                         RealmResults<RealmReminder> result = query.findAll();
@@ -164,7 +160,6 @@ public class ReminderService implements ReminderSource {
                 new ObservableOnSubscribe<Reminder>() {
                     @Override
                     public void subscribe(ObservableEmitter<Reminder> e) throws Exception {
-                        realm = Realm.getDefaultInstance();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
                         query.equalTo("reminderId", reminder.getReminderId());

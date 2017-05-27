@@ -3,11 +3,13 @@ package com.bracketcove.postrainer.dependencyinjection.modules;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.os.Vibrator;
 
 import com.bracketcove.postrainer.data.alarm.AlarmService;
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
+import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 import com.bracketcove.postrainer.util.SchedulerProvider;
@@ -16,6 +18,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
 
 import static android.content.Context.POWER_SERVICE;
 
@@ -30,9 +33,25 @@ import static android.content.Context.POWER_SERVICE;
 @Module
 public final class ApplicationModule {
     private final Context applicationContext;
+    private final Realm realm;
+    private final PowerManager.WakeLock wakeLock;
+    private final Vibrator vibrator;
+    private final AudioManager audioManager;
+    private final AlarmManager alarmManager;
+    private final MediaPlayer mediaPlayer;
 
-    public ApplicationModule(Context application) {
+    //This objects are necessary for creation of other objects within this Module, hence making them
+    //variables
+    public ApplicationModule(Context application, Realm realm) {
         this.applicationContext = application;
+        this.wakeLock = ((PowerManager) applicationContext
+                .getSystemService(POWER_SERVICE))
+                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Alarm");
+        this.audioManager = ((AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE));
+        this.vibrator = ((Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE));
+        this.alarmManager = ((AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE));
+        this.mediaPlayer = new MediaPlayer();
+        this.realm = realm;
     }
 
     @Provides
@@ -44,27 +63,31 @@ public final class ApplicationModule {
     @Singleton
     @Provides
     PowerManager.WakeLock provideWakeLock() {
-        return ((PowerManager) applicationContext
-                .getSystemService(POWER_SERVICE))
-                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Alarm");
+        return wakeLock;
     }
 
     @Singleton
     @Provides
     AudioManager provideAudioManager() {
-        return ((AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE));
+        return audioManager;
+    }
+
+    @Singleton
+    @Provides
+    MediaPlayer provideMediaPlayer() {
+        return mediaPlayer;
     }
 
     @Singleton
     @Provides
     Vibrator provideVibrator() {
-        return ((Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE));
+        return vibrator;
     }
 
     @Singleton
     @Provides
     AlarmManager provideAlarmManager() {
-        return ((AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE));
+        return alarmManager;
     }
 
     @Singleton
@@ -75,14 +98,21 @@ public final class ApplicationModule {
 
     @Singleton
     @Provides
-    AlarmSource provideAlarmSource(AlarmSource alarmSource) {
-        return alarmSource;
+    AlarmService provideAlarmService() {
+        return new AlarmService(
+                wakeLock,
+                mediaPlayer,
+                audioManager,
+                vibrator,
+                alarmManager,
+                applicationContext
+        );
     }
 
     @Singleton
     @Provides
-    ReminderSource provideReminderSource(ReminderSource reminderSource) {
-        return reminderSource;
+    ReminderService provideReminderService() {
+        return new ReminderService(realm);
     }
 
 }

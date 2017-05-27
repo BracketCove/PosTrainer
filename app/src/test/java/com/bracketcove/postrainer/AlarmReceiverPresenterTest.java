@@ -2,11 +2,9 @@ package com.bracketcove.postrainer;
 
 import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverContract;
 import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverPresenter;
-import com.bracketcove.postrainer.data.alarm.AlarmSource;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.alarm.AlarmService;
+import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
-import com.bracketcove.postrainer.settings.SettingsContract;
-import com.bracketcove.postrainer.settings.SettingsPresenter;
 import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import org.junit.Before;
@@ -17,9 +15,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,10 +25,10 @@ import static org.mockito.Mockito.when;
 public class AlarmReceiverPresenterTest {
 
     @Mock
-    private AlarmSource alarmSource;
+    private AlarmService alarmService;
 
     @Mock
-    private ReminderSource reminderSource;
+    private ReminderService reminderService;
 
     @Mock
     private AlarmReceiverContract.View view;
@@ -81,8 +79,8 @@ public class AlarmReceiverPresenterTest {
 
         presenter = new AlarmReceiverPresenter(
                 view,
-                reminderSource,
-                alarmSource,
+                reminderService,
+                alarmService,
                 schedulerProvider
         );
 
@@ -116,15 +114,15 @@ public class AlarmReceiverPresenterTest {
         when(view.getReminderId())
                 .thenReturn(REMINDER_ID);
 
-        when(reminderSource.getReminderById(REMINDER_ID))
-                .thenReturn(Single.just(repeatingReminder));
+        when(reminderService.getReminderById(repeatingReminder))
+                .thenReturn(Observable.just(repeatingReminder));
 
-        when(alarmSource.startAlarm(repeatingReminder))
+        when(alarmService.startAlarm(repeatingReminder))
                 .thenReturn(Completable.complete());
 
         presenter.subscribe();
 
-        verify(alarmSource).startAlarm(repeatingReminder);
+        verify(alarmService).startAlarm(repeatingReminder);
     }
 
     @Test
@@ -134,8 +132,8 @@ public class AlarmReceiverPresenterTest {
         when(view.getReminderId())
                 .thenReturn(REMINDER_ID);
 
-        when(reminderSource.getReminderById(REMINDER_ID))
-                .thenReturn(Single.<Reminder>error(new Exception()));
+        when(reminderService.getReminderById(ACTIVE_REMINDER))
+                .thenReturn(Observable.<Reminder>error(new Exception()));
 
         presenter.subscribe();
     }
@@ -151,10 +149,10 @@ public class AlarmReceiverPresenterTest {
     @Test
     public void onAlarmDismissSuccessful() {
 
-        when(alarmSource.stopMediaPlayerAndVibrator())
+        when(alarmService.dismissAlarm())
                 .thenReturn(Completable.complete());
 
-        when(alarmSource.releaseWakeLock())
+        when(alarmService.dismissAlarm())
                 .thenReturn(Completable.complete());
 
         presenter.onAlarmDismissClick();
@@ -168,10 +166,10 @@ public class AlarmReceiverPresenterTest {
      */
 //    @Test
 //    public void onAlarmDismissUnsuccessful () {
-//        when(alarmSource.stopMediaPlayerAndVibrator())
+//        when(alarmService.dismissAlarm())
 //                .thenReturn(Completable.complete());
 //
-//        when(alarmSource.releaseWakeLock())
+//        when(alarmService.releaseWakeLock())
 //                .thenReturn(Completable.error(new Exception()));
 //
 //        presenter.onAlarmDismissClick();

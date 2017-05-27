@@ -5,6 +5,7 @@ import android.app.Application;
 import com.bracketcove.postrainer.dependencyinjection.components.AlarmComponent;
 import com.bracketcove.postrainer.dependencyinjection.components.ApplicationComponent;
 import com.bracketcove.postrainer.dependencyinjection.components.DaggerAlarmComponent;
+import com.bracketcove.postrainer.dependencyinjection.components.DaggerApplicationComponent;
 import com.bracketcove.postrainer.dependencyinjection.components.DaggerReminderComponent;
 import com.bracketcove.postrainer.dependencyinjection.components.ReminderComponent;
 import com.bracketcove.postrainer.dependencyinjection.modules.ApplicationModule;
@@ -23,21 +24,29 @@ public class PostrainerApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        ApplicationModule applicationModule = new ApplicationModule(getApplicationContext());
-
-        reminderComponent = DaggerReminderComponent
-                .builder()
-                .applicationModule(applicationModule)
-                .build();
-
-        alarmComponent = DaggerAlarmComponent
-                .builder()
-                .applicationModule(applicationModule)
-                .build();
-
-
         initializeRealm();
         initializeLeakCanary();
+
+        ApplicationModule applicationModule = new ApplicationModule(
+                getApplicationContext(),
+                Realm.getDefaultInstance()
+        );
+
+        applicationComponent = DaggerApplicationComponent
+                .builder()
+                .applicationModule(applicationModule)
+                .build();
+
+//        reminderComponent = DaggerReminderComponent
+//                .builder()
+//                .applicationModule(applicationModule)
+//                .build();
+//
+//        alarmComponent = DaggerAlarmComponent
+//                .builder()
+//                .applicationModule(applicationModule)
+//                .build();
+
     }
 
     private void initializeRealm(){

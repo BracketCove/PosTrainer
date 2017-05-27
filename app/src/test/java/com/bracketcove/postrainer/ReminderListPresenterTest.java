@@ -1,12 +1,12 @@
 package com.bracketcove.postrainer;
 
-import com.bracketcove.postrainer.data.alarm.AlarmSource;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.alarm.AlarmService;
+import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListContract;
 import com.bracketcove.postrainer.reminderlist.ReminderListPresenter;
-import com.bracketcove.postrainer.util.SchedulerProvider;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
+import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +21,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,10 +36,10 @@ public class ReminderListPresenterTest {
     private ReminderListContract.View view;
 
     @Mock
-    private ReminderSource reminderSource;
+    private ReminderService reminderService;
 
     @Mock
-    private AlarmSource alarmSource;
+    private AlarmService alarmService;
 
     private BaseSchedulerProvider schedulerProvider;
 
@@ -86,8 +87,8 @@ public class ReminderListPresenterTest {
 
         presenter = new ReminderListPresenter(
                 view,
-                reminderSource,
-                alarmSource,
+                reminderService,
+                alarmService,
                 schedulerProvider
         );
     }
@@ -100,7 +101,7 @@ public class ReminderListPresenterTest {
         List<Reminder> reminderList = new ArrayList<>();
         reminderList.add(INACTIVE_REMINDER);
 
-        when(reminderSource.getReminders()).thenReturn(Maybe.just(reminderList));
+        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
 
         presenter.subscribe();
 
@@ -112,7 +113,7 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onGetRemindersEmpty() {
-        when(reminderSource.getReminders()).thenReturn(Maybe.<List<Reminder>>empty());
+        when(reminderService.getReminders()).thenReturn(Observable.<List<Reminder>>empty());
 
         presenter.subscribe();
 
@@ -124,8 +125,8 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onGetRemindersError() {
-        when(reminderSource.getReminders()).thenReturn(
-                Maybe.<List<Reminder>>error(new Exception())
+        when(reminderService.getReminders()).thenReturn(
+                Observable.<List<Reminder>>error(new Exception())
         );
 
 
@@ -161,22 +162,23 @@ public class ReminderListPresenterTest {
     @Test
     public void onReminderToggledStatesDifferActivate() {
 
-        Mockito.when(reminderSource.updateReminder(ACTIVE_REMINDER))
-                .thenReturn(Completable.complete());
+        Mockito.when(reminderService.updateReminder(ACTIVE_REMINDER))
+                .thenReturn(Observable.empty());
 
-        Mockito.when(alarmSource.setAlarm(ACTIVE_REMINDER))
+        Mockito.when(alarmService.setAlarm(ACTIVE_REMINDER))
                 .thenReturn(Completable.complete());
 
         presenter.onReminderToggled(true, INACTIVE_REMINDER);
+
         verify(view).makeToast(R.string.msg_alarm_activated);
     }
 
     @Test
     public void onReminderToggledStatesDifferDeactivate() {
-        Mockito.when(reminderSource.updateReminder(INACTIVE_REMINDER))
-                .thenReturn(Completable.complete());
+        Mockito.when(reminderService.updateReminder(INACTIVE_REMINDER))
+                .thenReturn(Observable.empty());
 
-        Mockito.when(alarmSource.setAlarm(INACTIVE_REMINDER))
+        Mockito.when(alarmService.setAlarm(INACTIVE_REMINDER))
                 .thenReturn(Completable.complete());
 
         presenter.onReminderToggled(false, ACTIVE_REMINDER);
@@ -186,8 +188,8 @@ public class ReminderListPresenterTest {
 
     @Test
     public void onReminderSuccessfullyDeleted() {
-        Mockito.when(reminderSource.deleteReminder(REMINDER_ID))
-                .thenReturn(Completable.complete());
+        Mockito.when(reminderService.deleteReminder(ACTIVE_REMINDER))
+                .thenReturn(Observable.empty());
 
         presenter.onReminderSwiped(1, ACTIVE_REMINDER);
 
@@ -196,8 +198,8 @@ public class ReminderListPresenterTest {
 
     @Test
     public void onReminderUnsuccessfullyDeleted() {
-        Mockito.when(reminderSource.deleteReminder(REMINDER_ID))
-                .thenReturn(Completable.error(new Exception()));
+        Mockito.when(reminderService.deleteReminder(ACTIVE_REMINDER))
+                .thenReturn(Observable.error(new Exception()));
 
         presenter.onReminderSwiped(1, ACTIVE_REMINDER);
 

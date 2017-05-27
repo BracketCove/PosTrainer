@@ -30,7 +30,7 @@ public class ReminderModule {
 
     @Singleton
     @Provides
-    ReminderSource provideReminderSource() {
+    ReminderService provideReminderService() {
         return reminderService;
     }
 

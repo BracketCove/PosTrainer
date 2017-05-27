@@ -20,6 +20,7 @@ import java.util.Calendar;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 
 import static android.content.Context.POWER_SERVICE;
 
@@ -33,19 +34,6 @@ public class AlarmService implements AlarmSource {
     private final AlarmManager alarmManager;
     private final Context applicationContext;
 
-    /**
-     * One unfortunate consequence of AlarmManager is that it requires Context in order to create
-     * Intents. Ideally, I wouldn't be passing in any kind of Context here, but the Framework makes
-     * this a necessity (until a better solution becomes apparent to me). I'll be monitoring
-     * this Context object for Memory Leaks, as this is a possible scenario for such things to occur,
-     * as I'm passing in ApplicationContext.
-     * @param wakeLock
-     * @param mediaPlayer
-     * @param audioManager
-     * @param vibe
-     * @param alarmManager
-     * @param applicationContext
-     */
     @Inject
     public AlarmService(PowerManager.WakeLock wakeLock,
                         MediaPlayer mediaPlayer,
@@ -115,14 +103,19 @@ public class AlarmService implements AlarmSource {
     }
 
     @Override
-    public Completable stopMediaPlayerAndVibrator() {
+    public Completable dismissAlarm() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
         }
+
         if (vibe != null) {
             vibe.cancel();
+        }
+
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
         }
 
         return Completable.complete();
@@ -150,18 +143,7 @@ public class AlarmService implements AlarmSource {
     }
 
 
-    @Override
-    public Completable releaseWakeLock() {
-        /*
-        a recent bug appears to cause crashes by calling release on wakeLocks that don't
-        pass WakeLock.isHeld(). important to note.
-         */
-        if (wakeLock != null && wakeLock.isHeld()) {
-            wakeLock.release();
-        }
 
-        return Completable.complete();
-    }
 
     private void playAlarmSound() throws java.io.IOException {
         new CountDownTimer(30000, 1000) {

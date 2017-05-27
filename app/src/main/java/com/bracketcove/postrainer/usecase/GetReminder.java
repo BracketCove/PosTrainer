@@ -1,6 +1,5 @@
-package com.bracketcove.postrainer.reminderdetail.usecase;
+package com.bracketcove.postrainer.usecase;
 
-import com.bracketcove.postrainer.base.ReminderUseCase;
 import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 

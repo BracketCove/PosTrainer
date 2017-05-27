@@ -1,18 +1,23 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.data.alarm.AlarmService;
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
+import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
+import com.bracketcove.postrainer.usecase.DismissAlarm;
+import com.bracketcove.postrainer.usecase.GetReminder;
+import com.bracketcove.postrainer.usecase.StartAlarm;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 
 /**
@@ -21,22 +26,25 @@ import io.reactivex.observers.DisposableSingleObserver;
 
 public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
 
-    //TODO refactor to Inject Use Cases instead of Data Sources (AlarmReceiver)
+    private final DismissAlarm dismissAlarm;
+    private final StartAlarm startAlarm;
+    private final GetReminder getReminder;
+
     private final AlarmReceiverContract.View view;
-    private final ReminderSource reminderSource;
-    private final AlarmSource alarmSource;
     private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable compositeDisposable;
     private Reminder currentReminder;
 
     @Inject
     public AlarmReceiverPresenter(AlarmReceiverContract.View view,
-                                  ReminderSource reminderSource,
-                                  AlarmSource alarmSource,
+                                  ReminderService reminderService,
+                                  AlarmService alarmService,
                                   BaseSchedulerProvider schedulerProvider) {
+        this.getReminder = new GetReminder(reminderService);
+        this.dismissAlarm = new DismissAlarm(alarmService);
+        this.startAlarm = new StartAlarm(alarmService);
+
         this.view = view;
-        this.reminderSource = reminderSource;
-        this.alarmSource = alarmSource;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
     }
@@ -57,43 +65,48 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
      * in from the Activity's extras.
      */
     private void getReminderFromDatabase() {
-        compositeDisposable.add(
-                reminderSource.getReminderById(view.getReminderId())
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableSingleObserver<Reminder>() {
-                            @Override
-                            public void onSuccess(Reminder reminder) {
-                                startAlarm(reminder);
-                            }
+        Reminder reminder = new Reminder();
+        reminder.setReminderId(view.getReminderId());
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.d("REMINDER_DB", e.getMessage().toString());
-                                view.makeToast(R.string.error_database_connection_failure);
-                            }
-                        })
-        );
+        getReminder.runUseCase(reminder)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(new DisposableObserver<Reminder>() {
+
+                    @Override
+                    public void onNext(Reminder reminder) {
+                        startAlarm(reminder);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("REMINDER_DB", e.getMessage().toString());
+                        view.makeToast(R.string.error_database_connection_failure);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void startAlarm(Reminder reminder) {
-        compositeDisposable.add(
-                alarmSource.startAlarm(reminder)
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableCompletableObserver() {
-                            @Override
-                            public void onComplete() {
-                                //Probably don't need to do anything here
-                            }
+        startAlarm.runUseCase(reminder)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        //Probably don't need to do anything here
+                    }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.d("ALARMRECEIVER", e.getMessage().toString());
-                                view.makeToast(R.string.error_starting_alarm);
-                            }
-                        })
-        );
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("ALARMRECEIVER", e.getMessage().toString());
+                        view.makeToast(R.string.error_starting_alarm);
+                    }
+                });
     }
 
     @Override
@@ -104,44 +117,19 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     @Override
     public void onAlarmDismissClick() {
         //first, stop the media player and vibrator
-        compositeDisposable.add(
-                alarmSource.stopMediaPlayerAndVibrator()
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableCompletableObserver() {
-                            @Override
-                            public void onComplete() {
-                                releaseWakeLock();
-                            }
+        dismissAlarm.runUseCase(new Reminder())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        //TODO figure out what to do here
+                    }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.d("ALARM", e.getMessage().toString());
-                                releaseWakeLock();
-                            }
-                        })
-        );
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("ALARM", e.getMessage().toString());
+                    }
+                });
     }
-
-    private void releaseWakeLock() {
-        compositeDisposable.add(
-                alarmSource.releaseWakeLock()
-                        .subscribeOn(schedulerProvider.io())
-                        .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableCompletableObserver() {
-                            @Override
-                            public void onComplete() {
-                                view.finishActivity();
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                //not really sure what else to do here. If I can't release the
-                                //wakelock, I'll just assume it's null.
-                                view.finishActivity();
-                            }
-                        })
-        );
-    }
-
 }

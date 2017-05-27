@@ -8,7 +8,7 @@ import com.bracketcove.postrainer.data.viewmodel.Reminder;
  * Created by Ryan on 06/03/2017.
  */
 
-public class ReminderDetailContract {
+public interface ReminderDetailContract {
     interface View extends BaseView<Presenter> {
         Reminder getViewModel();
 

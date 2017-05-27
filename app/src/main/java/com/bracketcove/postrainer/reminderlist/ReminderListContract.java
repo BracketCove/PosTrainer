@@ -11,7 +11,6 @@ import java.util.List;
  */
 
 public interface ReminderListContract  {
-
     interface View extends BaseView<Presenter> {
         void setReminderListData(List<Reminder> reminderListData);
 

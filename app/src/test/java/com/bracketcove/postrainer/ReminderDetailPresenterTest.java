@@ -1,11 +1,11 @@
 package com.bracketcove.postrainer;
 
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenter;
-import com.bracketcove.postrainer.util.SchedulerProvider;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
+import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -39,7 +40,7 @@ public class ReminderDetailPresenterTest {
     private ReminderDetailContract.View view;
 
     @Mock
-    private ReminderSource reminderSource;
+    private ReminderService reminderService;
 
     private BaseSchedulerProvider schedulerProvider;
 
@@ -88,7 +89,7 @@ public class ReminderDetailPresenterTest {
 
         presenter = new ReminderDetailPresenter(
                 view,
-                reminderSource,
+                reminderService,
                 schedulerProvider
         );
     }
@@ -105,8 +106,8 @@ public class ReminderDetailPresenterTest {
         Mockito.when(view.getReminderId())
                 .thenReturn(REMINDER_ID);
 
-        Mockito.when(reminderSource.getReminderById(REMINDER_ID))
-                .thenReturn(Single.<Reminder>error(new Exception("Something Went Wrong")));
+        Mockito.when(reminderService.getReminderById(ACTIVE_REMINDER))
+                .thenReturn(Observable.<Reminder>error(new Exception("Something Went Wrong")));
 
         presenter.subscribe();
 
@@ -122,8 +123,8 @@ public class ReminderDetailPresenterTest {
         Mockito.when(view.getReminderId())
                 .thenReturn(REMINDER_ID);
 
-        Mockito.when(reminderSource.getReminderById(REMINDER_ID))
-                .thenReturn(Single.just(ACTIVE_REMINDER));
+        Mockito.when(reminderService.getReminderById(ACTIVE_REMINDER))
+                .thenReturn(Observable.just(ACTIVE_REMINDER));
 
         presenter.subscribe();
 
@@ -161,8 +162,8 @@ public class ReminderDetailPresenterTest {
     public void whenReminderUpdatedSuccessful(){
         Mockito.when(view.getViewModel()).thenReturn(INACTIVE_REMINDER);
 
-        Mockito.when(reminderSource.updateReminder(INACTIVE_REMINDER))
-                .thenReturn(Completable.complete());
+        Mockito.when(reminderService.updateReminder(INACTIVE_REMINDER))
+                .thenReturn(Observable.empty());
 
         presenter.onDoneIconPress();
 
@@ -178,8 +179,8 @@ public class ReminderDetailPresenterTest {
     public void whenReminderUpdatedUnsuccessful(){
         Mockito.when(view.getViewModel()).thenReturn(INACTIVE_REMINDER);
 
-        Mockito.when(reminderSource.updateReminder(INACTIVE_REMINDER))
-                .thenReturn(Completable.error(new Exception("Something went wrong")));
+        Mockito.when(reminderService.updateReminder(INACTIVE_REMINDER))
+                .thenReturn(Observable.error(new Exception("Something went wrong")));
 
         presenter.onDoneIconPress();
 

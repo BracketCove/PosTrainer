@@ -3,6 +3,7 @@ package com.bracketcove.postrainer.data.alarm;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 
 /**
  * This interface describes the responsibilities and interactions between
@@ -16,9 +17,7 @@ public interface AlarmSource {
 
     Completable cancelAlarm(Reminder reminder);
 
-    Completable stopMediaPlayerAndVibrator();
+    Completable dismissAlarm();
 
     Completable startAlarm(Reminder reminder);
-
-    Completable releaseWakeLock();
 }

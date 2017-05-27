@@ -1,10 +1,10 @@
-package com.bracketcove.postrainer.base;
+package com.bracketcove.postrainer.usecase;
 
 
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
 
 /**
  *Contract for any Use Case which needs to operate upon a Reminder. My hypothesis is that instead
@@ -13,8 +13,8 @@ import io.reactivex.disposables.CompositeDisposable;
  * approach in a much more complex application, but it may be a much more viable approach in a
  * smaller App like this. This is simply conjecture until I get it working though.
  */
-public interface ReminderUseCase {
+public interface AlarmUseCase {
 
-    Observable runUseCase(Reminder reminder);
+    Completable runUseCase(Reminder reminder);
 
 }

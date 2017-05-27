@@ -22,11 +22,11 @@ public interface ReminderSource {
      * 1. It tells me that the operation completed
      * 2. It throws an error
      */
-    Completable createReminder(Reminder reminder);
+    Observable createReminder(Reminder reminder);
 
-    Completable deleteReminder(Reminder reminder);
+    Observable deleteReminder(Reminder reminder);
 
-    Completable updateReminder(Reminder reminder);
+    Observable updateReminder(Reminder reminder);
 
     /**
      * Maybe: RxJava Observable which has three possible outcomes:

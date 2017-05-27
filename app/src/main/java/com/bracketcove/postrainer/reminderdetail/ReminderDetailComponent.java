@@ -1,5 +1,6 @@
 package com.bracketcove.postrainer.reminderdetail;
 
+import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.dependencyinjection.components.ApplicationComponent;
 import com.bracketcove.postrainer.dependencyinjection.components.ReminderComponent;
@@ -18,6 +19,5 @@ import dagger.Component;
 public interface ReminderDetailComponent {
 
     void inject(ReminderDetailActivity reminderDetailActivity);
-    ReminderSource provideReminderSource();
 }
 
