@@ -4,15 +4,15 @@
 
 ## Topics
 * [What is PosTrainer?](#what-is-postrainer)
-* [Can I use the code?](#can-i-use-code-from-this-repo)
 * [Software Architecture Diagram](#software-architecture-diagram)
+* [Can I use the code?](#can-i-use-code-from-this-repo)
 * [Project APIs/Concepts](#apis-and-architectures-used)
 * [Learning Sources/Inspiration](#sources)
 * [Support Me](#contactsupport-me)
 * [Changes](#Changes)
 * [License](#license)
 
-## What is Profiler?
+## What is PosTrainer?
 
 PosTrainer is an Alarm App which allows the user to set up to 5 Daily Reminders to sit up Straight and/or Perform stretches to combat bad Posture from being a Desk Jockey.
 
@@ -34,7 +34,7 @@ This App has seen over 5 iterations, as it was the second App Idea I ever built.
 
 ## Software Architecture Diagram
 
-<img src="alarm_receiver.png" alt="Profile Page Screen" width="540" height="960"/>
+<img src="diagram.jpg" alt="Profile Page Screen" width="540" height="960"/>
 
 ## Can I use code from this Repo?
 Absolutely, pursuant to the project's [LICENSE](LICENSE.md). I primarily learned how to build Profiler by learning from free sources and referencing open source libraries, many of which I list (here)[#sources]. That being said, the logo (whenever I get around to making it) and name are my intellectual creations, so don't use them unless you are linking/reffering to this Repo.
