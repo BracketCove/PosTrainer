@@ -7,9 +7,8 @@
 * [Software Architecture Diagram](#software-architecture-diagram)
 * [Can I use the code?](#can-i-use-code-from-this-repo)
 * [Project APIs/Concepts](#apis-and-architectures-used)
-* [Learning Sources/Inspiration](#sources)
+* [Learning Sources/Inspiration](#sources-and-inspiration)
 * [Support Me](#contactsupport-me)
-* [Changes](#Changes)
 * [License](#license)
 
 ## What is PosTrainer?
