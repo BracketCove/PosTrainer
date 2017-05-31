@@ -33,7 +33,6 @@ import static android.content.Context.POWER_SERVICE;
 @Module
 public final class ApplicationModule {
     private final Context applicationContext;
-    private final Realm realm;
     private final PowerManager.WakeLock wakeLock;
     private final Vibrator vibrator;
     private final AudioManager audioManager;
@@ -42,7 +41,7 @@ public final class ApplicationModule {
 
     //This objects are necessary for creation of other objects within this Module, hence making them
     //variables
-    public ApplicationModule(Context application, Realm realm) {
+    public ApplicationModule(Context application) {
         this.applicationContext = application;
         this.wakeLock = ((PowerManager) applicationContext
                 .getSystemService(POWER_SERVICE))
@@ -51,7 +50,6 @@ public final class ApplicationModule {
         this.vibrator = ((Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE));
         this.alarmManager = ((AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE));
         this.mediaPlayer = new MediaPlayer();
-        this.realm = realm;
     }
 
     @Provides
@@ -112,7 +110,7 @@ public final class ApplicationModule {
     @Singleton
     @Provides
     ReminderService provideReminderService() {
-        return new ReminderService(realm);
+        return new ReminderService();
     }
 
 }

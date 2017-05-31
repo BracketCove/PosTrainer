@@ -118,7 +118,7 @@ public class AlarmReceiverPresenterTest {
                 .thenReturn(Observable.just(repeatingReminder));
 
         when(alarmService.startAlarm(repeatingReminder))
-                .thenReturn(Completable.complete());
+                .thenReturn(Observable.empty());
 
         presenter.subscribe();
 
@@ -150,10 +150,10 @@ public class AlarmReceiverPresenterTest {
     public void onAlarmDismissSuccessful() {
 
         when(alarmService.dismissAlarm())
-                .thenReturn(Completable.complete());
+                .thenReturn(Observable.empty());
 
         when(alarmService.dismissAlarm())
-                .thenReturn(Completable.complete());
+                .thenReturn(Observable.empty());
 
         presenter.onAlarmDismissClick();
 

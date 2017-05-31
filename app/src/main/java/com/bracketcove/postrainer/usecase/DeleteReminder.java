@@ -9,7 +9,7 @@ import io.reactivex.Observable;
  * Created by R_KAY on 5/23/2017.
  */
 
-public class DeleteReminder implements ReminderUseCase {
+public class DeleteReminder implements UseCase.RequestModel {
 
     private final ReminderService reminderService;
 
@@ -21,4 +21,5 @@ public class DeleteReminder implements ReminderUseCase {
     public Observable runUseCase(Reminder reminder) {
         return reminderService.deleteReminder(reminder);
     }
+
 }

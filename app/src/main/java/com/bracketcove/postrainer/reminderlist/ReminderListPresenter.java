@@ -10,7 +10,7 @@ import com.bracketcove.postrainer.usecase.CancelAlarm;
 import com.bracketcove.postrainer.usecase.DeleteReminder;
 import com.bracketcove.postrainer.usecase.GetReminderList;
 import com.bracketcove.postrainer.usecase.SetAlarm;
-import com.bracketcove.postrainer.usecase.UpdateReminder;
+import com.bracketcove.postrainer.usecase.UpdateOrCreateReminder;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
     //Use Cases
     private final GetReminderList getReminderList;
-    private final UpdateReminder updateReminder;
+    private final UpdateOrCreateReminder updateOrCreateReminder;
     private final DeleteReminder deleteReminder;
     private final SetAlarm setAlarm;
     private final CancelAlarm cancelAlarm;
@@ -47,7 +47,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                                  BaseSchedulerProvider schedulerProvider) {
 
         this.getReminderList = new GetReminderList(reminderService);
-        this.updateReminder = new UpdateReminder(reminderService);
+        this.updateOrCreateReminder= new UpdateOrCreateReminder(reminderService);
         this.deleteReminder = new DeleteReminder(reminderService);
         this.setAlarm = new SetAlarm(alarmService);
         this.cancelAlarm = new CancelAlarm(alarmService);
@@ -76,7 +76,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
      * error : Display database error
      */
     private void getReminders() {
-        getReminderList.runUseCase(new Reminder())
+        getReminderList.runUseCase()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(
@@ -118,7 +118,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
         if (active != reminder.isActive()) {
             reminder.setActive(active);
 
-            updateReminder.runUseCase(reminder)
+            updateOrCreateReminder.runUseCase(reminder)
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(new DisposableObserver() {
@@ -160,7 +160,12 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(
-                        new DisposableCompletableObserver() {
+                        new DisposableObserver<List<Reminder>>() {
+                            @Override
+                            public void onNext(List<Reminder> reminders) {
+                                view.setReminderListData(reminders);
+                            }
+
                             @Override
                             public void onError(Throwable e) {
                                 Log.d("ALARM", e.getMessage());
@@ -171,7 +176,8 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                             public void onComplete() {
                                 view.makeToast(R.string.msg_alarm_activated);
                             }
-                        });
+                        }
+                );
 
 
     }
@@ -181,10 +187,14 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(
-                        new DisposableCompletableObserver() {
+                        new DisposableObserver<List<Reminder>>() {
+                            @Override
+                            public void onNext(List<Reminder> reminders) {
+                                view.setReminderListData(reminders);
+                            }
+
                             @Override
                             public void onError(Throwable e) {
-                                Log.d("ALARM", e.getMessage());
                                 view.makeToast(R.string.error_managing_alarm);
                             }
 
@@ -192,7 +202,8 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                             public void onComplete() {
                                 view.makeToast(R.string.msg_alarm_deactivated);
                             }
-                        });
+                        }
+                );
     }
 
 
@@ -248,14 +259,15 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                     30
             );
 
-            updateReminder.runUseCase(reminder)
+            updateOrCreateReminder.runUseCase(reminder)
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui())
                     .subscribeWith(
                             new DisposableObserver() {
                                 @Override
                                 public void onComplete() {
-                                    view.addNewReminderToListView(reminder);
+                                    //view.addNewReminderToListView(reminder);
+                                    getReminders();
                                 }
 
                                 @Override

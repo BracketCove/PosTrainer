@@ -13,11 +13,11 @@ import io.reactivex.Observable;
 
 public interface AlarmSource {
 
-    Completable setAlarm(Reminder reminder);
+    Observable setAlarm(Reminder reminder);
 
-    Completable cancelAlarm(Reminder reminder);
+    Observable cancelAlarm(Reminder reminder);
 
-    Completable dismissAlarm();
+    Observable dismissAlarm();
 
-    Completable startAlarm(Reminder reminder);
+    Observable startAlarm(Reminder reminder);
 }

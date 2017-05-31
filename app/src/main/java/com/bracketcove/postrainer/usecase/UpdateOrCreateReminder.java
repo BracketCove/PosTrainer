@@ -6,14 +6,17 @@ import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import io.reactivex.Observable;
 
 /**
+ *
+ *
+ *
  * Created by R_KAY on 5/23/2017.
  */
 
-public class UpdateReminder implements ReminderUseCase {
+public class UpdateOrCreateReminder implements UseCase.RequestModel {
 
     private final ReminderService reminderService;
 
-    public UpdateReminder(ReminderService reminderService) {
+    public UpdateOrCreateReminder(ReminderService reminderService) {
         this.reminderService = reminderService;
     }
 
@@ -21,5 +24,4 @@ public class UpdateReminder implements ReminderUseCase {
     public Observable runUseCase(Reminder reminder) {
         return reminderService.updateReminder(reminder);
     }
-
 }

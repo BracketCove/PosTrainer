@@ -10,7 +10,7 @@ import io.reactivex.Observable;
  * Created by R_KAY on 5/23/2017.
  */
 
-public class SetAlarm implements AlarmUseCase {
+public class SetAlarm implements UseCase.RequestModel {
 
     private final AlarmService alarmService;
 
@@ -19,7 +19,7 @@ public class SetAlarm implements AlarmUseCase {
     }
 
     @Override
-    public Completable runUseCase(Reminder reminder) {
+    public Observable runUseCase(Reminder reminder) {
         return alarmService.setAlarm(reminder);
     }
 }

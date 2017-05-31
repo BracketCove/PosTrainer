@@ -15,7 +15,7 @@ import static dagger.internal.Preconditions.checkNotNull;
  * Created by R_KAY on 5/23/2017.
  */
 
-public class GetReminder implements ReminderUseCase {
+public class GetReminder implements UseCase.RequestModel {
 
     /**
      *Reminder Service is a Facade/Repository Pattern which Abstracts Realm from the rest of my the
@@ -31,4 +31,5 @@ public class GetReminder implements ReminderUseCase {
     public Observable runUseCase(Reminder reminder) {
         return reminderService.getReminderById(reminder);
     }
+
 }

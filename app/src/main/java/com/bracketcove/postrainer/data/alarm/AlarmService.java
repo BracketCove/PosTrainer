@@ -52,7 +52,7 @@ public class AlarmService implements AlarmSource {
 
 
     @Override
-    public Completable setAlarm(Reminder reminder) {
+    public Observable setAlarm(Reminder reminder) {
         Calendar alarm = Calendar.getInstance();
         alarm.setTimeInMillis(System.currentTimeMillis());
         alarm.set(Calendar.HOUR_OF_DAY, reminder.getHourOfDay());
@@ -76,7 +76,7 @@ public class AlarmService implements AlarmSource {
                     alarmIntent);
         }
 
-        return Completable.complete();
+        return Observable.empty();
     }
 
     private void checkAlarm(Calendar alarm) {
@@ -88,7 +88,7 @@ public class AlarmService implements AlarmSource {
     }
 
     @Override
-    public Completable cancelAlarm(Reminder reminder) {
+    public Observable cancelAlarm(Reminder reminder) {
 
         Intent intent = new Intent(applicationContext, AlarmReceiverActivity.class);
 
@@ -99,11 +99,11 @@ public class AlarmService implements AlarmSource {
 
         alarmManager.cancel(alarmIntent);
 
-        return Completable.complete();
+        return Observable.empty();
     }
 
     @Override
-    public Completable dismissAlarm() {
+    public Observable dismissAlarm() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
@@ -118,14 +118,14 @@ public class AlarmService implements AlarmSource {
             wakeLock.release();
         }
 
-        return Completable.complete();
+        return Observable.empty();
     }
 
     /**
      * Starts an Alarm with the Requisite Parameters:
      */
     @Override
-    public Completable startAlarm(Reminder reminder) {
+    public Observable startAlarm(Reminder reminder) {
         wakeLock.acquire();
 
         if (reminder.isVibrateOnly()) {
@@ -139,7 +139,7 @@ public class AlarmService implements AlarmSource {
             }
         }
 
-        return Completable.complete();
+        return Observable.empty();
     }
 
 

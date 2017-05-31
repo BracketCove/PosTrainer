@@ -23,7 +23,7 @@ import io.realm.Realm;
 public class ReminderModule {
 
     public ReminderModule (Realm realm){
-        this.reminderService = new ReminderService(realm);
+        this.reminderService = new ReminderService();
     }
 
     ReminderService reminderService;

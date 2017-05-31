@@ -18,8 +18,8 @@ public class RealmReminder implements RealmModel {
     private boolean active;
     private boolean vibrateOnly;
     private boolean renewAutomatically;
-    private int minute;
     private int hourOfDay;
+    private int minute;
 
     public RealmReminder() {
         //blank constructor for realm?

@@ -28,8 +28,7 @@ public class PostrainerApplication extends Application {
         initializeLeakCanary();
 
         ApplicationModule applicationModule = new ApplicationModule(
-                getApplicationContext(),
-                Realm.getDefaultInstance()
+                getApplicationContext()
         );
 
         applicationComponent = DaggerApplicationComponent

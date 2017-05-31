@@ -6,20 +6,9 @@ import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import io.reactivex.Completable;
-import io.reactivex.CompletableEmitter;
-import io.reactivex.CompletableOnSubscribe;
-import io.reactivex.Maybe;
-import io.reactivex.MaybeEmitter;
-import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -30,11 +19,8 @@ import io.realm.RealmResults;
 
 public class ReminderService implements ReminderSource {
 
-    private final Realm realm;
+    public ReminderService() {
 
-    @Inject
-    public ReminderService(Realm realm) {
-        this.realm = realm;
     }
 
     @Override
@@ -43,8 +29,7 @@ public class ReminderService implements ReminderSource {
                 new ObservableOnSubscribe() {
                     @Override
                     public void subscribe(final ObservableEmitter e) throws Exception {
-                        //Pretty sure this is pointless. Either use DI or Don't lol
-                        //realm = Realm.getDefaultInstance();
+                        Realm realm = Realm.getDefaultInstance();
 
                         realm.beginTransaction();
                         RealmReminder rem = realm.createObject(
@@ -70,6 +55,8 @@ public class ReminderService implements ReminderSource {
                 new ObservableOnSubscribe() {
                     @Override
                     public void subscribe(final ObservableEmitter e) throws Exception {
+                        Realm realm = Realm.getDefaultInstance();
+
                         realm.beginTransaction();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
@@ -95,25 +82,27 @@ public class ReminderService implements ReminderSource {
                 new ObservableOnSubscribe() {
                     @Override
                     public void subscribe(final ObservableEmitter e) throws Exception {
-                realm.beginTransaction();
+                        Realm realm = Realm.getDefaultInstance();
 
-                RealmReminder realmReminder = new RealmReminder();
+                        realm.beginTransaction();
 
-                realmReminder.setReminderId(reminder.getReminderId());
-                realmReminder.setHourOfDay(reminder.getHourOfDay());
-                realmReminder.setMinute(reminder.getMinute());
-                realmReminder.setReminderTitle(reminder.getReminderTitle());
-                realmReminder.setActive(reminder.isActive());
-                realmReminder.setVibrateOnly(reminder.isVibrateOnly());
-                realmReminder.setRenewAutomatically(reminder.isRenewAutomatically());
+                        RealmReminder realmReminder = new RealmReminder();
 
-                realm.copyToRealmOrUpdate(realmReminder);
+                        realmReminder.setReminderId(reminder.getReminderId());
+                        realmReminder.setHourOfDay(reminder.getHourOfDay());
+                        realmReminder.setMinute(reminder.getMinute());
+                        realmReminder.setReminderTitle(reminder.getReminderTitle());
+                        realmReminder.setActive(reminder.isActive());
+                        realmReminder.setVibrateOnly(reminder.isVibrateOnly());
+                        realmReminder.setRenewAutomatically(reminder.isRenewAutomatically());
 
-                realm.commitTransaction();
+                        realm.copyToRealmOrUpdate(realmReminder);
 
-                e.onComplete();
-            }
-        });
+                        realm.commitTransaction();
+
+                        e.onComplete();
+                    }
+                });
     }
 
     @Override
@@ -122,6 +111,7 @@ public class ReminderService implements ReminderSource {
                 new ObservableOnSubscribe<List<Reminder>>() {
                     @Override
                     public void subscribe(ObservableEmitter<List<Reminder>> e) throws Exception {
+                        Realm realm = Realm.getDefaultInstance();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
                         RealmResults<RealmReminder> result = query.findAll();
@@ -160,6 +150,8 @@ public class ReminderService implements ReminderSource {
                 new ObservableOnSubscribe<Reminder>() {
                     @Override
                     public void subscribe(ObservableEmitter<Reminder> e) throws Exception {
+
+                        Realm realm = Realm.getDefaultInstance();
 
                         RealmQuery<RealmReminder> query = realm.where(RealmReminder.class);
                         query.equalTo("reminderId", reminder.getReminderId());

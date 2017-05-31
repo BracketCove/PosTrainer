@@ -4,9 +4,7 @@ import android.util.Log;
 
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.alarm.AlarmService;
-import com.bracketcove.postrainer.data.alarm.AlarmSource;
 import com.bracketcove.postrainer.data.reminder.ReminderService;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.usecase.DismissAlarm;
 import com.bracketcove.postrainer.usecase.GetReminder;
@@ -18,7 +16,6 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableObserver;
-import io.reactivex.observers.DisposableSingleObserver;
 
 /**
  * Created by Ryan on 05/03/2017.
@@ -28,7 +25,7 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
 
     private final DismissAlarm dismissAlarm;
     private final StartAlarm startAlarm;
-    private final GetReminder getReminder;
+    private final GetReminder getReminderReminder;
 
     private final AlarmReceiverContract.View view;
     private final BaseSchedulerProvider schedulerProvider;
@@ -40,7 +37,7 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
                                   ReminderService reminderService,
                                   AlarmService alarmService,
                                   BaseSchedulerProvider schedulerProvider) {
-        this.getReminder = new GetReminder(reminderService);
+        this.getReminderReminder = new GetReminder(reminderService);
         this.dismissAlarm = new DismissAlarm(alarmService);
         this.startAlarm = new StartAlarm(alarmService);
 
@@ -68,7 +65,7 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
         Reminder reminder = new Reminder();
         reminder.setReminderId(view.getReminderId());
 
-        getReminder.runUseCase(reminder)
+        getReminderReminder.runUseCase(reminder)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(new DisposableObserver<Reminder>() {
@@ -95,18 +92,24 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
         startAlarm.runUseCase(reminder)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableCompletableObserver() {
+                .subscribeWith(new DisposableObserver() {
                     @Override
                     public void onComplete() {
-                        //Probably don't need to do anything here
+                        view.makeToast(R.string.msg_alarm_deleted);
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("ALARMRECEIVER", e.getMessage().toString());
                         view.makeToast(R.string.error_starting_alarm);
                     }
                 });
+
+
     }
 
     @Override
@@ -117,19 +120,26 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     @Override
     public void onAlarmDismissClick() {
         //first, stop the media player and vibrator
-        dismissAlarm.runUseCase(new Reminder())
+        dismissAlarm.runUseCase()
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        //TODO figure out what to do here
-                    }
+                .subscribeWith(
+                        new DisposableObserver() {
+                            @Override
+                            public void onComplete() {
+                                //TODO figure out what to do here
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("ALARM", e.getMessage().toString());
-                    }
-                });
+                            }
+
+                            @Override
+                            public void onNext(Object o) {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                            }
+                        });
+
     }
 }

@@ -5,6 +5,11 @@ import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListContract;
 import com.bracketcove.postrainer.reminderlist.ReminderListPresenter;
+import com.bracketcove.postrainer.usecase.CancelAlarm;
+import com.bracketcove.postrainer.usecase.DeleteReminder;
+import com.bracketcove.postrainer.usecase.GetReminderList;
+import com.bracketcove.postrainer.usecase.SetAlarm;
+import com.bracketcove.postrainer.usecase.UpdateOrCreateReminder;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 import com.bracketcove.postrainer.util.SchedulerProvider;
 
@@ -41,8 +46,25 @@ public class ReminderListPresenterTest {
     @Mock
     private AlarmService alarmService;
 
+    @Mock
+    private GetReminderList getReminderList;
+
+    @Mock
+    private UpdateOrCreateReminder updateOrCreateReminder;
+
+    @Mock
+    private DeleteReminder deleteReminder;
+
+    @Mock
+    private SetAlarm setAlarm;
+
+    @Mock
+    private CancelAlarm cancelAlarm;
+
+    @Mock
     private BaseSchedulerProvider schedulerProvider;
 
+    @Mock
     private ReminderListPresenter presenter;
 
     private static final String TITLE = "Coffee Break";
@@ -92,6 +114,52 @@ public class ReminderListPresenterTest {
                 schedulerProvider
         );
     }
+
+    /**
+     * At least one RealmReminder found in storage. Display it/them to user.
+     */
+    @Test
+    public void onGetReminderListSuccess() {
+        List<Reminder> reminderList = new ArrayList<>();
+        reminderList.add(INACTIVE_REMINDER);
+
+        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
+
+        presenter.subscribe();
+
+        verify(view).setReminderListData(Mockito.anyList());
+    }
+
+    /**
+     * At least one RealmReminder found in storage. Display it/them to user.
+     */
+    @Test
+    public void onGetReminderListEmpty() {
+        List<Reminder> reminderList = new ArrayList<>();
+        reminderList.add(INACTIVE_REMINDER);
+
+        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
+
+        presenter.subscribe();
+
+        verify(view).setReminderListData(Mockito.anyList());
+    }
+
+    /**
+     * At least one RealmReminder found in storage. Display it/them to user.
+     */
+    @Test
+    public void onGetReminderListException() {
+        List<Reminder> reminderList = new ArrayList<>();
+        reminderList.add(INACTIVE_REMINDER);
+
+        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
+
+        presenter.subscribe();
+
+        verify(view).setReminderListData(Mockito.anyList());
+    }
+
 
     /**
      * At least one RealmReminder found in storage. Display it/them to user.
@@ -166,7 +234,7 @@ public class ReminderListPresenterTest {
                 .thenReturn(Observable.empty());
 
         Mockito.when(alarmService.setAlarm(ACTIVE_REMINDER))
-                .thenReturn(Completable.complete());
+                .thenReturn(Observable.empty());
 
         presenter.onReminderToggled(true, INACTIVE_REMINDER);
 
@@ -179,7 +247,7 @@ public class ReminderListPresenterTest {
                 .thenReturn(Observable.empty());
 
         Mockito.when(alarmService.setAlarm(INACTIVE_REMINDER))
-                .thenReturn(Completable.complete());
+                .thenReturn(Observable.empty());
 
         presenter.onReminderToggled(false, ACTIVE_REMINDER);
         verify(view).makeToast(R.string.msg_alarm_deactivated);
