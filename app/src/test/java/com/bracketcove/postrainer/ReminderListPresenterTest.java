@@ -46,25 +46,6 @@ public class ReminderListPresenterTest {
     @Mock
     private AlarmService alarmService;
 
-    @Mock
-    private GetReminderList getReminderList;
-
-    @Mock
-    private UpdateOrCreateReminder updateOrCreateReminder;
-
-    @Mock
-    private DeleteReminder deleteReminder;
-
-    @Mock
-    private SetAlarm setAlarm;
-
-    @Mock
-    private CancelAlarm cancelAlarm;
-
-    @Mock
-    private BaseSchedulerProvider schedulerProvider;
-
-    @Mock
     private ReminderListPresenter presenter;
 
     private static final String TITLE = "Coffee Break";
@@ -72,8 +53,6 @@ public class ReminderListPresenterTest {
     private static final int MINUTE = 30;
 
     private static final int HOUR = 10;
-
-    private static final String DEFAULT_NAME = "New Alarm";
 
     private static final boolean ALARM_STATE = true;
 
@@ -105,7 +84,7 @@ public class ReminderListPresenterTest {
     public void SetUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        schedulerProvider = new SchedulerProvider();
+       SchedulerProvider schedulerProvider = new SchedulerProvider();
 
         presenter = new ReminderListPresenter(
                 view,
@@ -211,13 +190,13 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onReminderToggledStatesMatchFalse() {
-        presenter.onReminderToggled(false, ACTIVE_REMINDER);
+        presenter.onReminderToggled(false, INACTIVE_REMINDER);
         verify(view).makeToast(R.string.msg_alarm_deactivated);
     }
 
     @Test
     public void onReminderToggledStatesMatchTrue() {
-        presenter.onReminderToggled(true, INACTIVE_REMINDER);
+        presenter.onReminderToggled(true, ACTIVE_REMINDER);
         verify(view).makeToast(R.string.msg_alarm_activated);
     }
 
@@ -230,26 +209,61 @@ public class ReminderListPresenterTest {
     @Test
     public void onReminderToggledStatesDifferActivate() {
 
-        Mockito.when(reminderService.updateReminder(ACTIVE_REMINDER))
+        Reminder reminder = new Reminder(
+                REMINDER_ID,
+                TITLE,
+                false,
+                false,
+                false,
+                MINUTE,
+                HOUR
+        );
+
+        Mockito.when(reminderService.updateReminder(reminder))
                 .thenReturn(Observable.empty());
 
-        Mockito.when(alarmService.setAlarm(ACTIVE_REMINDER))
+        Mockito.when(alarmService.setAlarm(reminder))
                 .thenReturn(Observable.empty());
 
-        presenter.onReminderToggled(true, INACTIVE_REMINDER);
+        presenter.onReminderToggled(true, reminder);
 
         verify(view).makeToast(R.string.msg_alarm_activated);
     }
 
+    /**
+     * When a Reminder is toggled and the state of the View vs what
+     *  Compares a desired reminder to the state of the current reminder.
+     * - If states matches, we shouldn't need to update the Repository (I think so anyway).
+     * - If state doesn't match, animate the toggle in the view, and update the Repository to
+     * desired state
+     */
     @Test
     public void onReminderToggledStatesDifferDeactivate() {
-        Mockito.when(reminderService.updateReminder(INACTIVE_REMINDER))
+
+        /**
+         * One for the Error Log:
+         * By using different Test Objects to set up my when/thenReturn clauses, a NPE was
+         * being thrown in a strange spot.
+         */
+
+        Reminder reminder = new Reminder(
+                REMINDER_ID,
+                TITLE,
+                true,
+                false,
+                false,
+                MINUTE,
+                HOUR
+        );
+
+        Mockito.when(reminderService.updateReminder(reminder))
                 .thenReturn(Observable.empty());
 
-        Mockito.when(alarmService.setAlarm(INACTIVE_REMINDER))
+        Mockito.when(alarmService.cancelAlarm(reminder))
                 .thenReturn(Observable.empty());
 
-        presenter.onReminderToggled(false, ACTIVE_REMINDER);
+        presenter.onReminderToggled(false, reminder);
+
         verify(view).makeToast(R.string.msg_alarm_deactivated);
     }
 
@@ -287,7 +301,17 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void whenUserTriesToAddMoreThanFiveReminders() {
-        presenter.onCreateReminderButtonClick(5, DEFAULT_NAME, REMINDER_ID);
+        Reminder reminder = new Reminder(
+                REMINDER_ID,
+                TITLE,
+                true,
+                false,
+                false,
+                MINUTE,
+                HOUR
+        );
+
+        presenter.onCreateReminderButtonClick(5, reminder);
          view.makeToast(R.string.msg_reminder_limit_reached);
     }
 
@@ -297,14 +321,46 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onNewReminderCreatedSuccessfully() {
-        presenter.onCreateReminderButtonClick(1, DEFAULT_NAME, REMINDER_ID);
+        Reminder reminder = new Reminder(
+                REMINDER_ID,
+                TITLE,
+                true,
+                false,
+                false,
+                MINUTE,
+                HOUR
+        );
 
-        verify(view).addNewReminderToListView(Mockito.any(Reminder.class));
+        List<Reminder> reminders = new ArrayList<>();
+        reminders.add(INACTIVE_REMINDER);
+
+        Mockito.when(reminderService.updateReminder(reminder))
+                .thenReturn(Observable.empty());
+
+        Mockito.when(reminderService.getReminders())
+                .thenReturn(Observable.just(reminders));
+
+        presenter.onCreateReminderButtonClick(1, reminder);
+
+        verify(view).setReminderListData(reminders);
     }
 
     @Test
     public void onNewReminderCreatedUnsuccessfully() {
-        presenter.onCreateReminderButtonClick(1, DEFAULT_NAME, REMINDER_ID);
+        Reminder reminder = new Reminder(
+                REMINDER_ID,
+                TITLE,
+                true,
+                false,
+                false,
+                MINUTE,
+                HOUR
+        );
+
+        Mockito.when(reminderService.updateReminder(reminder))
+                .thenReturn(Observable.error(new Exception()));
+
+        presenter.onCreateReminderButtonClick(1, reminder);
 
         verify(view).makeToast(R.string.error_database_write_failure);
     }

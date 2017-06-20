@@ -1,8 +1,6 @@
 package com.bracketcove.postrainer.reminderdetail;
 
 
-import android.util.Log;
-
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
@@ -21,8 +19,10 @@ import io.reactivex.observers.DisposableObserver;
 
 public class ReminderDetailPresenter implements ReminderDetailContract.Presenter {
 
-    private final GetReminder getReminderReminder;
-    private final UpdateOrCreateReminder updateOrCreateReminderReminder;
+    //Use Cases
+    private final GetReminder getReminder;
+    private final UpdateOrCreateReminder updateOrCreateReminder;
+
 
     private final ReminderDetailContract.View view;
     private final BaseSchedulerProvider schedulerProvider;
@@ -33,8 +33,8 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     public ReminderDetailPresenter(ReminderDetailContract.View view,
                                    ReminderService reminderService,
                                    BaseSchedulerProvider schedulerProvider) {
-        this.getReminderReminder = new GetReminder(reminderService);
-        this.updateOrCreateReminderReminder = new UpdateOrCreateReminder(reminderService);
+        this.getReminder = new GetReminder(reminderService);
+        this.updateOrCreateReminder = new UpdateOrCreateReminder(reminderService);
 
         this.view = view;
         this.schedulerProvider = schedulerProvider;
@@ -52,7 +52,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
         Reminder reminder = view.getViewModel();
         reminder.setReminderId(view.getReminderId());
 
-        getReminderReminder.runUseCase(reminder)
+        getReminder.runUseCase(reminder)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(
@@ -68,7 +68,6 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.d("DATABASE", e.getMessage());
                                 view.makeToast(R.string.error_invalid_reminder_id);
                                 view.startReminderListActivity();
                             }
@@ -97,7 +96,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     public void onDoneIconPress() {
         Reminder reminder = view.getViewModel();
         reminder.setReminderId(view.getReminderId());
-        updateOrCreateReminderReminder.runUseCase(reminder)
+        updateOrCreateReminder.runUseCase(reminder)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(

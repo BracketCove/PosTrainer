@@ -88,11 +88,18 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
             @Override
             public void onClick(View view) {
 
-                presenter.onCreateReminderButtonClick(reminders.size(),
-                        getString(R.string.def_reminder_name),
-                        getDate()
+                presenter.onCreateReminderButtonClick(
+                        reminders.size(),
+                        new Reminder(
+                                getDate(),
+                                getString(R.string.def_reminder_name),
+                                false,
+                                true,
+                                false,
+                                12,
+                                30
+                        )
                 );
-
             }
         });
         return v;
@@ -209,9 +216,9 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         Calendar calendar = Calendar.getInstance();
         String date =
                 "" + calendar.get(Calendar.DAY_OF_YEAR) +
-                "" + calendar.get(Calendar.HOUR_OF_DAY) +
-                "" + calendar.get(Calendar.MINUTE) +
-                "" + calendar.get(Calendar.SECOND);
+                        "" + calendar.get(Calendar.HOUR_OF_DAY) +
+                        "" + calendar.get(Calendar.MINUTE) +
+                        "" + calendar.get(Calendar.SECOND);
 
         return date;
     }

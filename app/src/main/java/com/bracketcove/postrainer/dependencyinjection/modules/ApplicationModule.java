@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.provider.Settings;
 
 import com.bracketcove.postrainer.data.alarm.AlarmService;
 import com.bracketcove.postrainer.data.alarm.AlarmSource;
@@ -49,7 +50,7 @@ public final class ApplicationModule {
         this.audioManager = ((AudioManager) applicationContext.getSystemService(Context.AUDIO_SERVICE));
         this.vibrator = ((Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE));
         this.alarmManager = ((AlarmManager) applicationContext.getSystemService(Context.ALARM_SERVICE));
-        this.mediaPlayer = new MediaPlayer();
+        this.mediaPlayer = MediaPlayer.create(application, Settings.System.DEFAULT_ALARM_ALERT_URI);
     }
 
     @Provides

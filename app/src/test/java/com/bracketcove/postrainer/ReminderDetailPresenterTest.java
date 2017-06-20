@@ -4,6 +4,8 @@ import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenter;
+import com.bracketcove.postrainer.usecase.GetReminder;
+import com.bracketcove.postrainer.usecase.UpdateOrCreateReminder;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 import com.bracketcove.postrainer.util.SchedulerProvider;
 
@@ -37,12 +39,13 @@ public class ReminderDetailPresenterTest {
      * a direct example).
      */
     @Mock
-    private ReminderDetailContract.View view;
+    ReminderDetailContract.View view;
 
     @Mock
-    private ReminderService reminderService;
+    GetReminder getReminder;
 
-    private BaseSchedulerProvider schedulerProvider;
+    @Mock
+    ReminderService reminderService;
 
     private static final String TITLE = "Coffee Break";
 
@@ -78,6 +81,7 @@ public class ReminderDetailPresenterTest {
 
     );
 
+
     private ReminderDetailPresenter presenter;
 
     @Before
@@ -85,7 +89,7 @@ public class ReminderDetailPresenterTest {
         //In order to set up Mockito properly, we must call:
         MockitoAnnotations.initMocks(this);
 
-        schedulerProvider = new SchedulerProvider();
+        SchedulerProvider schedulerProvider = new SchedulerProvider();
 
         presenter = new ReminderDetailPresenter(
                 view,
@@ -103,11 +107,16 @@ public class ReminderDetailPresenterTest {
      */
     @Test
     public void whenReminderIdArgumentsInvalid(){
+        //Try to get a Reminder based on Id
         Mockito.when(view.getReminderId())
                 .thenReturn(REMINDER_ID);
 
+        Mockito.when(view.getViewModel())
+                .thenReturn(ACTIVE_REMINDER);
+
         Mockito.when(reminderService.getReminderById(ACTIVE_REMINDER))
                 .thenReturn(Observable.<Reminder>error(new Exception("Something Went Wrong")));
+
 
         presenter.subscribe();
 
@@ -123,8 +132,11 @@ public class ReminderDetailPresenterTest {
         Mockito.when(view.getReminderId())
                 .thenReturn(REMINDER_ID);
 
+        Mockito.when(view.getViewModel())
+                .thenReturn(ACTIVE_REMINDER);
+
         Mockito.when(reminderService.getReminderById(ACTIVE_REMINDER))
-                .thenReturn(Observable.just(ACTIVE_REMINDER));
+                .thenReturn(Observable.<Reminder>just(ACTIVE_REMINDER));
 
         presenter.subscribe();
 
@@ -186,8 +198,4 @@ public class ReminderDetailPresenterTest {
 
         Mockito.verify(view).makeToast(R.string.error_database_write_failure);
     }
-
-
-
-
 }

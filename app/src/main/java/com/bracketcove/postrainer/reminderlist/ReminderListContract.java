@@ -36,6 +36,6 @@ public interface ReminderListContract  {
 
         void onReminderIconClick(Reminder reminder);
 
-        void onCreateReminderButtonClick(int currentNumberOfReminders,String defaultName, String reminderId);
+        void onCreateReminderButtonClick(int currentNumberOfReminders, Reminder reminder);
     }
 }

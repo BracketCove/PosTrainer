@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 /**
  * Created by Ryan on 05/03/2017.
@@ -89,6 +90,19 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
     @Override
     public String getReminderId() {
         return this.reminderId;
+    }
+
+    @Override
+    public Reminder getReminderViewModel() {
+       return new Reminder(
+                this.reminderId,
+                getString(R.string.def_reminder_name),
+                false,
+                true,
+                false,
+                12,
+                30
+        );
     }
 
     @Override

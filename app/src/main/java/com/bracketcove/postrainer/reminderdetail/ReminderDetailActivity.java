@@ -22,9 +22,7 @@ public class ReminderDetailActivity extends AppCompatActivity {
 
     private FragmentManager manager;
 
-    //Field Injection
-
-    //Member Variable Injection
+    //Field/Member Variable Injection
     @Inject
     ReminderDetailPresenter presenter;
 
@@ -52,6 +50,9 @@ public class ReminderDetailActivity extends AppCompatActivity {
                 R.id.cont_reminder_detail_fragment,
                 FRAG_REMINDER_DETAIL
         );
+
+        //In order to create the Dependencies for my ReminderDetailPresenter, applicationComponent
+        //must be accessed.
 
         DaggerReminderDetailComponent.builder()
                 .reminderDetailPresenterModule(new ReminderDetailPresenterModule(fragment))

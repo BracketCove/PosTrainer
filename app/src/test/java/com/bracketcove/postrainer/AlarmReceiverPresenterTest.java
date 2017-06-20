@@ -43,10 +43,6 @@ public class AlarmReceiverPresenterTest {
 
     private static final int HOUR = 10;
 
-    private static final String DEFAULT_NAME = "New Alarm";
-
-    private static final boolean ALARM_STATE = true;
-
     //TODO: fix this test data to look the same as implementation would
     private static final String REMINDER_ID = "111111111111111";
 
@@ -101,6 +97,38 @@ public class AlarmReceiverPresenterTest {
      */
     @Test
     public void retrieveCurrentAlarm() {
+        Reminder nonRepeatingReminder = new Reminder(
+                REMINDER_ID,
+                TITLE,
+                true,
+                false,
+                false,
+                MINUTE,
+                HOUR
+        );
+
+        when(view.getReminderViewModel())
+                .thenReturn(nonRepeatingReminder);
+
+        //get the reminder so that we know if it needs to repeat or not
+        when(reminderService.getReminderById(nonRepeatingReminder))
+                .thenReturn(Observable.just(nonRepeatingReminder));
+
+        //since this tests non-repeating reminders, we must rewrite the Reminder as INACTIVE after
+        //it is retrieve
+        when(reminderService.updateReminder(nonRepeatingReminder))
+                .thenReturn(Observable.empty());
+
+        when(alarmService.startAlarm(nonRepeatingReminder))
+                .thenReturn(Observable.empty());
+
+        presenter.subscribe();
+
+        verify(alarmService).startAlarm(nonRepeatingReminder);
+    }
+
+    @Test
+    public void retrieveCurrentAlarmRepeating() {
         Reminder repeatingReminder = new Reminder(
                 REMINDER_ID,
                 TITLE,
@@ -111,8 +139,8 @@ public class AlarmReceiverPresenterTest {
                 HOUR
         );
 
-        when(view.getReminderId())
-                .thenReturn(REMINDER_ID);
+        when(view.getReminderViewModel())
+                .thenReturn(repeatingReminder);
 
         when(reminderService.getReminderById(repeatingReminder))
                 .thenReturn(Observable.just(repeatingReminder));
@@ -127,15 +155,26 @@ public class AlarmReceiverPresenterTest {
 
     @Test
     public void retrieveCurrentAlarmUnsuccessful() {
+        Reminder repeatingReminder = new Reminder(
+                REMINDER_ID,
+                TITLE,
+                true,
+                false,
+                true,
+                MINUTE,
+                HOUR
+        );
 
+        when(view.getReminderViewModel())
+                .thenReturn(repeatingReminder);
 
-        when(view.getReminderId())
-                .thenReturn(REMINDER_ID);
-
-        when(reminderService.getReminderById(ACTIVE_REMINDER))
+        when(reminderService.getReminderById(repeatingReminder))
                 .thenReturn(Observable.<Reminder>error(new Exception()));
 
         presenter.subscribe();
+
+        verify(view).makeToast(R.string.error_database_connection_failure);
+        verify(view).finishActivity();
     }
 
 
@@ -152,29 +191,10 @@ public class AlarmReceiverPresenterTest {
         when(alarmService.dismissAlarm())
                 .thenReturn(Observable.empty());
 
-        when(alarmService.dismissAlarm())
-                .thenReturn(Observable.empty());
-
         presenter.onAlarmDismissClick();
 
         verify(view).finishActivity();
 
     }
 
-    /**Not entirely sure if this is a good test. I don't really know what to do if I can't release
-     * the CPU after the first try, but perhaps I/you'll think of something.
-     */
-//    @Test
-//    public void onAlarmDismissUnsuccessful () {
-//        when(alarmService.dismissAlarm())
-//                .thenReturn(Completable.complete());
-//
-//        when(alarmService.releaseWakeLock())
-//                .thenReturn(Completable.error(new Exception()));
-//
-//        presenter.onAlarmDismissClick();
-//
-//        verify(view).finishActivity();
-//
-//    }
 }

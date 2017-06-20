@@ -83,6 +83,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                         new DisposableObserver<List<Reminder>>() {
                             @Override
                             public void onNext(List<Reminder> reminders) {
+                                //TODO figure out if a wholesale update of the ListView is better than updating a single reminder
                                 view.setReminderListData(reminders);
                             }
 
@@ -155,20 +156,17 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     private void onAlarmSet(Reminder reminder) {
-        view.makeToast(R.string.msg_alarm_activated);
         setAlarm.runUseCase(reminder)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(
-                        new DisposableObserver<List<Reminder>>() {
+                        new DisposableObserver() {
                             @Override
-                            public void onNext(List<Reminder> reminders) {
-                                view.setReminderListData(reminders);
+                            public void onNext(Object object) {
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.d("ALARM", e.getMessage());
                                 view.makeToast(R.string.error_managing_alarm);
                             }
 
@@ -187,10 +185,10 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribeWith(
-                        new DisposableObserver<List<Reminder>>() {
+                        new DisposableObserver() {
                             @Override
-                            public void onNext(List<Reminder> reminders) {
-                                view.setReminderListData(reminders);
+                            public void onNext(Object object) {
+
                             }
 
                             @Override
@@ -230,7 +228,6 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("DATABASE", e.getMessage());
                         view.makeToast(R.string.error_database_connection_failure);
                         view.undoDeleteReminderAt(position, reminder);
                     }
@@ -244,21 +241,10 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
     @Override
     public void onCreateReminderButtonClick(int currentNumberOfReminders,
-                                            String defaultName,
-                                            final String reminderId) {
+                                            Reminder reminder) {
 
         //only allow up to 5 Reminders at a time
         if (currentNumberOfReminders < 5) {
-            final Reminder reminder = new Reminder(
-                    reminderId,
-                    defaultName,
-                    false,
-                    true,
-                    false,
-                    12,
-                    30
-            );
-
             updateOrCreateReminder.runUseCase(reminder)
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui())
@@ -277,7 +263,6 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
                                 @Override
                                 public void onError(Throwable e) {
-                                    Log.d("DATABASE", e.getMessage());
                                     view.makeToast(R.string.error_database_write_failure);
                                 }
                             });

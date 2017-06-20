@@ -164,6 +164,7 @@ public class ReminderService implements ReminderSource {
                             RealmReminder realmReminder = result.get(0);
                             Reminder reminder = new Reminder();
 
+                            reminder.setReminderId(realmReminder.getReminderId());
                             reminder.setActive(realmReminder.isActive());
                             reminder.setRenewAutomatically(realmReminder.isRenewAutomatically());
                             reminder.setVibrateOnly(realmReminder.isVibrateOnly());

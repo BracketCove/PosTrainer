@@ -26,6 +26,7 @@ import javax.inject.Inject;
 
 
 /**
+ * I treat my Fragments as Views
  * Created by Ryan on 08/08/2016.
  */
 public class ReminderDetailFragment extends Fragment implements ReminderDetailContract.View {
@@ -59,9 +60,14 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        /*
+         *When you call setRetainInstance(true) on a Fragment, it allows you to
+         * preserve Fragment instances during events which might destroy the Activity.
+         *
+         * Most importantly, Orientation Changes
+         */
 
         this.reminderId = getArguments().getString(REMINDER_TO_BE_EDITED);
-
 
     }
 
@@ -160,6 +166,7 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
 
     /**
      * Knowing if the Alarm is Active or not is very important
+     *
      * @param active can be: true (active) or false (inactive
      */
     @Override
