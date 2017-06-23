@@ -1,47 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@drawable/divider_accent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:showDividers="middle"
     android:background="@color/colorPrimaryDark"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:divider="@drawable/divider_accent"
+    android:gravity="center_horizontal">
 
     <ImageButton
-        android:id="@+id/imb_manage_back"
+        android:id="@+id/imb_settings_back"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="left"
         android:background="@drawable/button_flat_inverse"
         android:padding="12dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_arrow_back_white_24dp" />
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_settings_contact"
-        style="@style/Button_Settings"
-        android:text="@string/settings_button_contact"
-        android:textColor="@color/ALPHA_WHITE"
-        />
+    <View
+        android:id="@+id/div_settings_one"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imb_settings_back" />
 
     <TextView
         android:id="@+id/lbl_settings_version"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="56dp"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="@string/settings_version_number"
-        android:fontFamily="sans-serif-light"
-        android:textSize="24sp"
         android:textColor="@color/ALPHA_WHITE"
-        />
+        android:textSize="24sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/div_settings_one" />
+
+    <View
+        android:id="@+id/div_settings_two"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_settings_version" />
+
+    <TextView
+        android:id="@+id/lbl_settings_contact_info"
+        style="@style/Label.BrandHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/contact_info"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/div_settings_two" />
+
+    <View
+        android:id="@+id/div_settings_three"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@drawable/divider_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_settings_contact_info"
+        android:layout_marginTop="16dp" />
 
     <ImageView
         android:id="@+id/settings_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:src="@drawable/ic_bracketlogobluelarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/div_settings_three" />
 
-        />
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

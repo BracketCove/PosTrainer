@@ -56,7 +56,7 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
 
 
     @Override
-    public void subscribe() {
+    public void start() {
         getReminderFromDatabase();
     }
 
@@ -148,7 +148,7 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void stop() {
         compositeDisposable.clear();
     }
 

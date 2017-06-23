@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cont_alarm_widget_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/layout_bg"
-    android:gravity="center"
-    android:layout_marginTop="@dimen/standard_vertical_margin"
-    android:layout_marginLeft="@dimen/standard_vertical_margin"
-    android:layout_marginRight="@dimen/standard_vertical_margin"
     android:elevation="2dp">
 
     <!-- TODO: Consider converting this to a Constraint layout -->
@@ -15,93 +13,106 @@
     <TextView
         android:id="@+id/lbl_alarm_title"
         style="@style/Lable.AlarmWidget"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="@string/reminders_alarm_title" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Coffee Break" />
 
     <View
         android:id="@+id/div_alarm_widget_one"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_below="@+id/lbl_alarm_title"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/divider_white" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="9dp"
+        android:background="@drawable/divider_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_alarm_title"
+        app:layout_constraintHorizontal_bias="0.497" />
 
     <ImageView
         android:id="@+id/im_clock"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_below="@+id/div_alarm_widget_one"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:alpha=".86"
         android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:padding="24dp"
         android:src="@drawable/ic_alarm_black_48dp"
-        android:tint="@color/WHITE" />
+        android:tint="@color/WHITE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/div_alarm_widget_one"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <RelativeLayout
-        android:id="@+id/cont_alarm_time"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/div_alarm_widget_one"
-        android:layout_toEndOf="@+id/im_clock"
-        android:layout_toRightOf="@+id/im_clock"
 
-        >
+    <TextView
+        android:id="@+id/lbl_alarm_time"
+        style="@style/Lable.AlarmWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/im_clock"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/div_alarm_widget_one"
+        tools:text="12:00 pm" />
 
-        <TextView
-            android:id="@+id/lbl_alarm_time"
-            style="@style/Lable.AlarmWidget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_centerInParent="true"
-            android:text="12:00 pm" />
-
-    </RelativeLayout>
 
     <View
         android:id="@+id/div_alarm_widget_two"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_below="@+id/cont_alarm_time"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_toRightOf="@id/im_clock"
-        android:background="@drawable/divider_white" />
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/divider_white"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/im_clock"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_alarm_time" />
 
-    <RelativeLayout
-        android:id="@+id/cont_alarm_activation"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@+id/div_alarm_widget_two"
-        android:layout_toEndOf="@+id/im_clock"
-        android:layout_toRightOf="@+id/im_clock"
-        android:background="@drawable/button_flat"
-        android:clickable="true">
+    <LinearLayout
+        android:id="@+id/cont_alarm_widget_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/im_clock"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/div_alarm_widget_two"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/lbl_alarm_activation"
             style="@style/Lable.AlarmWidget"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="ON" />
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:layout_marginRight="16dp"
+            tools:text="OFF" />
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/swi_alarm_activation"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="48dp"
-            android:padding="8dp"
-            android:theme="@style/Alarm_Switch_Theme" />
+            android:theme="@style/Alarm_Switch_Theme"
+             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

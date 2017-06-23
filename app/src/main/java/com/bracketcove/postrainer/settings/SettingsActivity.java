@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailFragment;
 import com.bracketcove.postrainer.util.ActivityUtils;
@@ -42,6 +43,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         DaggerSettingsComponent.builder()
                 .settingsPresenterModule(new SettingsPresenterModule(fragment))
+                .applicationComponent(
+                        ((PostrainerApplication) getApplication())
+                                .getApplicationComponent()
+                )
                 .build().inject(this);
     }
 }

@@ -41,7 +41,7 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
 
                     );
         }
-        presenter.subscribe();
+        presenter.start();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
 
     @Override
     public void onDestroy() {
-        presenter.unSubscribe();
+        presenter.stop();
         super.onDestroy();
     }
 

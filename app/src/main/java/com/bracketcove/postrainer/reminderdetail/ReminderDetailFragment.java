@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +15,9 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
-
-import javax.inject.Inject;
 
 
 /**
@@ -80,11 +75,11 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_reminder_detail, container, false);
 
-        reminderTitle = (AppCompatEditText) v.findViewById(R.id.edt_reminder_title);
+        reminderTitle = (EditText) v.findViewById(R.id.edt_reminder_title);
         nosePicker = (TimePicker) v.findViewById(R.id.pck_reminder_time);
 
-        vibrateOnly = (AppCompatCheckBox) v.findViewById(R.id.chb_vibrate_only);
-        autoRenew = (AppCompatCheckBox) v.findViewById(R.id.chb_renew_automatically);
+        vibrateOnly = (CheckBox) v.findViewById(R.id.chb_vibrate_only);
+        autoRenew = (CheckBox) v.findViewById(R.id.chb_renew_automatically);
 
         back = (ImageButton) v.findViewById(R.id.imb_reminder_detail_back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +103,7 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
     @Override
     public void onResume() {
         super.onResume();
-        presenter.subscribe();
+        presenter.start();
     }
 
     @Override

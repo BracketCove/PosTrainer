@@ -8,8 +8,8 @@ android {
         applicationId "com.bracketcove.postrainer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.6"
+        versionCode 8
+        versionName "2.0"
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
@@ -85,6 +85,9 @@ dependencies {
 
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion;
+    annotationProcessor 'android.arch.lifecycle:compiler:' + rootProject.archLifecycleVersion;
 
     androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestCompile "com.android.support.test:runner:$rootProject.runnerVersion"

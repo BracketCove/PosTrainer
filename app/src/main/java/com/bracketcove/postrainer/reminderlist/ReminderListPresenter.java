@@ -1,11 +1,13 @@
 package com.bracketcove.postrainer.reminderlist;
 
+import android.arch.lifecycle.LifecycleObserver;
 import android.util.Log;
 
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.alarm.AlarmService;
 import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
+import com.bracketcove.postrainer.data.viewmodel.ReminderListViewModel;
 import com.bracketcove.postrainer.usecase.CancelAlarm;
 import com.bracketcove.postrainer.usecase.DeleteReminder;
 import com.bracketcove.postrainer.usecase.GetReminderList;
@@ -27,7 +29,7 @@ import io.reactivex.observers.DisposableObserver;
  * Created by Ryan on 05/03/2017.
  */
 
-public class ReminderListPresenter implements ReminderListContract.Presenter {
+public class ReminderListPresenter implements ReminderListContract.Presenter, LifecycleObserver {
 
     private final ReminderListContract.View view;
     private final BaseSchedulerProvider schedulerProvider;
@@ -39,6 +41,12 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     private final DeleteReminder deleteReminder;
     private final SetAlarm setAlarm;
     private final CancelAlarm cancelAlarm;
+
+    //ViewModel
+    private ReminderListViewModel viewModel;
+
+
+    //TODO: Make Presenter a LifeCycleObserver, and add a ViewModel to it.
 
     @Inject
     public ReminderListPresenter(ReminderListContract.View view,
@@ -55,6 +63,8 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
         this.view = view;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
+
+
     }
 
     @Inject
@@ -64,7 +74,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
 
 
     @Override
-    public void subscribe() {
+    public void start() {
         getReminders();
     }
 
@@ -101,7 +111,7 @@ public class ReminderListPresenter implements ReminderListContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void stop() {
         compositeDisposable.clear();
     }
 

@@ -34,11 +34,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".alarmreceiver.AlarmReceiverActivity"
             android:label="@string/title_activity_manage_reminder"
             android:theme="@style/Postrainer.Inverse" />
-        <activity android:name=".reminderdetail.ReminderDetailActivity"></activity>
+
+        <activity android:name=".reminderdetail.ReminderDetailActivity"/>
+
     </application>
 
 </manifest>

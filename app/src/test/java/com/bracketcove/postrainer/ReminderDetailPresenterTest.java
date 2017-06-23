@@ -5,8 +5,6 @@ import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailContract;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailPresenter;
 import com.bracketcove.postrainer.usecase.GetReminder;
-import com.bracketcove.postrainer.usecase.UpdateOrCreateReminder;
-import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import org.junit.Before;
@@ -17,9 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 
 /**
  * This is a "Unit Test", which uses Mockito to test the Apps Behaviour/Logic.
@@ -118,7 +114,7 @@ public class ReminderDetailPresenterTest {
                 .thenReturn(Observable.<Reminder>error(new Exception("Something Went Wrong")));
 
 
-        presenter.subscribe();
+        presenter.start();
 
         Mockito.verify(view).makeToast(R.string.error_invalid_reminder_id);
         Mockito.verify(view).startReminderListActivity();
@@ -138,7 +134,7 @@ public class ReminderDetailPresenterTest {
         Mockito.when(reminderService.getReminderById(ACTIVE_REMINDER))
                 .thenReturn(Observable.<Reminder>just(ACTIVE_REMINDER));
 
-        presenter.subscribe();
+        presenter.start();
 
         Mockito.verify(view).setReminderTitle(ACTIVE_REMINDER.getReminderTitle());
         Mockito.verify(view).setVibrateOnly(ACTIVE_REMINDER.isVibrateOnly());

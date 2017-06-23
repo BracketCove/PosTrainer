@@ -20,17 +20,16 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     }
 
     @Override
-    public void subscribe() {
+    public void start() {
 
     }
 
     @Override
-    public void unSubscribe() {
+    public void stop() {
 
     }
 
     @Override
     public void onContactButtonClick() {
-
     }
 }

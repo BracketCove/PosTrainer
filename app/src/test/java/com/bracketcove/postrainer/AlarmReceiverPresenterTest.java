@@ -14,9 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -122,7 +120,7 @@ public class AlarmReceiverPresenterTest {
         when(alarmService.startAlarm(nonRepeatingReminder))
                 .thenReturn(Observable.empty());
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(alarmService).startAlarm(nonRepeatingReminder);
     }
@@ -148,7 +146,7 @@ public class AlarmReceiverPresenterTest {
         when(alarmService.startAlarm(repeatingReminder))
                 .thenReturn(Observable.empty());
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(alarmService).startAlarm(repeatingReminder);
     }
@@ -171,7 +169,7 @@ public class AlarmReceiverPresenterTest {
         when(reminderService.getReminderById(repeatingReminder))
                 .thenReturn(Observable.<Reminder>error(new Exception()));
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(view).makeToast(R.string.error_database_connection_failure);
         verify(view).finishActivity();

@@ -5,12 +5,6 @@ import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListContract;
 import com.bracketcove.postrainer.reminderlist.ReminderListPresenter;
-import com.bracketcove.postrainer.usecase.CancelAlarm;
-import com.bracketcove.postrainer.usecase.DeleteReminder;
-import com.bracketcove.postrainer.usecase.GetReminderList;
-import com.bracketcove.postrainer.usecase.SetAlarm;
-import com.bracketcove.postrainer.usecase.UpdateOrCreateReminder;
-import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import org.junit.Before;
@@ -24,8 +18,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.Observable;
 
 import static org.mockito.Mockito.verify;
@@ -104,7 +96,7 @@ public class ReminderListPresenterTest {
 
         when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(view).setReminderListData(Mockito.anyList());
     }
@@ -119,7 +111,7 @@ public class ReminderListPresenterTest {
 
         when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(view).setReminderListData(Mockito.anyList());
     }
@@ -134,7 +126,7 @@ public class ReminderListPresenterTest {
 
         when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(view).setReminderListData(Mockito.anyList());
     }
@@ -150,7 +142,7 @@ public class ReminderListPresenterTest {
 
         when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(view).setReminderListData(Mockito.anyList());
     }
@@ -162,7 +154,7 @@ public class ReminderListPresenterTest {
     public void onGetRemindersEmpty() {
         when(reminderService.getReminders()).thenReturn(Observable.<List<Reminder>>empty());
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(view).setNoReminderListDataFound();
     }
@@ -177,7 +169,7 @@ public class ReminderListPresenterTest {
         );
 
 
-        presenter.subscribe();
+        presenter.start();
 
         verify(view).makeToast(R.string.error_database_connection_failure);
     }

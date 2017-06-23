@@ -48,7 +48,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     }
 
     @Override
-    public void subscribe() {
+    public void start() {
         Reminder reminder = view.getViewModel();
         reminder.setReminderId(view.getReminderId());
 
@@ -80,7 +80,7 @@ public class ReminderDetailPresenter implements ReminderDetailContract.Presenter
     }
 
     @Override
-    public void unSubscribe() {
+    public void stop() {
 
     }
 

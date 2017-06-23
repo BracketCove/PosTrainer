@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.bracketcove.postrainer.R;
 
-import javax.inject.Inject;
-
 /**
  * Created by Ryan on 05/03/2017.
  */
@@ -34,22 +32,12 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button contact = (Button) v.findViewById(R.id.btn_settings_contact);
-        contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.onContactButtonClick();
-            }
-        });
         return v;
     }
 
@@ -70,7 +58,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
 
     @Override
     public void onDestroy() {
-        presenter.unSubscribe();
+        presenter.stop();
         super.onDestroy();
     }
 

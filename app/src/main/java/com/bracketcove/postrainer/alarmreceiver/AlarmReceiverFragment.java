@@ -84,7 +84,7 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
                 In order to set up the Presenter properly, it must be supplied with the Id of the
                 Alarm which just went off.
                  */
-        presenter.subscribe();
+        presenter.start();
     }
 
     @Override

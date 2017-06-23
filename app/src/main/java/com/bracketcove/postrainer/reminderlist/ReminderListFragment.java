@@ -113,7 +113,7 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     @Override
     public void onResume() {
         super.onResume();
-        presenter.subscribe();
+        presenter.start();
     }
 
     @Override
@@ -288,7 +288,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
             TextView alarmStateLabel;
             ImageView alarmIcon;
             SwitchCompat alarmStateSwitch;
-            View alarmActiveContainer;
 
             public ViewHolder(View itemView) {
                 super(itemView);
@@ -298,7 +297,6 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
                 alarmStateSwitch = (SwitchCompat) itemView.findViewById(R.id.swi_alarm_activation);
                 alarmIcon = (ImageView) itemView.findViewById(R.id.im_clock);
                 alarmIcon.setOnClickListener(this);
-                alarmActiveContainer = (View) itemView.findViewById(R.id.cont_alarm_activation);
                 alarmStateSwitch.setOnClickListener(this);
             }
 
