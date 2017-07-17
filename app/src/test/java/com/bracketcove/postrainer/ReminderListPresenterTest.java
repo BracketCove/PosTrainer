@@ -18,6 +18,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 import static org.mockito.Mockito.verify;
@@ -94,7 +96,7 @@ public class ReminderListPresenterTest {
         List<Reminder> reminderList = new ArrayList<>();
         reminderList.add(INACTIVE_REMINDER);
 
-        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
+        when(reminderService.getReminders()).thenReturn(Flowable.just(reminderList));
 
         presenter.start();
 
@@ -109,7 +111,7 @@ public class ReminderListPresenterTest {
         List<Reminder> reminderList = new ArrayList<>();
         reminderList.add(INACTIVE_REMINDER);
 
-        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
+        when(reminderService.getReminders()).thenReturn(Flowable.just(reminderList));
 
         presenter.start();
 
@@ -124,7 +126,7 @@ public class ReminderListPresenterTest {
         List<Reminder> reminderList = new ArrayList<>();
         reminderList.add(INACTIVE_REMINDER);
 
-        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
+        when(reminderService.getReminders()).thenReturn(Flowable.just(reminderList));
 
         presenter.start();
 
@@ -140,7 +142,7 @@ public class ReminderListPresenterTest {
         List<Reminder> reminderList = new ArrayList<>();
         reminderList.add(INACTIVE_REMINDER);
 
-        when(reminderService.getReminders()).thenReturn(Observable.just(reminderList));
+        when(reminderService.getReminders()).thenReturn(Flowable.just(reminderList));
 
         presenter.start();
 
@@ -152,7 +154,7 @@ public class ReminderListPresenterTest {
      */
     @Test
     public void onGetRemindersEmpty() {
-        when(reminderService.getReminders()).thenReturn(Observable.<List<Reminder>>empty());
+        when(reminderService.getReminders()).thenReturn(Flowable.<List<Reminder>>empty());
 
         presenter.start();
 
@@ -165,7 +167,7 @@ public class ReminderListPresenterTest {
     @Test
     public void onGetRemindersError() {
         when(reminderService.getReminders()).thenReturn(
-                Observable.<List<Reminder>>error(new Exception())
+                Flowable.<List<Reminder>>error(new Exception())
         );
 
 
@@ -212,10 +214,10 @@ public class ReminderListPresenterTest {
         );
 
         Mockito.when(reminderService.updateReminder(reminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         Mockito.when(alarmService.setAlarm(reminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         presenter.onReminderToggled(true, reminder);
 
@@ -249,10 +251,10 @@ public class ReminderListPresenterTest {
         );
 
         Mockito.when(reminderService.updateReminder(reminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         Mockito.when(alarmService.cancelAlarm(reminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         presenter.onReminderToggled(false, reminder);
 
@@ -263,7 +265,7 @@ public class ReminderListPresenterTest {
     @Test
     public void onReminderSuccessfullyDeleted() {
         Mockito.when(reminderService.deleteReminder(ACTIVE_REMINDER))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         presenter.onReminderSwiped(1, ACTIVE_REMINDER);
 
@@ -273,7 +275,7 @@ public class ReminderListPresenterTest {
     @Test
     public void onReminderUnsuccessfullyDeleted() {
         Mockito.when(reminderService.deleteReminder(ACTIVE_REMINDER))
-                .thenReturn(Observable.error(new Exception()));
+                .thenReturn(Completable.error(new Exception()));
 
         presenter.onReminderSwiped(1, ACTIVE_REMINDER);
 
@@ -327,10 +329,10 @@ public class ReminderListPresenterTest {
         reminders.add(INACTIVE_REMINDER);
 
         Mockito.when(reminderService.updateReminder(reminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         Mockito.when(reminderService.getReminders())
-                .thenReturn(Observable.just(reminders));
+                .thenReturn(Flowable.just(reminders));
 
         presenter.onCreateReminderButtonClick(1, reminder);
 
@@ -350,7 +352,7 @@ public class ReminderListPresenterTest {
         );
 
         Mockito.when(reminderService.updateReminder(reminder))
-                .thenReturn(Observable.error(new Exception()));
+                .thenReturn(Completable.error(new Exception()));
 
         presenter.onCreateReminderButtonClick(1, reminder);
 

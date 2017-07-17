@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 import static org.mockito.Mockito.verify;
@@ -109,16 +111,16 @@ public class AlarmReceiverPresenterTest {
                 .thenReturn(nonRepeatingReminder);
 
         //get the reminder so that we know if it needs to repeat or not
-        when(reminderService.getReminderById(nonRepeatingReminder))
-                .thenReturn(Observable.just(nonRepeatingReminder));
+        when(reminderService.getReminderById(REMINDER_ID))
+                .thenReturn(Flowable.just(nonRepeatingReminder));
 
         //since this tests non-repeating reminders, we must rewrite the Reminder as INACTIVE after
         //it is retrieve
         when(reminderService.updateReminder(nonRepeatingReminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         when(alarmService.startAlarm(nonRepeatingReminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         presenter.start();
 
@@ -140,11 +142,11 @@ public class AlarmReceiverPresenterTest {
         when(view.getReminderViewModel())
                 .thenReturn(repeatingReminder);
 
-        when(reminderService.getReminderById(repeatingReminder))
-                .thenReturn(Observable.just(repeatingReminder));
+        when(reminderService.getReminderById(REMINDER_ID))
+                .thenReturn(Flowable.just(repeatingReminder));
 
         when(alarmService.startAlarm(repeatingReminder))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         presenter.start();
 
@@ -166,8 +168,8 @@ public class AlarmReceiverPresenterTest {
         when(view.getReminderViewModel())
                 .thenReturn(repeatingReminder);
 
-        when(reminderService.getReminderById(repeatingReminder))
-                .thenReturn(Observable.<Reminder>error(new Exception()));
+        when(reminderService.getReminderById(REMINDER_ID))
+                .thenReturn(Flowable.<Reminder>error(new Exception()));
 
         presenter.start();
 
@@ -187,7 +189,7 @@ public class AlarmReceiverPresenterTest {
     public void onAlarmDismissSuccessful() {
 
         when(alarmService.dismissAlarm())
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         presenter.onAlarmDismissClick();
 

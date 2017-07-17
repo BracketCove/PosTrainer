@@ -22,10 +22,6 @@ public class ReminderDetailActivity extends AppCompatActivity {
 
     private FragmentManager manager;
 
-    //Field/Member Variable Injection
-    @Inject
-    ReminderDetailPresenter presenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +50,6 @@ public class ReminderDetailActivity extends AppCompatActivity {
         //In order to create the Dependencies for my ReminderDetailPresenter, applicationComponent
         //must be accessed.
 
-        DaggerReminderDetailComponent.builder()
-                .reminderDetailPresenterModule(new ReminderDetailPresenterModule(fragment))
-                .applicationComponent(
-                        ((PostrainerApplication) getApplication())
-                                .getApplicationComponent()
-                )
-                .build().inject(this);
+
     }
 }

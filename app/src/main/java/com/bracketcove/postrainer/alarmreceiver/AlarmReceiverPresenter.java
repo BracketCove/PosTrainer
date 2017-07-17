@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
  * Created by Ryan on 05/03/2017.
@@ -32,7 +33,6 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     private final AlarmReceiverContract.View view;
     private final BaseSchedulerProvider schedulerProvider;
     private final CompositeDisposable compositeDisposable;
-    private Reminder currentReminder;
 
     @Inject
     public AlarmReceiverPresenter(AlarmReceiverContract.View view,
@@ -60,6 +60,11 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
         getReminderFromDatabase();
     }
 
+    @Override
+    public void stop() {
+        compositeDisposable.clear();
+    }
+
     /**
      * Query the Reminder Database for a Reminder which matches the given reminderId passed
      * in from the Activity's extras.
@@ -67,31 +72,35 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     private void getReminderFromDatabase() {
         Reminder reminder = view.getReminderViewModel();
 
-        getReminder.runUseCase(reminder)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableObserver<Reminder>() {
-                    @Override
-                    public void onNext(Reminder reminder) {
-                        checkReminderState(reminder);
-                    }
+        //TODO get via ID since getting ViewModel doesn't make sense here
+        compositeDisposable.add(
+                getReminder.runUseCase(reminder.getReminderId())
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(new DisposableSubscriber<Reminder>() {
+                            @Override
+                            public void onNext(Reminder reminder) {
+                                checkReminderState(reminder);
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        view.makeToast(R.string.error_database_connection_failure);
-                        view.finishActivity();
-                    }
+                            @Override
+                            public void onError(Throwable e) {
+                                view.makeToast(R.string.error_database_connection_failure);
+                                view.finishActivity();
+                            }
 
-                    @Override
-                    public void onComplete() {
+                            @Override
+                            public void onComplete() {
 
-                    }
-                });
+                            }
+                        })
+        );
     }
 
     /**
      * Checks whether the Reminder should be written as INACTIVE or left alone, based on
      * reminder.isRenewAutomatically
+     *
      * @param reminder
      */
     private void checkReminderState(final Reminder reminder) {
@@ -99,81 +108,67 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
             startAlarm(reminder);
         } else {
             reminder.setActive(false);
-            updateOrCreateReminder.runUseCase(reminder)
-                    .subscribeOn(schedulerProvider.io())
-                    .observeOn(schedulerProvider.ui())
-                    .subscribeWith(
-                            new DisposableObserver() {
-                                @Override
-                                public void onComplete() {
-                                    startAlarm(reminder);
-                                }
 
-                                @Override
-                                public void onNext(Object o) {
+            compositeDisposable.add(
+                    updateOrCreateReminder.runUseCase(reminder)
+                            .subscribeOn(schedulerProvider.io())
+                            .observeOn(schedulerProvider.ui())
+                            .subscribeWith(
+                                    new DisposableCompletableObserver() {
+                                        @Override
+                                        public void onComplete() {
+                                            startAlarm(reminder);
+                                        }
 
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    view.makeToast(R.string.error_database_write_failure);
-                                }
-                            });
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            view.makeToast(R.string.error_database_write_failure);
+                                        }
+                                    })
+            );
         }
     }
 
 
-
     private void startAlarm(Reminder reminder) {
-        startAlarm.runUseCase(reminder)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(new DisposableObserver() {
-                    @Override
-                    public void onComplete() {
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        view.makeToast(R.string.error_starting_alarm);
-                    }
-                });
-
-
-    }
-
-    @Override
-    public void stop() {
-        compositeDisposable.clear();
-    }
-
-    @Override
-    public void onAlarmDismissClick() {
-        //first, stop the media player and vibrator
-        dismissAlarm.runUseCase()
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribeWith(
-                        new DisposableObserver() {
+        compositeDisposable.add(
+                startAlarm.runUseCase(reminder)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(new DisposableCompletableObserver() {
                             @Override
                             public void onComplete() {
-                                view.finishActivity();
-                            }
-
-                            @Override
-                            public void onNext(Object o) {
-
                             }
 
                             @Override
                             public void onError(Throwable e) {
+                                view.makeToast(R.string.error_starting_alarm);
                             }
-                        });
+                        })
+        );
 
+
+    }
+
+
+    @Override
+    public void onAlarmDismissClick() {
+        //first, stop the media player and vibrator
+        compositeDisposable.add(
+                dismissAlarm.runUseCase()
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribeWith(
+                                new DisposableCompletableObserver() {
+                                    @Override
+                                    public void onComplete() {
+                                        view.finishActivity();
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                    }
+                                })
+        );
     }
 }

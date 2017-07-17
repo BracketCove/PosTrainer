@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
+
+import javax.inject.Inject;
 
 /**
  * Created by Ryan on 05/03/2017.
@@ -18,7 +21,8 @@ import com.bracketcove.postrainer.R;
 
 public class SettingsFragment extends Fragment implements SettingsContract.View {
 
-    SettingsContract.Presenter presenter;
+    @Inject
+    SettingsPresenter settingsPresenter;
 
     public SettingsFragment() {
 
@@ -32,6 +36,14 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        DaggerSettingsComponent.builder()
+                .settingsPresenterModule(new SettingsPresenterModule(this))
+                .applicationComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getApplicationComponent()
+                )
+                .build().inject(this);
     }
 
     @Override
@@ -58,13 +70,12 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
 
     @Override
     public void onDestroy() {
-        presenter.stop();
         super.onDestroy();
     }
 
     @Override
     public void setPresenter(SettingsContract.Presenter presenter) {
-        this.presenter = presenter;
+        //this.presenter = presenter;
     }
 
     @Override

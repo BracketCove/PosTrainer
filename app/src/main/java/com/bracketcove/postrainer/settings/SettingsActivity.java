@@ -18,8 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FragmentManager manager;
 
-    @Inject
-    SettingsPresenter settingsPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +40,6 @@ public class SettingsActivity extends AppCompatActivity {
                 FRAG_SETTINGS
         );
 
-        DaggerSettingsComponent.builder()
-                .settingsPresenterModule(new SettingsPresenterModule(fragment))
-                .applicationComponent(
-                        ((PostrainerApplication) getApplication())
-                                .getApplicationComponent()
-                )
-                .build().inject(this);
+
     }
 }

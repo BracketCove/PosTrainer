@@ -15,6 +15,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
@@ -110,8 +112,8 @@ public class ReminderDetailPresenterTest {
         Mockito.when(view.getViewModel())
                 .thenReturn(ACTIVE_REMINDER);
 
-        Mockito.when(reminderService.getReminderById(ACTIVE_REMINDER))
-                .thenReturn(Observable.<Reminder>error(new Exception("Something Went Wrong")));
+        Mockito.when(reminderService.getReminderById(REMINDER_ID))
+                .thenReturn(Flowable.<Reminder>error(new Exception("Something Went Wrong")));
 
 
         presenter.start();
@@ -131,8 +133,8 @@ public class ReminderDetailPresenterTest {
         Mockito.when(view.getViewModel())
                 .thenReturn(ACTIVE_REMINDER);
 
-        Mockito.when(reminderService.getReminderById(ACTIVE_REMINDER))
-                .thenReturn(Observable.<Reminder>just(ACTIVE_REMINDER));
+        Mockito.when(reminderService.getReminderById(REMINDER_ID))
+                .thenReturn(Flowable.<Reminder>just(ACTIVE_REMINDER));
 
         presenter.start();
 
@@ -171,7 +173,7 @@ public class ReminderDetailPresenterTest {
         Mockito.when(view.getViewModel()).thenReturn(INACTIVE_REMINDER);
 
         Mockito.when(reminderService.updateReminder(INACTIVE_REMINDER))
-                .thenReturn(Observable.empty());
+                .thenReturn(Completable.complete());
 
         presenter.onDoneIconPress();
 
@@ -188,7 +190,7 @@ public class ReminderDetailPresenterTest {
         Mockito.when(view.getViewModel()).thenReturn(INACTIVE_REMINDER);
 
         Mockito.when(reminderService.updateReminder(INACTIVE_REMINDER))
-                .thenReturn(Observable.error(new Exception("Something went wrong")));
+                .thenReturn(Completable.error(new Exception("Something went wrong")));
 
         presenter.onDoneIconPress();
 

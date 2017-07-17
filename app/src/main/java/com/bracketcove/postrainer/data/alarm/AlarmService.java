@@ -52,12 +52,13 @@ public class AlarmService implements AlarmSource {
 
 
     @Override
-    public Observable setAlarm(Reminder reminder) {
+    public Completable setAlarm(Reminder reminder) {
         Calendar alarm = Calendar.getInstance();
         alarm.setTimeInMillis(System.currentTimeMillis());
         alarm.set(Calendar.HOUR_OF_DAY, reminder.getHourOfDay());
         alarm.set(Calendar.MINUTE, reminder.getMinute());
 
+        //make sure you aren't setting an alarm for earlier today
         checkAlarm(alarm);
 
         Intent intent = new Intent(applicationContext, AlarmReceiverActivity.class);
@@ -76,7 +77,7 @@ public class AlarmService implements AlarmSource {
                     alarmIntent);
         }
 
-        return Observable.empty();
+        return Completable.complete();
     }
 
     private void checkAlarm(Calendar alarm) {
@@ -88,7 +89,7 @@ public class AlarmService implements AlarmSource {
     }
 
     @Override
-    public Observable cancelAlarm(Reminder reminder) {
+    public Completable cancelAlarm(Reminder reminder) {
 
         Intent intent = new Intent(applicationContext, AlarmReceiverActivity.class);
 
@@ -99,11 +100,11 @@ public class AlarmService implements AlarmSource {
 
         alarmManager.cancel(alarmIntent);
 
-        return Observable.empty();
+        return Completable.complete();
     }
 
     @Override
-    public Observable dismissAlarm() {
+    public Completable dismissAlarm() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
@@ -118,14 +119,14 @@ public class AlarmService implements AlarmSource {
             wakeLock.release();
         }
 
-        return Observable.empty();
+        return Completable.complete();
     }
 
     /**
      * Starts an Alarm with the Requisite Parameters:
      */
     @Override
-    public Observable startAlarm(Reminder reminder) {
+    public Completable startAlarm(Reminder reminder) {
         wakeLock.acquire();
 
         if (reminder.isVibrateOnly()) {
@@ -139,7 +140,7 @@ public class AlarmService implements AlarmSource {
             }
         }
 
-        return Observable.empty();
+        return Completable.complete();
     }
 
 

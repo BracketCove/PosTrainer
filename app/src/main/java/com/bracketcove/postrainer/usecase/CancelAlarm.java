@@ -5,13 +5,14 @@ import com.bracketcove.postrainer.data.viewmodel.Alarm;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
  * Created by R_KAY on 5/23/2017.
  */
 
-public class CancelAlarm implements UseCase.RequestModel {
+public class CancelAlarm implements UseCaseCompletable<Reminder> {
 
     private final AlarmService alarmService;
 
@@ -20,7 +21,7 @@ public class CancelAlarm implements UseCase.RequestModel {
     }
 
     @Override
-    public Observable runUseCase(Reminder reminder) {
-        return alarmService.cancelAlarm(reminder);
+    public Completable runUseCase(Reminder... params) {
+        return alarmService.cancelAlarm(params[0]);
     }
 }

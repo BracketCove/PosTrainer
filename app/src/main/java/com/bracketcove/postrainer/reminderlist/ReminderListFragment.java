@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderdetail.ReminderDetailActivity;
@@ -28,6 +29,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by Ryan on 08/08/2016.
@@ -42,7 +45,8 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     private ArrayList<Reminder> reminders;
     private ImageButton settings;
 
-    ReminderListContract.Presenter presenter;
+    @Inject
+    ReminderListPresenter presenter;
 
     public ReminderListFragment() {
 
@@ -59,6 +63,13 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
+        DaggerReminderListComponent.builder()
+                .reminderListPresenterModule(new ReminderListPresenterModule(this))
+                .applicationComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getApplicationComponent()
+                )
+                .build().inject(this);
 
     }
 
@@ -117,6 +128,12 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.stop();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
@@ -131,7 +148,8 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
 
     @Override
     public void setPresenter(ReminderListContract.Presenter presenter) {
-        this.presenter = presenter;
+        //TODO: may need to remove this method entirely now that Presenters are injected into frags
+        //this.presenter = presenter;
     }
 
     @Override
@@ -329,6 +347,10 @@ public class ReminderListFragment extends Fragment implements ReminderListContra
         }
     }
 
+    /**
+     * ItemTouchHlper
+      * @return
+     */
     private ItemTouchHelper.Callback createHelperCallback() {
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {

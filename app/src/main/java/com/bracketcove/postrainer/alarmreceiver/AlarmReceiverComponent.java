@@ -17,5 +17,5 @@ import dagger.Component;
         modules = AlarmReceiverPresenterModule.class)
 public interface AlarmReceiverComponent {
 
-    void inject(AlarmReceiverActivity alarmReceiverActivity);
+    void inject(AlarmReceiverFragment alarmReceiverFragment);
 }

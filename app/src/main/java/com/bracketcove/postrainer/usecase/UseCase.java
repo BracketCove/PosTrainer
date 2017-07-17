@@ -3,23 +3,14 @@ package com.bracketcove.postrainer.usecase;
 
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
+import org.reactivestreams.Publisher;
+
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
 
 
-public interface UseCase {
+public interface UseCase<T, Params> {
 
-    /**
-     * Use cases which would benefit from a RequestModel Possibly
-     */
-    interface RequestModel {
-        Observable runUseCase(Reminder reminder);
-    }
+    Flowable<T> runUseCase(Params... params);
 
-    /**
-     * Use cases which don't require a RequestModel
-     */
-    interface Request {
-        Observable runUseCase();
-    }
 }

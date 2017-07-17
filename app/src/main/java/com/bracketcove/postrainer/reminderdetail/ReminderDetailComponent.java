@@ -18,6 +18,6 @@ import dagger.Component;
         modules = ReminderDetailPresenterModule.class)
 public interface ReminderDetailComponent {
 
-    void inject(ReminderDetailActivity reminderDetailActivity);
+    void inject(ReminderDetailFragment reminderDetailFragment);
 }
 

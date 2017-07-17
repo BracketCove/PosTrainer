@@ -15,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
+
+import javax.inject.Inject;
 
 
 /**
@@ -27,7 +30,8 @@ import com.bracketcove.postrainer.reminderlist.ReminderListActivity;
 public class ReminderDetailFragment extends Fragment implements ReminderDetailContract.View {
     private static final String REMINDER_TO_BE_EDITED = "REMINDER_TO_BE_EDITED";
 
-    ReminderDetailContract.Presenter presenter;
+    @Inject
+    ReminderDetailPresenter presenter;
 
     private EditText reminderTitle;
     private CheckBox vibrateOnly, autoRenew;
@@ -55,14 +59,16 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        /*
-         *When you call setRetainInstance(true) on a Fragment, it allows you to
-         * preserve Fragment instances during events which might destroy the Activity.
-         *
-         * Most importantly, Orientation Changes
-         */
 
         this.reminderId = getArguments().getString(REMINDER_TO_BE_EDITED);
+
+        DaggerReminderDetailComponent.builder()
+                .reminderDetailPresenterModule(new ReminderDetailPresenterModule(this))
+                .applicationComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getApplicationComponent()
+                )
+                .build().inject(this);
 
     }
 
@@ -218,7 +224,7 @@ public class ReminderDetailFragment extends Fragment implements ReminderDetailCo
 
     @Override
     public void setPresenter(ReminderDetailContract.Presenter presenter) {
-        this.presenter = presenter;
+        //this.presenter = presenter;
     }
 
     @Override

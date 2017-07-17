@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
+
+import javax.inject.Inject;
 
 /**
  * Created by Ryan on 05/03/2017.
@@ -22,7 +25,8 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
     private static final String REMINDER_ID = "REMINDER_ID";
     private String reminderId;
 
-    AlarmReceiverContract.Presenter presenter;
+    @Inject
+    AlarmReceiverPresenter presenter;
 
     public AlarmReceiverFragment() {
 
@@ -42,6 +46,14 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
         super.onCreate(savedInstanceState);
         this.reminderId = getArguments().getString(REMINDER_ID);
         setRetainInstance(true);
+
+        DaggerAlarmReceiverComponent.builder()
+                .alarmReceiverPresenterModule(new AlarmReceiverPresenterModule(this))
+                .applicationComponent(
+                        ((PostrainerApplication) getActivity().getApplication())
+                                .getApplicationComponent()
+                )
+                .build().inject(this);
     }
 
     @Override
@@ -65,7 +77,7 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
 
     @Override
     public void setPresenter(AlarmReceiverContract.Presenter presenter) {
-        this.presenter = presenter;
+        //this.presenter = presenter;
     }
 
     @Override

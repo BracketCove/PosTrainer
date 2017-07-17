@@ -3,6 +3,7 @@ package com.bracketcove.postrainer.data.alarm;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
@@ -13,11 +14,11 @@ import io.reactivex.Observable;
 
 public interface AlarmSource {
 
-    Observable setAlarm(Reminder reminder);
+    Completable setAlarm(Reminder reminder);
 
-    Observable cancelAlarm(Reminder reminder);
+    Completable cancelAlarm(Reminder reminder);
 
-    Observable dismissAlarm();
+    Completable dismissAlarm();
 
-    Observable startAlarm(Reminder reminder);
+    Completable startAlarm(Reminder reminder);
 }

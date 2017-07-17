@@ -25,8 +25,7 @@ public class AlarmReceiverActivity extends AppCompatActivity {
     private static final String ALARM_FRAGMENT = "ALARM_FRAGMENT";
     private static final String REMINDER_ID = "REMINDER_ID";
 
-    @Inject
-    AlarmReceiverPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +60,6 @@ public class AlarmReceiverActivity extends AppCompatActivity {
                 ALARM_FRAGMENT
         );
 
-        DaggerAlarmReceiverComponent.builder()
-                .alarmReceiverPresenterModule(new AlarmReceiverPresenterModule(fragment))
-                .applicationComponent(
-                        ((PostrainerApplication) getApplication())
-                                .getApplicationComponent()
-                )
-                .build().inject(this);
+
     }
 }

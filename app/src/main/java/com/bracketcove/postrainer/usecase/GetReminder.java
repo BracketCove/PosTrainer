@@ -3,6 +3,7 @@ package com.bracketcove.postrainer.usecase;
 import com.bracketcove.postrainer.data.reminder.ReminderService;
 import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 import static dagger.internal.Preconditions.checkNotNull;
@@ -15,7 +16,7 @@ import static dagger.internal.Preconditions.checkNotNull;
  * Created by R_KAY on 5/23/2017.
  */
 
-public class GetReminder implements UseCase.RequestModel {
+public class GetReminder implements UseCase<Reminder, String> {
 
     /**
      *Reminder Service is a Facade/Repository Pattern which Abstracts Realm from the rest of my the
@@ -28,8 +29,8 @@ public class GetReminder implements UseCase.RequestModel {
     }
 
     @Override
-    public Observable runUseCase(Reminder reminder) {
-        return reminderService.getReminderById(reminder);
+    public Flowable<Reminder> runUseCase(String... params) {
+        return reminderService.getReminderById(params[0]);
     }
 
 }
