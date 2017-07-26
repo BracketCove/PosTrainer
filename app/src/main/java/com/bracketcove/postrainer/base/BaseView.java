@@ -7,11 +7,7 @@ import android.support.annotation.StringRes;
  */
 
 //TODO Explain what T is and how it Works
-public interface BaseView<T> {
-
-
-    void setPresenter(T presenter);
-
+public interface BaseView {
 
     void makeToast(@StringRes int message);
 

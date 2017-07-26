@@ -4,24 +4,24 @@
     <string name="title_activity_movement_detail">ActivityMovementDetail</string>
     <string name="title_activity_movement_menu">ActivityMovementMenu</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_reminders">ActivityReminders</string>
-    <string name="title_activity_manage_reminder">ActivityManageReminder</string>
+    <string name="title_activity_alarms">ActivityAlarms</string>
+    <string name="title_activity_manage_alarm">ActivityManageAlarm</string>
 
-    <!-- ReminderListActivity -->
-    <string name="reminders_alarm_on">ON</string>
-    <string name="reminders_alarm_off">OFF</string>
-    <string name="reminders_new_alarm_prompt">Hit "+" to Create a New Reminder</string>
-    <string name="reminders_alarm_title">Alarm Title Text</string>
-    <string name="reminders_alarm_dialog_delete_title">Delete Reminder?</string>
+    <!-- AlarmListActivity -->
+    <string name="alarms_alarm_on">ON</string>
+    <string name="alarms_alarm_off">OFF</string>
+    <string name="alarms_new_alarm_prompt">Hit "+" to Create a New Alarm</string>
+    <string name="alarms_alarm_title">Alarm Title Text</string>
+    <string name="alarms_alarm_dialog_delete_title">Delete Alarm?</string>
 
-    <!-- ActivityManageReminder -->
+    <!-- ActivityManageAlarm -->
     <string name="manage_alarm_title_hint">Alarm Title</string>
     <string name="manage_alarm_vibrate">Vibrate Only</string>
     <string name="manage_alarm_renew">Renew Automatically</string>
     <string name="manage_alarm_action_done">Done</string>
     <string name="manage_alarm_action_delete">Delete</string>
     <string name="manage_alarm_new_title">New Alarm</string>
-    <string name="manage_alarm_toolbar_title">Set Reminder</string>
+    <string name="manage_alarm_toolbar_title">Set Alarm</string>
     <string name="manage_alarm_write_successful">Alarm Updated/Created</string>
     <string name="manage_alarm_write_unsuccessful">Alarm Update Unsuccessful</string>
 
@@ -56,14 +56,14 @@
     <!-- Validation -->
     <string name="error_input_invalid_blank">Title can\'t be blank</string>
     <string name="error_input_invalid_too_long">Title must be 36 Chars. or less</string>
-    <string name="error_too_many_reminders">Maximum Number of Reminders is 5</string>
+    <string name="error_too_many_alarms">Maximum Number of Alarms is 5</string>
 
     <!--Toolbar Titles -->
     <string name="movement_menu_title">Movements</string>
     <string name="movement_detail_title">Movement Detail</string>
-    <string name="reminder_list_title">Current Reminders</string>
-    <string name="reminder_manage_title">Manage Reminder</string>
-    <string name="reminder_disclaimer_title">Disclaimer</string>
+    <string name="alarm_list_title">Current Alarms</string>
+    <string name="alarm_manage_title">Manage Alarm</string>
+    <string name="alarm_disclaimer_title">Disclaimer</string>
     <string name="settings_title">About</string>
 
     <!-- Other -->
@@ -87,21 +87,24 @@
         G+: google.com/+wiseass
     </string>
     <string name="stop_alarm">Stop Alarm</string>
-    <string name="menu_item_reminders">Reminders</string>
+    <string name="menu_item_alarms">Alarms</string>
     <string name="menu_item_movements">Movements</string>
     <string name="menu_item_about">About</string>
     <string name="error_database_write_failure">Unable to write to Database :(</string>
-    <string name="message_database_write_successful">Reminder updated Succesfully</string>
+    <string name="message_database_write_successful">Alarm updated Succesfully</string>
     <string name="prompt_new_alarm">Hit \"+\" to \nProceed</string>
     <string name="error_database_connection_failure">Couldn\'t connect to Database</string>
     <string name="msg_alarm_activated">Alarm Activated</string>
     <string name="msg_alarm_deactivated">Alarm Deactivated</string>
     <string name="msg_alarm_deleted">Alarm Deleted</string>
-    <string name="def_reminder_name">New Alarm</string>
-    <string name="msg_reminder_limit_reached">Maximun Reminders per Day is 5.</string>
-    <string name="error_invalid_reminder_id">That\'s not supposed to happen. Contact the Dev. if this message keeps appearing.</string>
+    <string name="def_alarm_name">New Alarm</string>
+    <string name="msg_alarm_limit_reached">Maximun Alarms per Day is 5.</string>
+    <string name="error_invalid_alarm_id">That\'s not supposed to happen. Contact the Dev. if this message keeps appearing.</string>
     <string name="error_managing_alarm">Error Managing Alarm</string>
     <string name="error_starting_alarm">Unable to Start Alarm</string>
+    <string name="action_delete_item">Alarm Deleted</string>
+    <string name="action_undo">UNDO</string>
+    <string name="error_unable_to_retrieve_alarm">Unable to Restore Alarm</string>
 
 
 </resources>

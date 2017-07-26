@@ -1,11 +1,9 @@
 package com.bracketcove.postrainer.usecase;
 
-import com.bracketcove.postrainer.data.alarm.AlarmService;
-import com.bracketcove.postrainer.data.viewmodel.Reminder;
+import com.bracketcove.postrainer.data.alarmservice.AlarmManager;
+import com.bracketcove.postrainer.data.alarmservice.AlarmService;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
 
 /**
  *
@@ -14,14 +12,14 @@ import io.reactivex.Observable;
 
 public class DismissAlarm implements UseCaseCompletable<Void> {
 
-    private final AlarmService alarmService;
+    private final AlarmManager alarmManager;
 
-    public DismissAlarm(AlarmService alarmService) {
-        this.alarmService = alarmService;
+    public DismissAlarm(AlarmManager alarmManager) {
+        this.alarmManager = alarmManager;
     }
 
     @Override
     public Completable runUseCase(Void... params) {
-        return alarmService.dismissAlarm();
+        return alarmManager.dismissAlarm();
     }
 }

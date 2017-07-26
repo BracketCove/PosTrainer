@@ -1,27 +1,26 @@
 package com.bracketcove.postrainer.usecase;
 
-import com.bracketcove.postrainer.data.alarm.AlarmService;
+
+import com.bracketcove.postrainer.data.alarmservice.AlarmManager;
+import com.bracketcove.postrainer.data.alarmservice.AlarmService;
 import com.bracketcove.postrainer.data.viewmodel.Alarm;
-import com.bracketcove.postrainer.data.viewmodel.Reminder;
 
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
 
 /**
  * Created by R_KAY on 5/23/2017.
  */
 
-public class CancelAlarm implements UseCaseCompletable<Reminder> {
+public class CancelAlarm implements UseCaseCompletable<Alarm> {
 
-    private final AlarmService alarmService;
+    private final AlarmManager alarmManager;
 
-    public CancelAlarm(AlarmService alarmService) {
-        this.alarmService = alarmService;
+    public CancelAlarm(AlarmManager alarmManager) {
+        this.alarmManager = alarmManager;
     }
 
     @Override
-    public Completable runUseCase(Reminder... params) {
-        return alarmService.cancelAlarm(params[0]);
+    public Completable runUseCase(Alarm... params) {
+        return alarmManager.cancelAlarm(params[0]);
     }
 }

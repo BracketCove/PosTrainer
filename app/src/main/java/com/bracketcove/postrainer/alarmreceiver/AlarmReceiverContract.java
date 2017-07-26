@@ -2,17 +2,17 @@ package com.bracketcove.postrainer.alarmreceiver;
 
 import com.bracketcove.postrainer.base.BasePresenter;
 import com.bracketcove.postrainer.base.BaseView;
-import com.bracketcove.postrainer.data.viewmodel.Reminder;
+import com.bracketcove.postrainer.data.viewmodel.Alarm;
 
 /**
  * Created by Ryan on 05/03/2017.
  */
 
 public interface AlarmReceiverContract {
-    interface View extends BaseView<Presenter> {
-            String getReminderId();
+    interface View extends BaseView {
+            String getAlarmId();
 
-            Reminder getReminderViewModel();
+            Alarm getViewModel();
 
             void finishActivity();
     }

@@ -1,22 +1,21 @@
 package com.bracketcove.postrainer.alarmreceiver;
 
-import android.util.Log;
-
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.data.alarm.AlarmService;
-import com.bracketcove.postrainer.data.reminder.ReminderService;
-import com.bracketcove.postrainer.data.viewmodel.Reminder;
+import com.bracketcove.postrainer.data.alarmdatabase.AlarmSource;
+import com.bracketcove.postrainer.data.alarmservice.AlarmManager;
+import com.bracketcove.postrainer.data.alarmservice.AlarmService;
+import com.bracketcove.postrainer.data.alarmdatabase.AlarmDatabase;
+import com.bracketcove.postrainer.data.viewmodel.Alarm;
 import com.bracketcove.postrainer.usecase.DismissAlarm;
-import com.bracketcove.postrainer.usecase.GetReminder;
+import com.bracketcove.postrainer.usecase.GetAlarm;
 import com.bracketcove.postrainer.usecase.StartAlarm;
-import com.bracketcove.postrainer.usecase.UpdateOrCreateReminder;
+import com.bracketcove.postrainer.usecase.UpdateOrCreateAlarm;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
@@ -27,8 +26,8 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
 
     private final DismissAlarm dismissAlarm;
     private final StartAlarm startAlarm;
-    private final GetReminder getReminder;
-    private final UpdateOrCreateReminder updateOrCreateReminder;
+    private final GetAlarm getAlarm;
+    private final UpdateOrCreateAlarm updateOrCreateAlarm;
 
     private final AlarmReceiverContract.View view;
     private final BaseSchedulerProvider schedulerProvider;
@@ -36,28 +35,22 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
 
     @Inject
     public AlarmReceiverPresenter(AlarmReceiverContract.View view,
-                                  ReminderService reminderService,
-                                  AlarmService alarmService,
+                                  AlarmSource alarmSource,
+                                  AlarmManager alarmManager,
                                   BaseSchedulerProvider schedulerProvider) {
-        this.getReminder = new GetReminder(reminderService);
-        this.dismissAlarm = new DismissAlarm(alarmService);
-        this.startAlarm = new StartAlarm(alarmService);
-        this.updateOrCreateReminder = new UpdateOrCreateReminder(reminderService);
+        this.getAlarm = new GetAlarm(alarmSource);
+        this.dismissAlarm = new DismissAlarm(alarmManager);
+        this.startAlarm = new StartAlarm(alarmManager);
+        this.updateOrCreateAlarm = new UpdateOrCreateAlarm(alarmSource);
 
         this.view = view;
         this.schedulerProvider = schedulerProvider;
         this.compositeDisposable = new CompositeDisposable();
     }
 
-    @Inject
-    void setPresenter() {
-        view.setPresenter(this);
-    }
-
-
     @Override
     public void start() {
-        getReminderFromDatabase();
+        getAlarmFromDatabase();
     }
 
     @Override
@@ -66,21 +59,21 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     }
 
     /**
-     * Query the Reminder Database for a Reminder which matches the given reminderId passed
+     * Query the Alarm Database for a Alarm which matches the given reminderId passed
      * in from the Activity's extras.
      */
-    private void getReminderFromDatabase() {
-        Reminder reminder = view.getReminderViewModel();
+    private void getAlarmFromDatabase() {
+        Alarm alarm = view.getViewModel();
 
         //TODO get via ID since getting ViewModel doesn't make sense here
         compositeDisposable.add(
-                getReminder.runUseCase(reminder.getReminderId())
+                getAlarm.runUseCase(alarm.getAlarmId())
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
-                        .subscribeWith(new DisposableSubscriber<Reminder>() {
+                        .subscribeWith(new DisposableSubscriber<Alarm>() {
                             @Override
-                            public void onNext(Reminder reminder) {
-                                checkReminderState(reminder);
+                            public void onNext(Alarm alarm) {
+                                checkAlarmState(alarm);
                             }
 
                             @Override
@@ -98,26 +91,26 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     }
 
     /**
-     * Checks whether the Reminder should be written as INACTIVE or left alone, based on
-     * reminder.isRenewAutomatically
+     * Checks whether the Alarm should be written as INACTIVE or left alone, based on
+     * alarm.isRenewAutomatically
      *
-     * @param reminder
+     * @param alarm
      */
-    private void checkReminderState(final Reminder reminder) {
-        if (reminder.isRenewAutomatically()) {
-            startAlarm(reminder);
+    private void checkAlarmState(final Alarm alarm) {
+        if (alarm.isRenewAutomatically()) {
+            startAlarm(alarm);
         } else {
-            reminder.setActive(false);
+            alarm.setActive(false);
 
             compositeDisposable.add(
-                    updateOrCreateReminder.runUseCase(reminder)
+                    updateOrCreateAlarm.runUseCase(alarm)
                             .subscribeOn(schedulerProvider.io())
                             .observeOn(schedulerProvider.ui())
                             .subscribeWith(
                                     new DisposableCompletableObserver() {
                                         @Override
                                         public void onComplete() {
-                                            startAlarm(reminder);
+                                            startAlarm(alarm);
                                         }
 
                                         @Override
@@ -130,9 +123,9 @@ public class AlarmReceiverPresenter implements AlarmReceiverContract.Presenter {
     }
 
 
-    private void startAlarm(Reminder reminder) {
+    private void startAlarm(Alarm alarm) {
         compositeDisposable.add(
-                startAlarm.runUseCase(reminder)
+                startAlarm.runUseCase(alarm)
                         .subscribeOn(schedulerProvider.io())
                         .observeOn(schedulerProvider.ui())
                         .subscribeWith(new DisposableCompletableObserver() {

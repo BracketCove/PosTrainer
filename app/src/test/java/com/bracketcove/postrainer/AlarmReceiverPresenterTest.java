@@ -2,9 +2,9 @@ package com.bracketcove.postrainer;
 
 import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverContract;
 import com.bracketcove.postrainer.alarmreceiver.AlarmReceiverPresenter;
-import com.bracketcove.postrainer.data.alarm.AlarmService;
-import com.bracketcove.postrainer.data.reminder.ReminderService;
-import com.bracketcove.postrainer.data.viewmodel.Reminder;
+import com.bracketcove.postrainer.data.alarmdatabase.AlarmSource;
+import com.bracketcove.postrainer.data.alarmservice.AlarmManager;
+import com.bracketcove.postrainer.data.viewmodel.Alarm;
 import com.bracketcove.postrainer.util.SchedulerProvider;
 
 import org.junit.Before;
@@ -16,7 +16,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,10 +24,10 @@ import static org.mockito.Mockito.when;
 public class AlarmReceiverPresenterTest {
 
     @Mock
-    private AlarmService alarmService;
+    private AlarmManager alarmManager;
 
     @Mock
-    private ReminderService reminderService;
+    private AlarmSource alarmSource;
 
     @Mock
     private AlarmReceiverContract.View view;
@@ -44,10 +43,10 @@ public class AlarmReceiverPresenterTest {
     private static final int HOUR = 10;
 
     //TODO: fix this test data to look the same as implementation would
-    private static final String REMINDER_ID = "111111111111111";
+    private static final String ALARM_ID = "111111111111111";
 
-    private static final Reminder ACTIVE_REMINDER = new Reminder(
-            REMINDER_ID,
+    private static final Alarm ACTIVE_ALARM = new Alarm(
+            ALARM_ID,
             TITLE,
             true,
             false,
@@ -56,8 +55,8 @@ public class AlarmReceiverPresenterTest {
             HOUR
     );
 
-    private static final Reminder INACTIVE_REMINDER = new Reminder(
-            REMINDER_ID,
+    private static final Alarm INACTIVE_ALARM = new Alarm(
+            ALARM_ID,
             TITLE,
             false,
             false,
@@ -75,8 +74,8 @@ public class AlarmReceiverPresenterTest {
 
         presenter = new AlarmReceiverPresenter(
                 view,
-                reminderService,
-                alarmService,
+                alarmSource,
+                alarmManager,
                 schedulerProvider
         );
 
@@ -84,21 +83,21 @@ public class AlarmReceiverPresenterTest {
 
 
     /**
-     * When an Alarm fires, ReminderService will have to retrieve it from the Database. Other than
+     * When an Alarm fires, AlarmSource will have to retrieve it from the Database. Other than
      * failing, there are two possible results:
      *
-     * 1. If Reminder is set to Repeat, it should not be deactivated after being retrieved.
+     * 1. If Alarm is set to Repeat, it should not be deactivated after being retrieved.
      *
-     * 2. If Reminder isn't set to repeat, it should be deactivated and written back to the Database
+     * 2. If Alarm isn't set to repeat, it should be deactivated and written back to the Database
      * before returning it to the Presenter.
      *
-     * We can verify this logic flow by checking the state of a Reminder once it is passed to the
-     * AlarmService
+     * We can verify this logic flow by checking the state of a Alarm once it is passed to the
+     * AlarmManager
      */
     @Test
     public void retrieveCurrentAlarm() {
-        Reminder nonRepeatingReminder = new Reminder(
-                REMINDER_ID,
+        Alarm nonRepeatingAlarm = new Alarm(
+                ALARM_ID,
                 TITLE,
                 true,
                 false,
@@ -107,30 +106,30 @@ public class AlarmReceiverPresenterTest {
                 HOUR
         );
 
-        when(view.getReminderViewModel())
-                .thenReturn(nonRepeatingReminder);
+        when(view.getViewModel())
+                .thenReturn(nonRepeatingAlarm);
 
-        //get the reminder so that we know if it needs to repeat or not
-        when(reminderService.getReminderById(REMINDER_ID))
-                .thenReturn(Flowable.just(nonRepeatingReminder));
+        //get the alarm so that we know if it needs to repeat or not
+        when(alarmSource.getAlarmsById(ALARM_ID))
+                .thenReturn(Flowable.just(nonRepeatingAlarm));
 
-        //since this tests non-repeating reminders, we must rewrite the Reminder as INACTIVE after
+        //since this tests non-repeating alarms, we must rewrite the Alarm as INACTIVE after
         //it is retrieve
-        when(reminderService.updateReminder(nonRepeatingReminder))
+        when(alarmSource.updateAlarm(nonRepeatingAlarm))
                 .thenReturn(Completable.complete());
 
-        when(alarmService.startAlarm(nonRepeatingReminder))
+        when(alarmManager.startAlarm(nonRepeatingAlarm))
                 .thenReturn(Completable.complete());
 
         presenter.start();
 
-        verify(alarmService).startAlarm(nonRepeatingReminder);
+        verify(alarmManager).startAlarm(nonRepeatingAlarm);
     }
 
     @Test
     public void retrieveCurrentAlarmRepeating() {
-        Reminder repeatingReminder = new Reminder(
-                REMINDER_ID,
+        Alarm repeatingAlarm = new Alarm(
+                ALARM_ID,
                 TITLE,
                 true,
                 false,
@@ -139,24 +138,24 @@ public class AlarmReceiverPresenterTest {
                 HOUR
         );
 
-        when(view.getReminderViewModel())
-                .thenReturn(repeatingReminder);
+        when(view.getViewModel())
+                .thenReturn(repeatingAlarm);
 
-        when(reminderService.getReminderById(REMINDER_ID))
-                .thenReturn(Flowable.just(repeatingReminder));
+        when(alarmSource.getAlarmsById(ALARM_ID))
+                .thenReturn(Flowable.just(repeatingAlarm));
 
-        when(alarmService.startAlarm(repeatingReminder))
+        when(alarmManager.startAlarm(repeatingAlarm))
                 .thenReturn(Completable.complete());
 
         presenter.start();
 
-        verify(alarmService).startAlarm(repeatingReminder);
+        verify(alarmManager).startAlarm(repeatingAlarm);
     }
 
     @Test
     public void retrieveCurrentAlarmUnsuccessful() {
-        Reminder repeatingReminder = new Reminder(
-                REMINDER_ID,
+        Alarm repeatingAlarm = new Alarm(
+                ALARM_ID,
                 TITLE,
                 true,
                 false,
@@ -165,11 +164,11 @@ public class AlarmReceiverPresenterTest {
                 HOUR
         );
 
-        when(view.getReminderViewModel())
-                .thenReturn(repeatingReminder);
+        when(view.getViewModel())
+                .thenReturn(repeatingAlarm);
 
-        when(reminderService.getReminderById(REMINDER_ID))
-                .thenReturn(Flowable.<Reminder>error(new Exception()));
+        when(alarmSource.getAlarmsById(ALARM_ID))
+                .thenReturn(Flowable.<Alarm>error(new Exception()));
 
         presenter.start();
 
@@ -188,7 +187,7 @@ public class AlarmReceiverPresenterTest {
     @Test
     public void onAlarmDismissSuccessful() {
 
-        when(alarmService.dismissAlarm())
+        when(alarmManager.dismissAlarm())
                 .thenReturn(Completable.complete());
 
         presenter.onAlarmDismissClick();

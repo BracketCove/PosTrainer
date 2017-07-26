@@ -1,6 +1,7 @@
 package com.bracketcove.postrainer.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -8,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
+import com.bracketcove.postrainer.alarmlist.AlarmListActivity;
 
 import javax.inject.Inject;
 
@@ -23,6 +26,8 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
 
     @Inject
     SettingsPresenter settingsPresenter;
+
+    private ImageButton back;
 
     public SettingsFragment() {
 
@@ -50,6 +55,13 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
+        back = (ImageButton) v.findViewById(R.id.imb_settings_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settingsPresenter.onBackButtonPress();
+            }
+        });
         return v;
     }
 
@@ -74,15 +86,15 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     }
 
     @Override
-    public void setPresenter(SettingsContract.Presenter presenter) {
-        //this.presenter = presenter;
-    }
-
-    @Override
     public void makeToast(@StringRes int message) {
         Toast.makeText(getActivity(),
                 message,
                 Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    @Override
+    public void startAlarmListActivity() {
+        startActivity(new Intent(getActivity(), AlarmListActivity.class));
     }
 }

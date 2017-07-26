@@ -3,16 +3,11 @@ package com.bracketcove.postrainer.alarmreceiver;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.data.viewmodel.Reminder;
 import com.bracketcove.postrainer.util.ActivityUtils;
-
-import javax.inject.Inject;
 
 /**
  * This Activity is fired when an Alarm goes off. Once it is active, it handles the Alarm based on
@@ -23,7 +18,7 @@ import javax.inject.Inject;
 public class AlarmReceiverActivity extends AppCompatActivity {
 
     private static final String ALARM_FRAGMENT = "ALARM_FRAGMENT";
-    private static final String REMINDER_ID = "REMINDER_ID";
+    private static final String ALARM_ID = "ALARM_ID";
 
 
 
@@ -44,7 +39,7 @@ public class AlarmReceiverActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_alarm_receiver);
 
-        String reminderId = getIntent().getStringExtra(REMINDER_ID);
+        String reminderId = getIntent().getStringExtra(ALARM_ID);
 
         FragmentManager manager = this.getSupportFragmentManager();
 

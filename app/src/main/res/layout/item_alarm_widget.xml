@@ -8,8 +8,6 @@
     android:background="@drawable/layout_bg"
     android:elevation="2dp">
 
-    <!-- TODO: Consider converting this to a Constraint layout -->
-
     <TextView
         android:id="@+id/lbl_alarm_title"
         style="@style/Lable.AlarmWidget"

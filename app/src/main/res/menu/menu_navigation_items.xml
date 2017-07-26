@@ -6,7 +6,7 @@
         <item
             android:id="@+id/nav_item_reminders"
             android:icon="@drawable/ic_alarm_black_48dp"
-            android:title="@string/menu_item_reminders" />
+            android:title="@string/menu_item_alarms" />
 
         <item
             android:id="@+id/nav_item_movements"

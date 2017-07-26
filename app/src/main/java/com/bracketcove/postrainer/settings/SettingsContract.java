@@ -8,11 +8,11 @@ import com.bracketcove.postrainer.base.BaseView;
  */
 
 public interface SettingsContract {
-    interface View extends BaseView<Presenter> {
-
+    interface View extends BaseView {
+        void startAlarmListActivity();
     }
 
     interface Presenter extends BasePresenter {
-        void onContactButtonClick();
+        void onBackButtonPress();
     }
 }

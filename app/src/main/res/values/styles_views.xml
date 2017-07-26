@@ -90,7 +90,15 @@
     <!-- *********************** Toolbar  *********************** -->
 
 
-    <!-- *********************** Others  *********************** -->
+    <!-- *********************** Others android:Widget.Material.Light.TimePicker *********************** -->
+    <style name="CustomTimePicker" parent="android:Widget.Material.Light.TimePicker">
+        <item name="android:timePickerMode">clock</item>
+        <item name="android:headerBackground">@color/colorAccent</item>
+        <item name="android:numbersTextColor">@color/BLACK</item>
+        <item name="android:numbersSelectorColor">?android:attr/colorControlActivated</item>
+        <item name="android:numbersBackgroundColor">@color/WHITE</item>
+        <item name="android:amPmTextColor">@color/ALPHA_WHITE</item>
+    </style>
 
     <style name="CheckboxCustomOverlay" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/WHITE</item>

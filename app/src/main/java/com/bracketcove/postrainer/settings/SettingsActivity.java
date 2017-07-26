@@ -5,12 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.reminderdetail.ReminderDetailFragment;
 import com.bracketcove.postrainer.util.ActivityUtils;
-
-import javax.inject.Inject;
 
 public class SettingsActivity extends AppCompatActivity {
     private static final String FRAG_SETTINGS = "FRAG_SETTINGS";

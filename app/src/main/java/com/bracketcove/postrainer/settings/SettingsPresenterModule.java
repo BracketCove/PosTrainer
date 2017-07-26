@@ -1,7 +1,5 @@
 package com.bracketcove.postrainer.settings;
 
-import com.bracketcove.postrainer.reminderlist.ReminderListContract;
-
 import dagger.Module;
 import dagger.Provides;
 

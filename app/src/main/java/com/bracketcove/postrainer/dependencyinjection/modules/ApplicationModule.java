@@ -8,10 +8,9 @@ import android.os.PowerManager;
 import android.os.Vibrator;
 import android.provider.Settings;
 
-import com.bracketcove.postrainer.data.alarm.AlarmService;
-import com.bracketcove.postrainer.data.alarm.AlarmSource;
-import com.bracketcove.postrainer.data.reminder.ReminderService;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.alarmdatabase.AlarmDatabase;
+import com.bracketcove.postrainer.data.alarmdatabase.AlarmSource;
+import com.bracketcove.postrainer.data.alarmservice.AlarmService;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 import com.bracketcove.postrainer.util.SchedulerProvider;
 
@@ -19,7 +18,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
 
 import static android.content.Context.POWER_SERVICE;
 
@@ -85,7 +83,7 @@ public final class ApplicationModule {
 
     @Singleton
     @Provides
-    AlarmManager provideAlarmManager() {
+    AlarmManager provideAndroidAlarmManager() {
         return alarmManager;
     }
 
@@ -97,7 +95,7 @@ public final class ApplicationModule {
 
     @Singleton
     @Provides
-    AlarmService provideAlarmService() {
+    com.bracketcove.postrainer.data.alarmservice.AlarmManager provideAlarmManager() {
         return new AlarmService(
                 wakeLock,
                 mediaPlayer,
@@ -110,8 +108,8 @@ public final class ApplicationModule {
 
     @Singleton
     @Provides
-    ReminderService provideReminderService() {
-        return new ReminderService();
+    AlarmSource provideAlarmSource() {
+        return new AlarmDatabase();
     }
 
 }

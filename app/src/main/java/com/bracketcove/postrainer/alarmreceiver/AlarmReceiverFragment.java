@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.bracketcove.postrainer.PostrainerApplication;
 import com.bracketcove.postrainer.R;
-import com.bracketcove.postrainer.data.viewmodel.Reminder;
+import com.bracketcove.postrainer.data.viewmodel.Alarm;
 
 import javax.inject.Inject;
 
@@ -22,8 +22,8 @@ import javax.inject.Inject;
 
 public class AlarmReceiverFragment extends Fragment implements AlarmReceiverContract.View {
 
-    private static final String REMINDER_ID = "REMINDER_ID";
-    private String reminderId;
+    private static final String ALARM_ID = "ALARM_ID";
+    private String alarmId;
 
     @Inject
     AlarmReceiverPresenter presenter;
@@ -32,10 +32,10 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
 
     }
 
-    public static AlarmReceiverFragment newInstance(String reminderId) {
+    public static AlarmReceiverFragment newInstance(String alarmId) {
         AlarmReceiverFragment fragment = new AlarmReceiverFragment();
         Bundle args = new Bundle();
-        args.putString(REMINDER_ID, reminderId);
+        args.putString(ALARM_ID, alarmId);
         fragment.setArguments(args);
 
         return fragment;
@@ -44,7 +44,7 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.reminderId = getArguments().getString(REMINDER_ID);
+        this.alarmId = getArguments().getString(ALARM_ID);
         setRetainInstance(true);
 
         DaggerAlarmReceiverComponent.builder()
@@ -76,11 +76,6 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
     }
 
     @Override
-    public void setPresenter(AlarmReceiverContract.Presenter presenter) {
-        //this.presenter = presenter;
-    }
-
-    @Override
     public void makeToast(@StringRes int message) {
         Toast.makeText(getActivity(),
                 message,
@@ -99,16 +94,15 @@ public class AlarmReceiverFragment extends Fragment implements AlarmReceiverCont
         presenter.start();
     }
 
-    @Override
-    public String getReminderId() {
-        return this.reminderId;
+    public String getAlarmId() {
+        return this.alarmId;
     }
 
     @Override
-    public Reminder getReminderViewModel() {
-       return new Reminder(
-                this.reminderId,
-                getString(R.string.def_reminder_name),
+    public Alarm getViewModel() {
+       return new Alarm(
+                this.alarmId,
+                getString(R.string.def_alarm_name),
                 false,
                 true,
                 false,

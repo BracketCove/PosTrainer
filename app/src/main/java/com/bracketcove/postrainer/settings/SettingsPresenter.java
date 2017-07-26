@@ -14,11 +14,6 @@ public class SettingsPresenter implements SettingsContract.Presenter {
         this.view = view;
     }
 
-    @Inject
-    void setPresenter() {
-        view.setPresenter(this);
-    }
-
     @Override
     public void start() {
 
@@ -30,6 +25,7 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     }
 
     @Override
-    public void onContactButtonClick() {
+    public void onBackButtonPress() {
+        view.startAlarmListActivity();
     }
 }

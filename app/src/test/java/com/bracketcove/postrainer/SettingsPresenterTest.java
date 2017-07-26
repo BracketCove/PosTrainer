@@ -36,7 +36,7 @@ public class SettingsPresenterTest {
 
     @Test
     public void whenContactButtonClicked () {
-        presenter.onContactButtonClick();
+        presenter.onBackButtonPress();
         //verify(view).startCreateAccountActivity();
     }
 

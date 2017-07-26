@@ -4,10 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
+    android:elevation="8dp"
     app:popupTheme="@style/Toolbar_Popup"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:titleTextAppearance="@style/Toolbar_Title"
-    android:elevation="8dp"
-    >
+    app:titleTextAppearance="@style/Toolbar_Title" />
 
-    </android.support.v7.widget.Toolbar>

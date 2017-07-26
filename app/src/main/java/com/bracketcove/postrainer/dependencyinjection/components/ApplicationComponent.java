@@ -20,10 +20,10 @@ import android.media.AudioManager;
 import android.os.PowerManager;
 import android.os.Vibrator;
 
-import com.bracketcove.postrainer.data.alarm.AlarmService;
-import com.bracketcove.postrainer.data.alarm.AlarmSource;
-import com.bracketcove.postrainer.data.reminder.ReminderService;
-import com.bracketcove.postrainer.data.reminder.ReminderSource;
+import com.bracketcove.postrainer.data.alarmdatabase.AlarmSource;
+import com.bracketcove.postrainer.data.alarmservice.AlarmManager;
+import com.bracketcove.postrainer.data.alarmservice.AlarmService;
+import com.bracketcove.postrainer.data.alarmdatabase.AlarmDatabase;
 import com.bracketcove.postrainer.dependencyinjection.modules.ApplicationModule;
 import com.bracketcove.postrainer.util.BaseSchedulerProvider;
 
@@ -42,8 +42,8 @@ public interface ApplicationComponent {
   PowerManager.WakeLock wakeLock();
   AudioManager audioManager();
   Vibrator vibrator();
-  AlarmService alarmService();
-  ReminderService reminderService();
+  AlarmManager alarmManager();
+  AlarmSource alarmSource();
   BaseSchedulerProvider baseSchedulerProvider();
 
 }

@@ -1,9 +1,9 @@
-### Postrainer
 
-# Profiler
+# PosTrainer
 
 ## Topics
 * [What is PosTrainer?](#what-is-postrainer)
+* [Change Log](#change-log)
 * [Software Architecture Diagram](#software-architecture-diagram)
 * [Can I use the code?](#can-i-use-code-from-this-repo)
 * [Project APIs/Concepts](#apis-and-architectures-used)
@@ -17,12 +17,12 @@ PosTrainer is an Alarm App which allows the user to set up to 5 Daily Reminders 
 
 This App has seen over 5 iterations, as it was the second App Idea I ever built. At this time, I'm currently refactoring it to apply Clean Architecture Principles, as well as Dagger 2 for Dependency Injection, RxJava 2 for Concurrency/Communication, and a Realm Database to store the Reminders. Please see my Software Architecture Diagram for a generalized Picture of this Application's Software Architecture.
 
-### Reminder List Component
+### AlarmList Component
 <img src="reminder_list.png" alt="Login Screen" width="270" height="480"/>
 
 <img src="reminder_list_active.png" alt="Login Screen" width="270" height="480"/>
 
-### Reminder Detail Component
+### AlarmDetail Component
 <img src="reminder_detail.png" alt="Create Account Screen" width="270" height="480"/>
 
 ### AlarmReceiver Page Component
@@ -30,6 +30,10 @@ This App has seen over 5 iterations, as it was the second App Idea I ever built.
 
 ### Settings  Component
 *Coming Soon*
+
+## Change Log
+
+
 
 ## Software Architecture Diagram
 

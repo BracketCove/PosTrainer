@@ -10,7 +10,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
-
+        <item name="android:timePickerStyle">@style/CustomTimePicker</item>
     </style>
 
     <style name="Postrainer.Inverse" parent="Theme.AppCompat.Light.NoActionBar">
@@ -24,4 +24,5 @@
         <item name="android:textColorPrimary">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
+
 </resources>
