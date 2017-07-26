@@ -17,6 +17,9 @@ PosTrainer is an Alarm App which allows the user to set up to 5 Daily Reminders 
 
 This App has seen over 5 iterations, as it was the second App Idea I ever built. At this time, I'm currently refactoring it to apply Clean Architecture Principles, as well as Dagger 2 for Dependency Injection, RxJava 2 for Concurrency/Communication, and a Realm Database to store the Reminders. Please see my Software Architecture Diagram for a generalized Picture of this Application's Software Architecture.
 
+This App is available on the Play Store here:
+https://play.google.com/store/apps/details?id=com.bracketcove.postrainer&hl=en
+
 ### AlarmList Component
 <img src="reminder_list.png" alt="Login Screen" width="270" height="480"/>
 
@@ -29,9 +32,20 @@ This App has seen over 5 iterations, as it was the second App Idea I ever built.
 <img src="alarm_receiver.png" alt="Profile Page Screen" width="270" height="480"/>
 
 ### Settings  Component
-*Coming Soon*
+<img src="settings.png" alt="Settings Screen" width="270" height="480"/>
 
 ## Change Log
+
+As of July 2017, PosTrainer has been drastically refactored. Changes include:
+- Removal of Reminder Objects and references to Reminders. This Decision was made based on the ambiguity between a Reminder and an Alarm. No need for two names that have the same data.
+- Overhaul of my RxJava 2 Implementation. Now uses CompositeDisposable with Observables created via UseCases.
+- Generally UI Improvements
+
+## Issues
+
+- Styling the TimePicker Widget across API versions and Screen sizes is a very obnoxious process; particularly API 21. This will need to be improved over time.
+
+- AlarmReceiver Component sometimes behaves unexpectedly. At this point, I'm considering releasing the wakelock/alarm the moment onPause() is called, just to avoid crashes and issues releasing the Wakelock. 
 
 
 
