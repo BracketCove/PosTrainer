@@ -69,11 +69,16 @@
     <!-- Other -->
     <string name="on">ON</string>
     <string name="off">OFF</string>
-    <string name="disclaimer_body"> The information provided within this App, must at no point be considered as professional advice.
-        I have selected a series of low-impact Stretches and Exercises which, in my admittedly unprofessional opinion, may alleviate postural imbalances associated with being a desk jockey.
-        All forms of Exercise carry a risk of injury, however small. Some of the movements may stretch/activate muscles which haven\'t seen a lot of stretching/activation in a long time.
-        I implore you to take extreme caution when performing any of the movements for the first time, performing only a few repetitions and not going beyond a \'light stretching\' sensation.
-        If you experience excessive pain during, or any level of long-term pain after a movement, consult a professional before performing any more movements. You have been warned.
+    <string name="disclaimer_body">The information provided within this App, must at no point be considered as
+        professional advice.
+        I have selected a series of low-impact Stretches and Exercises which, in my admittedly unprofessional opinion,
+        may alleviate postural imbalances associated with being a desk jockey.
+        All forms of Exercise carry a risk of injury, however small. Some of the movements may stretch/activate muscles
+        which haven\'t seen a lot of stretching/activation in a long time.
+        I implore you to take extreme caution when performing any of the movements for the first time, performing only a
+        few repetitions and not going beyond a \'light stretching\' sensation.
+        If you experience excessive pain during, or any level of long-term pain after a movement, consult a professional
+        before performing any more movements. You have been warned.
     </string>
     <string name="disclaimer_title">Damnit Jim, I\'m a Programmer, not a Doctor!</string>
     <string name="disclaimer_check_box">I understand the risk.</string>
@@ -99,7 +104,9 @@
     <string name="msg_alarm_deleted">Alarm Deleted</string>
     <string name="def_alarm_name">New Alarm</string>
     <string name="msg_alarm_limit_reached">Maximun Alarms per Day is 5.</string>
-    <string name="error_invalid_alarm_id">That\'s not supposed to happen. Contact the Dev. if this message keeps appearing.</string>
+    <string name="error_invalid_alarm_id">That\'s not supposed to happen. Contact the Dev. if this message keeps
+        appearing.
+    </string>
     <string name="error_managing_alarm">Error Managing Alarm</string>
     <string name="error_starting_alarm">Unable to Start Alarm</string>
     <string name="action_delete_item">Alarm Deleted</string>

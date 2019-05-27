@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/root_alarm"
-    >
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:id="@+id/root_alarm_receiver"
+                                                   tools:context=".alarmreceiver.AlarmReceiverActivity"
+>
 
+    <Button
+            android:id="@+id/btn_alarm_dismiss"
+            android:layout_width="192dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_flat"
+            android:fontFamily="sans-serif-medium"
+            android:padding="8dp"
+            android:text="@string/stop_alarm"
+            android:textColor="@color/WHITE"
+            android:textSize="28sp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="@+id/guideline"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintVertical_bias="0.0"/>
+    <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            app:srcCompat="@drawable/ic_alarm_black_48dp"
+            android:tint="@color/WHITE"
+            android:alpha=".86"
+            android:id="@+id/imageView"
+            app:layout_constraintBottom_toTopOf="@+id/guideline" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintVertical_bias="1.0"/>
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                                android:id="@+id/guideline"
+                                                android:orientation="horizontal"
+                                                app:layout_constraintGuide_percent="0.500684"/>
 
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

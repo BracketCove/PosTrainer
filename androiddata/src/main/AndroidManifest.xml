@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.wiseassblog.androiddata"
+>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application>
+        <receiver android:name=".data.AlarmReceiver"
+                  android:enabled="false"
+                    tools:node="merge"
+        >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
