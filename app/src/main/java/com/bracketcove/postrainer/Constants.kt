@@ -12,3 +12,9 @@ internal const val PROMPT_DELETE = "DELETE"
 internal const val ALARM_SET = "Alarm Set."
 internal const val ALARM_CANCELLED = "Alarm Cancelled."
 internal const val MESSAGE_DELETE_CONFIRMATION = "Delete Alarm?"
+
+
+internal const val ACTION_ALARM_SET = "ALARM_SET"
+internal const val ACTION_ALARM_CANCEL = "ALARM_CANCEL"
+internal const val ACTION_ALARM_DISMISS = "ALARM_DISMISS"
+internal const val ACTION_ALARM_START = "ALARM_START"

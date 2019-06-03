@@ -5,13 +5,17 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application>
-        <receiver android:name=".data.AlarmReceiver"
-                  android:enabled="false"
-                    tools:node="merge"
+        <service android:name=".data.alarmservice.AlarmService"
+                 tools:node="merge"
+                 android:directBootAware="true"
+        ></service>
+
+        <receiver android:name=".data.alarmservice.AlarmReceiver"
+                  android:enabled="true"
+                  android:exported="false"
+                  tools:node="merge"
+                  android:directBootAware="true"
         >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
         </receiver>
     </application>
 </manifest>
