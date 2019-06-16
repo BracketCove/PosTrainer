@@ -38,6 +38,8 @@ dependencies {
     implementation project(":domain")
     implementation project(":common")
 
+    implementation "androidx.core:core:$rootProject.supportCompatVersion"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
 

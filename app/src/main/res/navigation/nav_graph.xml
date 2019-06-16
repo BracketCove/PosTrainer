@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/nav_graph.xml" app:startDestination="@id/alarmListFragment">
+            android:id="@+id/nav_graph.xml" app:startDestination="@id/reminderListFragment">
 
-    <fragment android:id="@+id/alarmDetailFragment" android:name="com.bracketcove.postrainer.alarm.AlarmDetailFragment"
-              android:label="AlarmDetailFragment"
-              tools:layout="@layout/fragment_alarm_detail"
+    <fragment android:id="@+id/reminderDetailFragment"
+              android:name="com.bracketcove.postrainer.reminder.ReminderDetailFragment"
+              android:label="ReminderDetailFragment"
+              tools:layout="@layout/fragment_reminder_detail"
     >
-        <action android:id="@+id/action_alarmDetailFragment_to_alarmListFragment"
-                app:destination="@id/alarmListFragment"/>
+        <action android:id="@+id/action_reminderDetailFragment_to_reminderListFragment"
+                app:destination="@id/reminderListFragment"/>
 
-        <argument android:name="alarmId" app:argType="string" android:defaultValue='""'/>
+        <argument android:name="reminderId" app:argType="string" android:defaultValue='""'/>
 
     </fragment>
-    <fragment android:id="@+id/alarmListFragment" android:name="com.bracketcove.postrainer.alarmlist.AlarmListFragment"
-              android:label="AlarmListFragment"
-              tools:layout="@layout/fragment_alarm_list"
+    <fragment android:id="@+id/reminderListFragment"
+              android:name="com.bracketcove.postrainer.reminderlist.ReminderListFragment"
+              android:label="ReminderListFragment"
+              tools:layout="@layout/fragment_reminder_list"
     >
-        <action android:id="@+id/action_alarmListFragment_to_alarmDetailFragment"
-                app:destination="@id/alarmDetailFragment"/>
+        <action android:id="@+id/action_reminderListFragment_to_reminderDetailFragment"
+                app:destination="@id/reminderDetailFragment"/>
+        <action android:id="@+id/action_reminderListFragment_to_movementListFragment"
+                app:destination="@id/movementListFragment"/>
+        <action android:id="@+id/action_reminderListFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment"/>
+    </fragment>
+    <fragment android:id="@+id/movementListFragment"
+              android:name="com.bracketcove.postrainer.movementlist.MovementListFragment"
+              tools:layout="@layout/fragment_movement_list"
+              android:label="MovementListFragment">
+        <action android:id="@+id/action_movementListFragment_to_reminderListFragment"
+                app:destination="@id/reminderListFragment"/>
+        <action android:id="@+id/action_movementListFragment_to_movementFragment"
+                app:destination="@id/movementFragment"/>
+    </fragment>
+    <fragment android:id="@+id/movementFragment" android:name="com.bracketcove.postrainer.movement.MovementFragment"
+              tools:layout="@layout/fragment_movement"
+              android:label="MovementFragment">
+        <action android:id="@+id/action_movementFragment_to_movementListFragment"
+                app:destination="@id/movementListFragment"/>
+    </fragment>
+    <fragment android:id="@+id/settingsFragment" android:name="com.bracketcove.postrainer.settings.SettingsFragment"
+              tools:layout="@layout/fragment_settings"
+              android:label="SettingsFragment">
+        <action android:id="@+id/action_settingsFragment_to_reminderListFragment"
+                app:destination="@id/reminderListFragment"/>
     </fragment>
 </navigation>

@@ -1,7 +1,7 @@
 package com.wiseassblog.common
 
-object AlarmServiceException: Exception()
-object AlarmRepositoryException: Exception()
+object ReminderServiceException: Exception()
+object ReminderRepositoryException: Exception()
 
-const val  ALARM_OFF:String = "OFF"
-const val  ALARM_ON:String = "ON"
+const val  REMINDER_OFF:String = "OFF"
+const val  REMINDER_ON:String = "ON"

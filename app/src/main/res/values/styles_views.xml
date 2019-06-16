@@ -20,6 +20,31 @@
         <item name="android:textColor">@color/WHITE</item>
     </style>
 
+    <style name="MovementText">
+        <item name="android:textColor">@color/WHITE</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">8dp</item>
+    </style>
+
+    <style name="MovementText.Header">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="MovementText.Header.Sub">
+        <item name="android:fontFamily">sans-serif-medium-condensed</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_height">36dp</item>
+    </style>
+
+    <style name="MovementText.Content">
+        <item name="android:fontFamily">sans-serif-condensed-medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
     <style name="Label.Tabs" parent="android:Widget.TextView">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/WHITE</item>
@@ -28,7 +53,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Lable.AlarmWidget" parent="@android:style/Widget.TextView">
+    <style name="Label.ReminderWidget" parent="@android:style/Widget.TextView">
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/WHITE</item>
@@ -87,6 +112,12 @@
 
     <!-- *********************** ImageView/Buttons  *********************** -->
 
+    <style name="MovementIcon">
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">36dp</item>
+        <item name="android:tint">@color/WHITE</item>
+    </style>
+
     <!-- *********************** Toolbar  *********************** -->
 
 
@@ -109,7 +140,7 @@
         <item name="android:textColorPrimary">@color/BLACK</item>
     </style>
 
-    <style name="Alarm_Switch_Theme" parent="ThemeOverlay.AppCompat">
+    <style name="Reminder_Switch_Theme" parent="ThemeOverlay.AppCompat">
         <item name="colorControlActivated">@color/MINT_GREEN</item>
     </style>
 

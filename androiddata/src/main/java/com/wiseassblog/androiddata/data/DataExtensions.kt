@@ -1,12 +1,13 @@
 package com.wiseassblog.androiddata.data
 
-import com.wiseassblog.androiddata.data.realmmodel.RealmAlarm
-import com.wiseassblog.domain.domainmodel.Alarm
+import com.wiseassblog.androiddata.data.realmmodel.RealmReminder
+import com.wiseassblog.domain.domainmodel.Reminder
+import java.util.*
 
-internal val RealmAlarm.toAlarm: Alarm
-    get() = Alarm(
-        this.alarmId,
-        this.alarmTitle,
+internal val RealmReminder.toReminder: Reminder
+    get() = Reminder(
+        this.reminderId,
+        this.reminderTitle,
         this.isActive,
         this.isVibrateOnly,
         this.isRenewAutomatically,
@@ -14,10 +15,10 @@ internal val RealmAlarm.toAlarm: Alarm
         this.minute
     )
 
-internal val Alarm.toRealmAlarm: RealmAlarm
-    get() = RealmAlarm(
-        this.alarmId,
-        this.alarmTitle,
+internal val Reminder.toRealmReminder: RealmReminder
+    get() = RealmReminder(
+        this.reminderId,
+        this.reminderTitle,
         this.isActive,
         this.isVibrateOnly,
         this.isRenewAutomatically,
@@ -25,3 +26,12 @@ internal val Alarm.toRealmAlarm: RealmAlarm
         this.minute
     )
 
+/**
+ * Read out of the Hour and
+ */
+internal fun Calendar.setReminderTime(reminder: Reminder): Calendar  {
+    timeInMillis = System.currentTimeMillis()
+    set(Calendar.HOUR_OF_DAY, reminder.hourOfDay)
+    set(Calendar.MINUTE, reminder.minute)
+    return this
+}

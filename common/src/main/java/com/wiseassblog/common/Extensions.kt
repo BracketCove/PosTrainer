@@ -26,6 +26,6 @@ fun getFormattedDate(): String {
 }
 
 fun Boolean.toAlarmState(): String {
-    return if (this) ALARM_ON
-    else ALARM_OFF
+    return if (this) REMINDER_ON
+    else REMINDER_OFF
 }

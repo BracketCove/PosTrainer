@@ -5,16 +5,16 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application>
-        <service android:name=".data.alarmservice.AlarmService"
+        <service android:name=".data.reminderapi.ReminderService"
                  tools:node="merge"
                  android:directBootAware="true"
         ></service>
 
-        <receiver android:name=".data.alarmservice.AlarmReceiver"
+        <receiver android:name=".data.reminderapi.ReminderBroadcastReceiver"
                   android:enabled="true"
                   android:exported="false"
-                  tools:node="merge"
                   android:directBootAware="true"
+                  tools:node="merge"
         >
         </receiver>
     </application>

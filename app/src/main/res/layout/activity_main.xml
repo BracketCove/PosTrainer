@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent"
         android:id="@+id/root_main_activity"
 >
@@ -15,4 +16,4 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

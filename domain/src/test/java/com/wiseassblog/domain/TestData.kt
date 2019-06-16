@@ -1,8 +1,8 @@
 package com.wiseassblog.domain
 
-import com.wiseassblog.domain.domainmodel.Alarm
+import com.wiseassblog.domain.domainmodel.Reminder
 
-internal fun getAlarm(
+internal fun getReminder(
     id: String = "8675309",
     title: String = "Lunch Break",
     active: Boolean = true,
@@ -10,7 +10,7 @@ internal fun getAlarm(
     renewAutomatically: Boolean = false,
     hourOfDay: Int = 12,
     minuteOfDay: Int = 30
-) = Alarm(
+) = Reminder(
     id,
     title,
     active,

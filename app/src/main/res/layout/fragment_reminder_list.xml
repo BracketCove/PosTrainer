@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/rootReminderListFragment"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:layout_editor_absoluteY="25dp"
+                                                   tools:layout_editor_absoluteX="0dp"
+                                                   tools:context=".MainActivity"
+>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tlbReminderList"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintLeft_creator="1">
+
+        <TextView
+                android:id="@+id/lblReminderListBrandHeader"
+                style="@style/Label.BrandHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingLeft="16dp"
+                android:gravity="center_vertical|left"
+                android:text="@string/app_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+            android:id="@+id/lblAlarmPrompt"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/prompt_new_reminder"
+            android:textColor="@color/ALPHA_WHITE"
+            android:fontFamily="sans-serif-medium"
+            android:background="@color/colorPrimary"
+            android:textSize="34sp"
+            android:gravity="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:listitem="@layout/item_reminder_widget"
+            app:layout_constraintTop_toBottomOf="@+id/tlbReminderList"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_reminder_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/windowBackground"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:listitem="@layout/item_reminder_widget"
+            app:layout_constraintTop_toBottomOf="@+id/tlbReminderList"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAlarm"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:padding="16dp"
+            android:layout_gravity="bottom|end"
+            android:alpha=".86"
+            android:src="@drawable/ic_add_white_24dp"
+            app:srcCompat="@drawable/ic_add_white_24dp"
+            android:layout_marginRight="16dp"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavReminders"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="48dp"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/bottomNavReminders"
+            app:menu="@menu/menu_bottom_nav"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+</androidx.constraintlayout.widget.ConstraintLayout>

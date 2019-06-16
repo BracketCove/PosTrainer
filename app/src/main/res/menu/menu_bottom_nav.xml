@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/reminders"
+            android:icon="@drawable/ic_alarm_black_48dp"
+            android:contentDescription="@string/reminders"
+            android:iconTint="@color/WHITE"
+            android:title="@string/reminders" />
+    <item
+            android:id="@+id/movements"
+            android:icon="@drawable/ic_directions_walk_black_24dp"
+            android:contentDescription="@string/movements"
+            android:iconTint="@color/WHITE"
+            android:title="@string/movements" />
+    <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:contentDescription="@string/settings_title"
+            android:iconTint="@color/WHITE"
+            android:title="@string/settings" />
+</menu>
