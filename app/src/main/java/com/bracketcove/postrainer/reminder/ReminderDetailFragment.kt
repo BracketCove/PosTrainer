@@ -26,10 +26,7 @@ class ReminderDetailFragment : Fragment(), ReminderDetailContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val v = inflater.inflate(R.layout.fragment_reminder_detail, container, false)
-
-
-        return v
+        return inflater.inflate(R.layout.fragment_reminder_detail, container, false)
     }
 
     override fun onStart() {

@@ -15,6 +15,27 @@ fun Activity.addFragmentToActivity(
     .commit()
 
 
-fun Fragment.showToast(msg:String) = Toast.makeText(this.context, msg, Toast.LENGTH_LONG).show()
+fun Fragment.showToast(msg: String) = Toast.makeText(this.context, msg, Toast.LENGTH_LONG).show()
 
-/** Wakelock **/
+fun Fragment.getTargetsByResource(targets: List<String>): List<Int>{
+    val newList = mutableListOf<Int>()
+    targets.forEach {
+        newList.add(
+            resources.getIdentifier(
+                it,
+                "drawable",
+                activity?.packageName
+            )
+        )
+    }
+
+    return newList
+}
+
+fun Fragment.getThumbnailByResourceName(s: String): Int {
+    return resources.getIdentifier(
+        s,
+        "drawable",
+        activity?.packageName
+    )
+}

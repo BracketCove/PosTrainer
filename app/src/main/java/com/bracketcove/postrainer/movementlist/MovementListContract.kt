@@ -1,15 +1,15 @@
 package com.bracketcove.postrainer.movementlist
 
-import com.wiseassblog.domain.domainmodel.Reminder
+import com.wiseassblog.domain.domainmodel.Movement
 
 interface MovementListContract {
 
     interface View {
-        fun setReminderListData(reminderListData: List<Reminder>)
+        fun setMovementListData(movementListData: List<Movement>)
 
-        fun startReminderDetailView(reminderId: String)
+        fun startMovementView(movementId: String)
 
-        fun startSettingsActivity()
+        fun startSettingsView()
 
         fun showMessage(msg: String)
 
@@ -19,9 +19,7 @@ interface MovementListContract {
 
 sealed class MovementListEvent {
     object OnSettingsClick : MovementListEvent()
-    object OnMovementsClick : MovementListEvent()
-    object OnCreateButtonClick : MovementListEvent()
-    data class OnMovementIconClick(val reminder: Reminder) : MovementListEvent()
-    data class OnMovementToggled(val isActive: Boolean, val reminder: Reminder) : MovementListEvent()
+    object OnRemindersClick : MovementListEvent()
+    data class OnMovementClick(val movementId: String) : MovementListEvent()
     object OnStart : MovementListEvent()
 }

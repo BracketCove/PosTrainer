@@ -17,12 +17,12 @@ import com.wiseassblog.common.toAlarmState
 import com.wiseassblog.domain.domainmodel.Reminder
 import kotlinx.android.synthetic.main.item_reminder_widget.view.*
 
-class NoteListAdapter(var event: MutableLiveData<ReminderListEvent> = MutableLiveData()) :
-    ListAdapter<Reminder, NoteListAdapter.AlarmViewHolder>(ReminderDiffUtilCallback()) {
+class ReminderListAdapter(var event: MutableLiveData<ReminderListEvent> = MutableLiveData()) :
+    ListAdapter<Reminder, ReminderListAdapter.AlarmViewHolder>(ReminderDiffUtilCallback()) {
 
     internal fun setObserver(observer: Observer<ReminderListEvent>) = event.observeForever(observer)
 
-    override fun onBindViewHolder(holder: NoteListAdapter.AlarmViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ReminderListAdapter.AlarmViewHolder, position: Int) {
         getItem(position).let { alarm ->
             holder.alarmTitle.text = alarm.reminderTitle
             holder.alarmTime.text = convertTime(alarm.hourOfDay, alarm.minute)

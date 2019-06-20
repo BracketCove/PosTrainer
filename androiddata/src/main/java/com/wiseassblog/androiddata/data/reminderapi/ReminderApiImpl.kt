@@ -11,7 +11,7 @@ import com.wiseassblog.androiddata.data.REMINDER_ID
 import com.wiseassblog.androiddata.data.setReminderTime
 import com.wiseassblog.common.ResultWrapper
 import com.wiseassblog.domain.domainmodel.Reminder
-import com.wiseassblog.domain.repository.IReminderAPI
+import com.wiseassblog.domain.api.IReminderAPI
 import java.util.*
 
 /**

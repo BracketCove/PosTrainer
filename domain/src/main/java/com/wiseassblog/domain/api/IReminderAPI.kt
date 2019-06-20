@@ -1,4 +1,4 @@
-package com.wiseassblog.domain.repository
+package com.wiseassblog.domain.api
 
 import com.wiseassblog.common.ResultWrapper
 import com.wiseassblog.domain.domainmodel.Reminder

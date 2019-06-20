@@ -12,8 +12,12 @@ data class Movement(
     val isTimeBased: Boolean,
     //Where to find movement images
     val imageResourceNames: List<String>,
-    val difficulty: Int,
+    val difficulty: String,
     //where to find video to play
-    val videoUrl:String?
+    val videoUrl:String?,
+    //String resource names
+    val descriptionResourceName: String,
+    val instructionsResourceName: String
+
 
 )

@@ -1,11 +1,11 @@
 package com.bracketcove.postrainer.reminder
 
 
-import com.bracketcove.postrainer.REMINDER_DELETED
-import com.bracketcove.postrainer.REMINDER_UPDATED
 import com.bracketcove.postrainer.BaseLogic
 import com.bracketcove.postrainer.ERROR_GENERIC
-import com.bracketcove.postrainer.dependencyinjection.AndroidDependencyProvider
+import com.bracketcove.postrainer.REMINDER_DELETED
+import com.bracketcove.postrainer.REMINDER_UPDATED
+import com.bracketcove.postrainer.dependencyinjection.AndroidReminderProvider
 import com.wiseassblog.common.ResultWrapper
 import com.wiseassblog.common.getFormattedDate
 import com.wiseassblog.domain.domainmodel.Reminder
@@ -16,7 +16,7 @@ import kotlin.coroutines.CoroutineContext
 class ReminderDetailLogic(
     private val view: ReminderDetailContract.View,
     private val viewModel: ReminderDetailContract.ViewModel,
-    private val provider: AndroidDependencyProvider,
+    private val provider: AndroidReminderProvider,
     dispatcher: CoroutineDispatcher
 ) : BaseLogic<ReminderDetailEvent>(dispatcher) {
 

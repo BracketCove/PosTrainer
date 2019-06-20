@@ -1,14 +1,14 @@
 package com.bracketcove.postrainer
 
 import android.app.Application
-import com.bracketcove.postrainer.dependencyinjection.AndroidDependencyProvider
+import com.bracketcove.postrainer.dependencyinjection.AndroidReminderProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
 
 class PostrainerApplication: Application() {
 
-    internal val dependencyProvider = AndroidDependencyProvider(this)
+    internal val dependencyProvider = AndroidReminderProvider(this)
 
     override fun onCreate() {
         super.onCreate()

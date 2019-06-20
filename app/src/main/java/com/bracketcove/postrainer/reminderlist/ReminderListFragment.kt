@@ -26,7 +26,7 @@ class ReminderListFragment : Fragment(), ReminderListContract.View {
     }
 
     var logic: BaseLogic<ReminderListEvent>? = null
-    private lateinit var adapter: NoteListAdapter
+    private lateinit var adapter: ReminderListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +66,7 @@ class ReminderListFragment : Fragment(), ReminderListContract.View {
     }
 
     private fun setUpAdapter() {
-        adapter = NoteListAdapter()
+        adapter = ReminderListAdapter()
         //forward events to logic
         adapter.event.observe(this,
             Observer {

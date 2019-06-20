@@ -1,7 +1,7 @@
 package com.wiseassblog.domain
 
 import com.wiseassblog.common.ResultWrapper
-import com.wiseassblog.domain.repository.IReminderAPI
+import com.wiseassblog.domain.api.IReminderAPI
 import com.wiseassblog.domain.repository.IReminderRepository
 import com.wiseassblog.domain.usecase.CancelReminder
 import io.mockk.clearAllMocks

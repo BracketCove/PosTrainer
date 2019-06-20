@@ -2,7 +2,7 @@ package com.wiseassblog.domain.usecase
 
 import com.wiseassblog.common.ResultWrapper
 import com.wiseassblog.domain.domainmodel.Reminder
-import com.wiseassblog.domain.repository.IReminderAPI
+import com.wiseassblog.domain.api.IReminderAPI
 import com.wiseassblog.domain.repository.IReminderRepository
 
 /**

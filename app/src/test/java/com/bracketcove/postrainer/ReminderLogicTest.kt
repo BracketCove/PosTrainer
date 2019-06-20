@@ -1,6 +1,6 @@
 package com.bracketcove.postrainer
 
-import com.bracketcove.postrainer.dependencyinjection.AndroidDependencyProvider
+import com.bracketcove.postrainer.dependencyinjection.AndroidReminderProvider
 import com.bracketcove.postrainer.reminder.ReminderDetailContract
 import com.bracketcove.postrainer.reminder.ReminderDetailEvent
 import com.bracketcove.postrainer.reminder.ReminderDetailLogic
@@ -18,8 +18,7 @@ class ReminderLogicTest {
 
     private val view: ReminderDetailContract.View = mockk(relaxed = true)
     private val viewModel: ReminderDetailContract.ViewModel = mockk(relaxed = true)
-    private val provider: AndroidDependencyProvider = mockk()
-    private val dispatcher: Dispatchers = mockk()
+    private val provider: AndroidReminderProvider = mockk()
 
     /*
     Use Cases for this feature:

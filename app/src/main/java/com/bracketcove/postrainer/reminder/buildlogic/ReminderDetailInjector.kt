@@ -2,7 +2,7 @@ package com.bracketcove.postrainer.reminder.buildlogic
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProviders
-import com.bracketcove.postrainer.dependencyinjection.AndroidDependencyProvider
+import com.bracketcove.postrainer.dependencyinjection.AndroidReminderProvider
 import com.bracketcove.postrainer.reminder.ReminderDetailFragment
 import com.bracketcove.postrainer.reminder.ReminderDetailLogic
 import com.bracketcove.postrainer.reminder.ReminderViewModel
@@ -25,7 +25,7 @@ object ReminderDetailInjector {
                         Reminder(reminderId = alarmId)
                     )
                 },
-            AndroidDependencyProvider(application),
+            AndroidReminderProvider(application),
             Dispatchers.Main
         )
     }

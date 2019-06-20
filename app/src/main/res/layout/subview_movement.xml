@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent">
+
+
+    <ImageView
+            style="@style/MovementIcon"
+            android:src="@drawable/ic_gps_fixed_white_24dp"
+            android:id="@+id/imvTargets"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"/>
+
+    <ImageView
+            style="@style/MovementIcon"
+            tools:src="@drawable/ic_chest"
+            android:id="@+id/imvIconOne"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvTargets" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+    <ImageView
+            style="@style/MovementIcon"
+            tools:src="@drawable/ic_arm"
+            android:id="@+id/imvIconTwo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvIconOne" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+    <ImageView
+            style="@style/MovementIcon"
+            tools:src="@drawable/ic_shoulders"
+            android:id="@+id/imvIconThree"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvIconTwo" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+    <ImageView
+            style="@style/MovementIcon"
+            tools:src="@drawable/ic_back"
+            android:id="@+id/imvIconFour"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvIconThree" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+    <ImageView
+            style="@style/MovementIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp" tools:src="@drawable/ic_abdomen"
+            android:id="@+id/imvIconFive"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvIconFour" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+
+    <ImageView
+            style="@style/MovementIcon"
+            android:src="@drawable/ic_loop_white_24dp"
+            android:id="@+id/imvFrequency"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/imvTargets"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+            style="@style/MovementText.Header.Sub"
+            android:text="TextView"
+            tools:text="1-4 Sets/Day"
+            android:id="@+id/lblFrequency"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toEndOf="@+id/imvFrequency" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/imvTargets"/>
+
+    <ImageView
+            style="@style/MovementIcon"
+            android:src="@drawable/ic_swap_vert_white_24dp"
+            android:id="@+id/imvRepsOrTime"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/imvFrequency"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"/>
+
+    <TextView
+            style="@style/MovementText.Header.Sub"
+            android:text="TextView"
+            tools:text="12-20 Repetitions"
+            android:id="@+id/lblRepsOrTime"
+            android:layout_width="0dp" android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lblFrequency"
+            app:layout_constraintStart_toEndOf="@+id/imvRepsOrTime" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginStart="8dp"/>
+
+    <ImageView
+            style="@style/MovementIcon"
+            android:src="@drawable/ic_star_half_black_24dp"
+            android:id="@+id/imvDifficulty"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/imvRepsOrTime"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"/>
+
+    <TextView
+            style="@style/MovementText.Header.Sub"
+            android:text="TextView"
+            tools:text="Easy"
+            android:id="@+id/lblDifficulty"
+            android:layout_width="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lblRepsOrTime"
+            app:layout_constraintStart_toEndOf="@+id/imvDifficulty" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginStart="8dp"/>
+
+    <TextView
+            style="@style/MovementText.Header"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:text="@string/description"
+            android:id="@+id/lblDescriptionHeader"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lblDifficulty" android:paddingStart="16dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
+
+    <TextView
+            style="@style/MovementText.Content"
+            android:layout_width="0dp"
+            android:id="@+id/lblDescriptionContent"
+            tools:text="@tools:sample/lorem/random" android:padding="8dp"
+            android:fontFamily="sans-serif-condensed" android:textColor="@color/WHITE"
+            android:layout_marginTop="8dp"
+            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintTop_toBottomOf="@+id/lblDescriptionHeader"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="0dp"/>
+
+    <TextView
+            style="@style/MovementText.Header"
+            android:text="@string/instructions"
+            android:layout_width="0dp"
+            android:id="@+id/lblInstructionHeader"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lblDescriptionContent" android:paddingStart="16dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
+
+    <TextView
+            style="@style/MovementText.Content"
+            android:text="TextView"
+            android:layout_width="0dp"
+            android:id="@+id/lblInstructionContent"
+            tools:text="@tools:sample/lorem/random" android:padding="8dp"
+            android:fontFamily="sans-serif-condensed" android:textColor="@color/WHITE"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/lblInstructionHeader"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"
+            android:layout_height="0dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,7 @@ package com.wiseassblog.domain
 import com.wiseassblog.common.ReminderServiceException
 import com.wiseassblog.common.ResultWrapper
 import com.wiseassblog.domain.repository.IReminderRepository
-import com.wiseassblog.domain.repository.IReminderAPI
+import com.wiseassblog.domain.api.IReminderAPI
 import com.wiseassblog.domain.usecase.SetReminder
 import io.mockk.clearAllMocks
 import io.mockk.coEvery

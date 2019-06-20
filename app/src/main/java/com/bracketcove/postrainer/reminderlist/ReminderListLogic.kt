@@ -4,7 +4,7 @@ import com.bracketcove.postrainer.BaseLogic
 import com.bracketcove.postrainer.ERROR_GENERIC
 import com.bracketcove.postrainer.REMINDER_CANCELLED
 import com.bracketcove.postrainer.REMINDER_SET
-import com.bracketcove.postrainer.dependencyinjection.AndroidDependencyProvider
+import com.bracketcove.postrainer.dependencyinjection.AndroidReminderProvider
 import com.wiseassblog.common.ResultWrapper
 import com.wiseassblog.domain.domainmodel.Reminder
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,7 +20,7 @@ import kotlin.coroutines.CoroutineContext
 class ReminderListLogic(
     private val view: ReminderListContract.View,
     //Service Locator
-    private val provider: AndroidDependencyProvider,
+    private val provider: AndroidReminderProvider,
     dispatcher: CoroutineDispatcher
 ) : BaseLogic<ReminderListEvent>(dispatcher) {
 

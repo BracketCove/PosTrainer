@@ -1,6 +1,6 @@
 package com.bracketcove.postrainer
 
-import com.bracketcove.postrainer.dependencyinjection.AndroidDependencyProvider
+import com.bracketcove.postrainer.dependencyinjection.AndroidReminderProvider
 import com.bracketcove.postrainer.reminderlist.ReminderListContract
 import com.bracketcove.postrainer.reminderlist.ReminderListEvent
 import com.bracketcove.postrainer.reminderlist.ReminderListLogic
@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test
 class ReminderListLogicTest {
 
     private val view: ReminderListContract.View = mockk(relaxed = true)
-    private val provider: AndroidDependencyProvider = mockk()
+    private val provider: AndroidReminderProvider = mockk()
 
     /*
     Use Cases for this feature:

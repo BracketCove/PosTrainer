@@ -33,18 +33,26 @@
         <action android:id="@+id/action_movementListFragment_to_reminderListFragment"
                 app:destination="@id/reminderListFragment"/>
         <action android:id="@+id/action_movementListFragment_to_movementFragment"
-                app:destination="@id/movementFragment"/>
+                app:destination="@id/movementFragment"
+
+        />
+        <action android:id="@+id/action_movementListFragment_to_settingsFragment"
+                app:destination="@id/settingsFragment"/>
     </fragment>
     <fragment android:id="@+id/movementFragment" android:name="com.bracketcove.postrainer.movement.MovementFragment"
               tools:layout="@layout/fragment_movement"
               android:label="MovementFragment">
         <action android:id="@+id/action_movementFragment_to_movementListFragment"
                 app:destination="@id/movementListFragment"/>
+
+        <argument android:name="movementId" app:argType="string" android:defaultValue='""'/>
     </fragment>
     <fragment android:id="@+id/settingsFragment" android:name="com.bracketcove.postrainer.settings.SettingsFragment"
               tools:layout="@layout/fragment_settings"
               android:label="SettingsFragment">
         <action android:id="@+id/action_settingsFragment_to_reminderListFragment"
                 app:destination="@id/reminderListFragment"/>
+        <action android:id="@+id/action_settingsFragment_to_movementListFragment"
+                app:destination="@id/movementListFragment"/>
     </fragment>
 </navigation>

@@ -10,28 +10,28 @@
 
     <ImageView
             style="@style/MovementIcon"
-            app:srcCompat="@drawable/ic_chest"
+            tools:src="@drawable/ic_chest"
             android:id="@+id/imvItemIconOne"
             app:layout_constraintTop_toBottomOf="@+id/lblMovementItemName"
             app:layout_constraintStart_toEndOf="@+id/imvMovementItemThumb" android:layout_marginStart="32dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"/>
     <ImageView
             style="@style/MovementIcon"
-            app:srcCompat="@drawable/ic_arm"
+            tools:src="@drawable/ic_arm"
             android:id="@+id/imvItemIconTwo"
             app:layout_constraintTop_toBottomOf="@+id/lblMovementItemName"
             app:layout_constraintStart_toEndOf="@+id/imvItemIconOne"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"/>
     <ImageView
             style="@style/MovementIcon"
-            app:srcCompat="@drawable/ic_shoulders"
+            tools:src="@drawable/ic_shoulders"
             android:id="@+id/imvItemIconThree"
             app:layout_constraintTop_toBottomOf="@+id/lblMovementItemName"
             app:layout_constraintStart_toEndOf="@+id/imvItemIconTwo"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"/>
     <ImageView
             style="@style/MovementIcon"
-            app:srcCompat="@drawable/ic_back"
+            tools:src="@drawable/ic_back"
             android:id="@+id/imvItemIconFour"
             app:layout_constraintTop_toBottomOf="@+id/lblMovementItemName"
             app:layout_constraintStart_toEndOf="@+id/imvItemIconThree"
@@ -39,7 +39,7 @@
     <ImageView
             style="@style/MovementIcon"
             android:layout_width="36dp"
-            android:layout_height="36dp" app:srcCompat="@drawable/ic_abdomen"
+            android:layout_height="36dp" tools:src="@drawable/ic_abdomen"
             android:id="@+id/imvItemIconFive"
             app:layout_constraintTop_toBottomOf="@+id/lblMovementItemName"
             app:layout_constraintStart_toEndOf="@+id/imvItemIconFour"
