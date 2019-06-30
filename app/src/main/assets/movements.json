@@ -1,0 +1,91 @@
+[
+  {
+    "name": "Passive Hang",
+    "targets": [
+      "shoulders",
+      "neck",
+      "arm",
+      "chest",
+      "back"
+    ],
+    "frequency": "1-4 Sets/Day",
+    "timeOrRepetitions": "30-90 Seconds",
+    "isTimeBased": true,
+    "imageResourceNames": [
+      "gopnik"
+    ],
+    "difficulty": "Easy",
+    "videoUrl": "",
+    "description": "The Passive Hang is a very simple and effective movement to stretch out the front and back sides of the body, decompress the spine, and strengthen the forearms. I typically perform this exercise for 1-2 sets (sometimes alternating with the Active Hang) of 30-60 seconds both at the start and end of my day as a great near-to-full body stretch.\n",
+    "instructions": "1. Locate a fixed bar or surface from which you can grip and hang from, allowing full extension of the arms.\n2. Beginners to this movement should start by gripping the bar or surface, and gradually squatting down until a stretch is felt in the shoulders, forearms, upper back, and chest. Over time, your flexibility should improve to the point where your biceps are inline with, and even touching your ears.\n3. Once you are comfortable hanging with leg support for 30-60 seconds, you may increase the difficulty of this movement by removing leg support for a true passive hang.\n"
+  },
+  {
+    "name": "Active Hang",
+    "targets": [
+      "shoulders",
+      "arm",
+      "chest",
+      "back"
+    ],
+    "frequency": "1-2 Sets/Day",
+    "timeOrRepetitions": "30-90 Seconds",
+    "isTimeBased": true,
+    "imageResourceNames": [
+      "gopnik"
+    ],
+    "difficulty": "Advanced",
+    "videoUrl": "",
+    "description": "Whereas the Passive Hang stretches the muscles of the upper back and shoulders (among others), the Active Hang requires you to contract many of these muscles. This movement can be considered a more advanced variation, as many individuals will not have the strength in their Rhomboids, Trapezius, and Rotator Cuffs to perform the movement properly. Performing the Prone Shoulder Raises movements, and practicing the Passive Hang should gradually make this movement possible. I typically perform the Active Hang as an activation movement before workouts, or at the start of my day.",
+    "instructions": "1. Locate a fixed bar or surface from which you can grip and hang from, allowing full extension of the arms.\n2. Beginning in the Passive Hang, raise your chest by engaging your upper and mid-back (\"proud chest\" is a good mental cue), and pull your shoulders down and away from your ears.\n3. For an added benefit to the hips, you may engage your Glutes and Hamstrings during the movement, which tend to turn off during long sitting periods.\n"
+  },
+  {
+    "name": "Prone Shoulder Raises",
+    "targets": [
+      "back",
+      "shoulders"
+    ],
+    "frequency": "2-6 Sets/Week",
+    "timeOrRepetitions": "4-12 Repetitions",
+    "isTimeBased": false,
+    "imageResourceNames": [
+      "gopnik"
+    ],
+    "difficulty": "Medium",
+    "videoUrl": "",
+    "description": "Extended periods in a hunched over position tend to cause the muscles at the back of your shoulders and upper back to weaken over time, while also causing the chest, front shoulders, and biceps to become tight. While stretching out the tight muscles will help to alleviate this problem, I have benefited greatly from regularly performing light-resistance exercises on the weak muscles. Doing so will reduce injury risk, encourage better posture, and improve athletic performance. I perform this exercise circuit, sometimes referred to as Ys, Ts, and Ws, typically for 2 sets until the muscles are fatigued but not worked to failure. It is also a great warm up prior to pressing movements in the gym.",
+    "instructions": "1. Laying prone (although beginners may lessen the resistance of the movements by performing them standing while bent at the waist on a steep angle), raise your chest by engaging your upper and middle-back (\"proud chest\" is a good mental cue), and pull your shoulders down and away from your ears. If you have difficulty doing so, consider stretching your chest via the Chest Wall Stretch and Passive Hang first.\n2. With your upper and middle-back engaged throughout the movement, raise your arms in front of you in a \"Y\" position and hold for a moment.\n3. Keeping your arms off the floor, lower them until they make a \"T\" position and hold for a moment.\n4. Again, lower your arms until they make \"^\" position, then bend your arms at the elbow and rotate your forearm until your thumbs pointing to the ceiling. Again, hold for a moment and contract the muscles in the upper back strongly.\n5. Raise your arms back in to a \"Y\" position, and repeat until your muscles are fatigued but not exhausted.\n"
+  },
+  {
+    "name": "Chest Wall Stretch",
+    "targets": ["chest"],
+    "frequency": "1-3 Sets/Day",
+    "timeOrRepetitions": "30-120 Seconds",
+    "isTimeBased": true,
+    "imageResourceNames": [
+      "gopnik"
+    ],
+    "difficulty": "Easy",
+    "videoUrl": "",
+    "description": "Tight pectoral muscles will tend to pull the shoulders down (via the Pectoralis Minor), forward, and inward towards the sternum. This tightness can be made worse by spending all day in front of a keyboard and mouse, or failing to balance chest workouts with exercises which work the muscles which counter-balance the pectoral muscles. These stretches are a great pair with Prone Shoulder Raises, as together they will lengthen and relax the chest while improving strength and activation of the muscles which work to pull the shoulders and chest in to a healthier alignment. As the pectoral muscles have many insertion points and different muscle fibre angles, I suggest experimenting with various arm elevations. I typically feel the best stretch with my arm in a more overhead angle, similar to where it may be in the Active Hang position. I typically perform this stretch with Prone Shoulder Raises for 2 sets as mobility work prior to workouts, and rehab work after long days in front of a desk.\n",
+    "instructions": "1. Using a wall, doorframe, power rack, or similar fixed and standing object, while standing upright with your arm relaxed and externally rotated, lightly press your shoulder joint in to the object.\n2. Keeping your chest up and your core tight, begin to slide or raise your arm up the wall (etc.) to the desired angle, keeping pressure on the shoulder joint for stabilization.\n3. Experiment with different arm angles. A higher overhead angle will typically have greater impact on the Pectoralis Minor, which is very problematic when tight.\n"
+  },
+  {
+    "name": "Prone Cobra",
+    "targets": [
+      "shoulders",
+      "back",
+      "abdomen",
+      "neck"
+    ],
+    "frequency": "2-4 Sets/Week",
+    "timeOrRepetitions": "30-60 Seconds",
+    "isTimeBased": true,
+    "imageResourceNames": [
+      "gopnik"
+    ],
+    "difficulty": "Advanced",
+    "videoUrl": "",
+    "description": "The Prone Cobra is a great compound exercise to strengthen the upper back and encourage external rotation of the shoulders. Since many upper body posture problems are caused by being hunched forward with your arms internally rotated, it follows that an exercise which does exactly the opposite may help to fix the resulting issues. With that being said, I do not recommend this exercise unless you have built up enough strength in your upper and mid-back to keep your shoulder blades in the correct position (thinking \"proud chest\" helps to cue the appropriate position). I found the Prone Shoulder Raises and the Active Hang to be the best compliments to build up this strength, and I typically will perform the Chest Wall Stretch prior to attempting the Prone Cobra. I typically perform this exercise once or twice a week for several sets as part of a core strengthening workout.\n",
+    "instructions": "1. Lay face down with your arms at your side, palms facing down.\n2. Contract your Glutes, and raise your chest off the ground with your chin slightly tucked; do not arch the neck back in an unnatural position.\n3. Finding an arm angle somewhere between a \"T\" shape and an \"^\" shape, while maintaining a raised chest and contracted Glutes, begin to externally rotate your arms until your thumbs point towards the ceiling.\n4. Do not forget to breath; which can be tricky as much of your weight will be on your abdomen.\n"
+  }
+]

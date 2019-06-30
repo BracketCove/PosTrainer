@@ -39,6 +39,7 @@ class ReminderDetailFragment : Fragment(), ReminderDetailContract.View {
 
         imbReminderDetailBack.setOnClickListener { logic?.handleEvent(ReminderDetailEvent.OnBackIconPress) }
         imbReminderDetailProceed.setOnClickListener { logic?.handleEvent(ReminderDetailEvent.OnDoneIconPress) }
+        imbReminderDetailDelete.setOnClickListener { logic?.handleEvent(ReminderDetailEvent.OnDeleteIconPress) }
 
         logic?.handleEvent(ReminderDetailEvent.OnStart)
     }
@@ -57,14 +58,16 @@ class ReminderDetailFragment : Fragment(), ReminderDetailContract.View {
         }
     }
 
+    //TODO: Decide if VibrateOnly and Renew Automatically are still feasible options
+
     override fun getState(): Reminder {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Reminder(
                 null,
                 edtReminderTitle.text.toString(),
                 false,
-                chbVibrateOnly.isChecked,
-                chbRenewAutomatically.isChecked,
+                false,
+                false,
                 pckAlarmTime.hour,
                 pckAlarmTime.minute
             )
@@ -73,8 +76,8 @@ class ReminderDetailFragment : Fragment(), ReminderDetailContract.View {
                 null,
                 edtReminderTitle.text.toString(),
                 false,
-                chbVibrateOnly.isChecked,
-                chbRenewAutomatically.isChecked,
+                false,
+                false,
                 pckAlarmTime.currentHour,
                 pckAlarmTime.currentMinute
             )
@@ -87,12 +90,13 @@ class ReminderDetailFragment : Fragment(), ReminderDetailContract.View {
         edtReminderTitle.setText(title)
     }
 
+
     override fun setVibrateOnly(active: Boolean) {
-        chbVibrateOnly.isChecked = active
+
     }
 
     override fun setRenewAutomatically(active: Boolean) {
-        chbRenewAutomatically!!.isChecked = active
+
     }
 
     override fun setPickerTime(hour: Int, minute: Int) {

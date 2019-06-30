@@ -21,7 +21,20 @@ class MovementLogic(
     override fun handleEvent(eventType: MovementEvent) {
         when (eventType){
             is MovementEvent.OnStart -> getMovement(eventType.movementId)
+            is MovementEvent.OnImageClick -> onImageClick()
         }
+    }
+
+    private fun onImageClick() {
+        val imageList = viewModel.getMovement()!!.imageResourceNames
+        val index = viewModel.getCurrentIndex()
+
+        if (imageList.lastIndex == index) updateViewImage(viewModel.getImageResource(0))
+        else updateViewImage(viewModel.getImageResource(index + 1))
+    }
+
+    private fun updateViewImage(imageResource: String) {
+        view.setParallaxImage(imageResource)
     }
 
     private fun getMovement(movementId: String?) = launch {
@@ -47,17 +60,17 @@ class MovementLogic(
         view.startMovementListView()
     }
 
-    //TODO update this function so that it passes the whole set of images in
     private fun updateView(mov: Movement) {
         view.setTootlbarTitle(mov.name)
-        view.setParallaxImage(mov.imageResourceNames)
+        view.setParallaxImage(mov.imageResourceNames[0])
         view.setTargets(mov.targets)
         view.setFrequency(mov.frequency)
         view.setIsTimed(mov.isTimeBased)
         view.setTimeOrRepetitions(mov.timeOrRepetitions)
         view.setDifficulty(mov.difficulty)
-        view.setDescription(mov.descriptionResourceName)
-        view.setInstructions(mov.instructionsResourceName)
+        view.setDescription(mov.description)
+        view.setInstructions(mov.instructions)
+        view.hideProgressBar()
     }
 
 

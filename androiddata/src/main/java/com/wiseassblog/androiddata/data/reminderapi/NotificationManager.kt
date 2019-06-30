@@ -34,14 +34,6 @@ object NotificationManager {
             getDismissIntent(context, reminderId)
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notification.addAction(
-                R.drawable.ic_alarm_off_black_24dp,
-                NOTIFICATION_ACTION_TEXT,
-                getDismissIntent(context, reminderId)
-            )
-        }
-
         notification.setPriority(NotificationCompat.PRIORITY_MAX)
 
         NotificationManagerCompat.from(context).notify(

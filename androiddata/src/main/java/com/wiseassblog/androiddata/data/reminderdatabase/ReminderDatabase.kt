@@ -28,10 +28,12 @@ object ReminderDatabase : IReminderRepository {
             .equalTo("reminderId", reminderId)
             .findFirst()
 
-        if (queryResult != null){
+        if (queryResult != null) {
             val reminder = queryResult.toReminder
             updateReminders(reminder.copy(isActive = false))
         }
+
+        realm.close()
     }
 
     override suspend fun deleteReminder(reminder: Reminder): ResultWrapper<Exception, Unit> =
@@ -49,6 +51,7 @@ object ReminderDatabase : IReminderRepository {
                     queryResult.deleteFromRealm()
                 }
 
+                realm.close()
                 ResultWrapper.build { Unit }
             }
         }
@@ -61,6 +64,7 @@ object ReminderDatabase : IReminderRepository {
                 it.insertOrUpdate(reminder.toRealmReminder)
             }
 
+            realm.close()
             ResultWrapper.build { Unit }
         }
 
@@ -70,6 +74,7 @@ object ReminderDatabase : IReminderRepository {
         val queryResult = realm.where<RealmReminder>(RealmReminder::class.java).findAll()
 
         if (queryResult.size == 0) {
+            realm.close()
             ResultWrapper.build { emptyList<Reminder>() }
         } else {
 
@@ -77,6 +82,9 @@ object ReminderDatabase : IReminderRepository {
             queryResult.forEach {
                 alarmList.add(it.toReminder)
             }
+
+            realm.close()
+
             ResultWrapper.build { alarmList }
         }
     }
@@ -91,7 +99,11 @@ object ReminderDatabase : IReminderRepository {
                 .findFirst()
 
             if (queryResult == null) ResultWrapper.build { throw ReminderServiceException }
-            else ResultWrapper.build { queryResult.toReminder }
+            else {
+                val reminder = queryResult.toReminder
+                realm.close()
+                ResultWrapper.build { reminder }
+            }
 
         }
 }

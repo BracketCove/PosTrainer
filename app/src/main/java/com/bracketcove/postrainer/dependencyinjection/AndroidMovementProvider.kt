@@ -2,6 +2,7 @@ package com.bracketcove.postrainer.dependencyinjection
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.bracketcove.postrainer.PostrainerApplication
 import com.wiseassblog.androiddata.data.movementapi.MovementAPI
 import com.wiseassblog.androiddata.data.movementdatabase.MovementDatabaseImpl
 import com.wiseassblog.domain.api.IMovementAPI
@@ -15,7 +16,7 @@ import com.wiseassblog.domain.repository.IMovementRepository
  */
 class AndroidMovementProvider(application: Application) : AndroidViewModel(application), MovementDependencyProvider {
     override val movementRepository: IMovementRepository
-        get() = MovementDatabaseImpl
+        get() = MovementDatabaseImpl(getApplication<PostrainerApplication>().assets)
 
     override val movementAPI: IMovementAPI
         get() = MovementAPI

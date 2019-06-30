@@ -111,6 +111,4 @@ class ReminderListLogic(
         if (value.size == 0) view.setNoReminderListDataFound()
         else view.setReminderListData(value)
     }
-
-
 }

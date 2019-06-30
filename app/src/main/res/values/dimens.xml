@@ -3,6 +3,8 @@
     <dimen name="standard_horizontal_margin">16dp</dimen>
     <dimen name="standard_vertical_margin">16dp</dimen>
 
+    <dimen name="toolbar_elevation">4dp</dimen>
+
     <integer name="text_switch_anim_duration">320</integer>
     <integer name="act_transition_length">300</integer>
     <item name="act_fade_deg" format="float" type="dimen">0.6</item>

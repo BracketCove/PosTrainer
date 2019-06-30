@@ -13,7 +13,12 @@ class PostrainerApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         initializeRealm()
+
+
+
     }
+
+
 
     private fun initializeRealm() {
         Realm.init(this)

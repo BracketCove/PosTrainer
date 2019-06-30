@@ -42,7 +42,8 @@
             android:id="@+id/recMovementList"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/windowBackground"
+            android:visibility="invisible"
+            android:background="@color/colorPrimary"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -54,9 +55,28 @@
             tools:layout_constraintLeft_creator="1"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavMovements"/>
 
+    <ProgressBar
+            android:id="@+id/proMovementList"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:background="@color/colorPrimary"
+            android:indeterminate="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tlbReminderList"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavMovements"
+    />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
+            style="@style/BottomBar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            app:itemIconTint="@drawable/bottom_bar_focus_colors"
+            app:itemTextColor="@drawable/bottom_bar_focus_colors"
             android:id="@+id/bottomNavMovements"
             app:menu="@menu/menu_bottom_nav"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"

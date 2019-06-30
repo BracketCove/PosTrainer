@@ -24,6 +24,20 @@
         android:layout_marginTop="0dp" />
 
     <ImageButton
+            android:id="@+id/imbReminderDetailDelete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_delete_white_24dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/imbReminderDetailProceed"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp" />
+
+    <ImageButton
         android:id="@+id/imbReminderDetailProceed"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -39,7 +53,7 @@
 
     <EditText
         android:id="@+id/edtReminderTitle"
-        style="@style/InputField.ReminderName"
+        style="@style/InputReminderName"
         android:theme="@style/Postrainer.Inverse"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -54,60 +68,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0" />
 
-    <CheckBox
-        android:id="@+id/chbVibrateOnly"
-        style="@style/CheckBox_White_Border"
-        android:theme="@style/Postrainer.Inverse"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edtReminderTitle"
-        android:text="@string/manage_reminder_vibrate"
-
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/edtReminderTitle"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-    <CheckBox
-        android:id="@+id/chbRenewAutomatically"
-        style="@style/CheckBox_White_Border"
-        android:theme="@style/Postrainer.Inverse"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chbVibrateOnly"
-        android:text="@string/manage_reminder_renew"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/chbVibrateOnly"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-    <View
-        android:id="@+id/div_manage_one"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_below="@id/chbRenewAutomatically"
-        android:background="@drawable/divider_white"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/chbRenewAutomatically"
-        app:layout_constraintHorizontal_bias="0.0" />
-
     <TimePicker
+            style="@style/CustomTimePicker"
         android:id="@+id/pckAlarmTime"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_below="@id/div_manage_one"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/div_manage_one"
+        app:layout_constraintTop_toBottomOf="@+id/edtReminderTitle"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"

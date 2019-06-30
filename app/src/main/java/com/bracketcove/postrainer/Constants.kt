@@ -12,4 +12,6 @@ internal const val PROMPT_DELETE = "DELETE"
 internal const val REMINDER_SET = "Reminder Set."
 internal const val REMINDER_CANCELLED = "Reminder Cancelled."
 internal const val MESSAGE_DELETE_CONFIRMATION = "Delete Reminder?"
+internal const val PROMPT_ENTER_NAME = "Reminder name may not be blank."
+
 

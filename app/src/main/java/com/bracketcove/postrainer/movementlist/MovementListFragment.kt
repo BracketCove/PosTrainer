@@ -32,24 +32,26 @@ class MovementListFragment : Fragment(), MovementListContract.View {
 
         setUpBottomNav()
         logic?.handleEvent(MovementListEvent.OnStart)
-
     }
 
     private fun setUpBottomNav() {
         bottomNavMovements.setupWithNavController(findNavController())
         bottomNavMovements.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.movements -> logic?.handleEvent(MovementListEvent.OnRemindersClick)
+                R.id.reminders -> logic?.handleEvent(MovementListEvent.OnRemindersClick)
                 R.id.settings -> logic?.handleEvent(MovementListEvent.OnSettingsClick)
             }
 
             true
         }
+
+        bottomNavMovements.selectedItemId = R.id.movements
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         //prevent memory leaks
+        logic?.handleEvent(MovementListEvent.OnStop)
         recMovementList.adapter = null
     }
 
@@ -67,7 +69,8 @@ class MovementListFragment : Fragment(), MovementListContract.View {
 
         recMovementList.adapter = movementAdapter
 
-
+        proMovementList.visibility = View.INVISIBLE
+        recMovementList.visibility = View.VISIBLE
     }
 
     override fun startMovementView(movementId: String) {
@@ -77,11 +80,14 @@ class MovementListFragment : Fragment(), MovementListContract.View {
         )
     }
 
+    //Why the if clause? I was getting crashes from fast successive calls to this function
     override fun startSettingsView() {
-        findNavController().navigate(
-            MovementListFragmentDirections
-                .actionMovementListFragmentToSettingsFragment()
-        )
+        if (findNavController().currentDestination?.id == R.id.movementListFragment) {
+            findNavController().navigate(
+                MovementListFragmentDirections
+                    .actionMovementListFragmentToSettingsFragment()
+            )
+        }
     }
 
     override fun showMessage(msg: String) {
@@ -89,10 +95,13 @@ class MovementListFragment : Fragment(), MovementListContract.View {
     }
 
     override fun startRemindersView() {
-        findNavController().navigate(
-            MovementListFragmentDirections
-                .actionMovementListFragmentToReminderListFragment()
-        )
+        if (findNavController().currentDestination?.id == R.id.movementListFragment) {
+            findNavController().navigate(
+                MovementListFragmentDirections
+                    .actionMovementListFragmentToReminderListFragment()
+            )
+        }
+
     }
 
     /**
@@ -106,11 +115,22 @@ class MovementListFragment : Fragment(), MovementListContract.View {
                 MovementListItem(
                     movement.name,
                     getTargetsByResource(movement.targets),
-                    getThumbnailByResourceName(movement.imageResourceNames[0])
+                    getThumbnailByResourceName(movement.imageResourceNames[0]),
+                    movement.difficulty.difficultyToInt()
                 )
             )
         }
 
         return newList
     }
+
+    private fun String.difficultyToInt(): Int {
+        return when (this) {
+            "Easy" -> 1
+            "Medium" -> 2
+            "Advanced" -> 3
+            else -> 2
+        }
+    }
+
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bracketcove.postrainer.R
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_movement.view.*
 
 class MovementAdapter(var event: MutableLiveData<MovementListEvent> = MutableLiveData(),
@@ -22,16 +23,32 @@ class MovementAdapter(var event: MutableLiveData<MovementListEvent> = MutableLiv
     override fun onBindViewHolder(holder: MovementAdapter.MovementViewHolder, position: Int) {
         movements[position].let { item ->
             holder.movementTitle.text = item.name
-            holder.movementThumb.setImageResource(item.thumbnail)
+
+            //thumbnail
+            Glide.with(holder.itemView)
+                .load(item.thumbnail)
+                .placeholder(R.drawable.ic_launcher_v2)
+                .centerCrop()
+                .into(holder.movementThumb)
+            //holder.movementThumb.setImageResource(item.thumbnail)
+
+
             //Number of targets are finite, but not all will be used for all movements.
             //I could add the ImageViews dynamically, but I've decided to implement an EZ workaround instead
             bindTargets(item, holder)
+            showDifficultyIcons(item.difficulty, holder)
             holder.itemView.setOnClickListener {
                 event.value = MovementListEvent.OnMovementClick(
                     movements[position].name
                 )
             }
         }
+    }
+
+    private fun showDifficultyIcons(difficulty: Int, holder:MovementViewHolder) {
+        if (difficulty > 0 ) holder.starIconOne.visibility = View.VISIBLE
+        if (difficulty > 1) holder.starIconTwo.visibility = View.VISIBLE
+        if (difficulty > 2) holder.starIconThree.visibility = View.VISIBLE
     }
 
     //Since
@@ -50,6 +67,8 @@ class MovementAdapter(var event: MutableLiveData<MovementListEvent> = MutableLiv
         )
     }
 
+    //TODO: Performance could possibly take a hit with this many views, probably worth creating one imageview with n number of drawables to represent different difficulties
+
     class MovementViewHolder(private val root: View) : RecyclerView.ViewHolder(root) {
         var movementTitle: TextView = root.lblMovementItemName
         var movementThumb: ImageView = root.imvMovementItemThumb
@@ -58,6 +77,9 @@ class MovementAdapter(var event: MutableLiveData<MovementListEvent> = MutableLiv
         var targetIconThree: ImageView = root.imvItemIconThree
         var targetIconFour: ImageView = root.imvItemIconFour
         var targetIconFive: ImageView = root.imvItemIconFive
+        var starIconOne: ImageView = root.imvItemStarOne
+        var starIconTwo: ImageView = root.imvItemStarTwo
+        var starIconThree: ImageView = root.imvItemStarThree
     }
 }
 

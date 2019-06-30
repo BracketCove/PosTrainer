@@ -5,13 +5,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.wiseassblog.androiddata.data.ACTION_REMINDER_CANCEL
 import com.wiseassblog.androiddata.data.ACTION_REMINDER_START
 import com.wiseassblog.androiddata.data.REMINDER_ID
 import com.wiseassblog.androiddata.data.setReminderTime
 import com.wiseassblog.common.ResultWrapper
-import com.wiseassblog.domain.domainmodel.Reminder
 import com.wiseassblog.domain.api.IReminderAPI
+import com.wiseassblog.domain.domainmodel.Reminder
 import java.util.*
 
 /**
@@ -62,22 +61,21 @@ class ReminderApiImpl(
 
     override suspend fun cancelReminder(reminder: Reminder): ResultWrapper<Exception, Unit> {
         val intent = Intent(context, ReminderBroadcastReceiver::class.java)
-        intent.setAction(
-            ACTION_REMINDER_START
-        )
-
         intent.putExtra(REMINDER_ID, reminder.reminderId)
-        intent.action = ACTION_REMINDER_CANCEL
+            .setAction(
+                ACTION_REMINDER_START
+            )
 
-        //intent to be fired when
-        val contentIntent = PendingIntent.getActivity(
+        val receiverIntent = PendingIntent.getBroadcast(
             context,
             Integer.parseInt(reminder.reminderId),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+        val aManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        aManager.cancel(receiverIntent)
         return ResultWrapper.build { Unit }
     }
 
@@ -89,7 +87,5 @@ class ReminderApiImpl(
             reminder.timeInMillis = alarmForFollowingDay
         }
     }
-
-
 
 }

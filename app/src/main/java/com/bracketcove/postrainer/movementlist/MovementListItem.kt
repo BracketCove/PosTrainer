@@ -6,5 +6,6 @@ package com.bracketcove.postrainer.movementlist
 class MovementListItem(
     val name: String,
     val targets:List<Int>,
-    val thumbnail: Int
+    val thumbnail: Int,
+    val difficulty: Int
 )

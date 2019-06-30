@@ -1,5 +1,6 @@
 package com.bracketcove.postrainer.movementlist
 
+import android.util.Log
 import com.bracketcove.postrainer.BaseLogic
 import com.bracketcove.postrainer.ERROR_GENERIC
 import com.bracketcove.postrainer.dependencyinjection.AndroidMovementProvider
@@ -23,6 +24,7 @@ class MovementListLogic(
             is MovementListEvent.OnSettingsClick -> view.startSettingsView()
             is MovementListEvent.OnRemindersClick -> view.startRemindersView()
             is MovementListEvent.OnMovementClick -> view.startMovementView(eventType.movementId)
+            is MovementListEvent.OnStop -> jobTracker.cancel()
         }
     }
 
@@ -32,6 +34,7 @@ class MovementListLogic(
         when (result) {
             is ResultWrapper.Success -> view.setMovementListData(result.value)
             is ResultWrapper.Error -> {
+                Log.d("MOVEMENT_LIST", result.error.toString())
                 view.showMessage(ERROR_GENERIC)
                 view.startRemindersView()
             }

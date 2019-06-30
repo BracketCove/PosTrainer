@@ -20,9 +20,11 @@ import kotlinx.android.synthetic.main.fragment_reminder_list.*
  */
 class ReminderListFragment : Fragment(), ReminderListContract.View {
     override fun startMovementsView() {
-        findNavController().navigate(
-            ReminderListFragmentDirections.actionReminderListFragmentToMovementListFragment()
-        )
+        if (findNavController().currentDestination?.id == R.id.reminderListFragment) {
+            findNavController().navigate(
+                ReminderListFragmentDirections.actionReminderListFragmentToMovementListFragment()
+            )
+        }
     }
 
     var logic: BaseLogic<ReminderListEvent>? = null
@@ -45,7 +47,7 @@ class ReminderListFragment : Fragment(), ReminderListContract.View {
 
         fabAlarm.setOnClickListener {
             logic?.handleEvent(ReminderListEvent.OnCreateButtonClick)
-    }
+        }
 
         setUpAdapter()
         setUpBottomNav()
@@ -53,9 +55,13 @@ class ReminderListFragment : Fragment(), ReminderListContract.View {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     private fun setUpBottomNav() {
         bottomNavReminders.setupWithNavController(findNavController())
-        bottomNavReminders.setOnNavigationItemSelectedListener{
+        bottomNavReminders.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.movements -> logic?.handleEvent(ReminderListEvent.OnMovementsClick)
                 R.id.settings -> logic?.handleEvent(ReminderListEvent.OnSettingsClick)
@@ -102,16 +108,20 @@ class ReminderListFragment : Fragment(), ReminderListContract.View {
     }
 
     override fun startReminderDetailView(reminderId: String) {
-        findNavController().navigate(
-            ReminderListFragmentDirections
-                .actionReminderListFragmentToReminderDetailFragment(reminderId)
-        )
+        if (findNavController().currentDestination?.id == R.id.reminderListFragment) {
+            findNavController().navigate(
+                ReminderListFragmentDirections
+                    .actionReminderListFragmentToReminderDetailFragment(reminderId)
+            )
+        }
     }
 
     override fun startSettingsActivity() {
-        findNavController().navigate(
-            ReminderListFragmentDirections.actionReminderListFragmentToSettingsFragment()
-        )
+        if (findNavController().currentDestination?.id == R.id.reminderListFragment) {
+            findNavController().navigate(
+                ReminderListFragmentDirections.actionReminderListFragmentToSettingsFragment()
+            )
+        }
     }
 
 }

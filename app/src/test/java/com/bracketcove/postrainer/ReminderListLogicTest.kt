@@ -122,6 +122,7 @@ class ReminderListLogicTest {
         verify(exactly = 1) { view.startReminderDetailView("") }
     }
 
+
     /**
      * On Reminder Set: User wants to make an Reminder active
      * 1. Check boolean active from adapter (forwarded by the View). This boolean is the "intended" state of the reminder after the update is called, since it is based on the Switch state in the View

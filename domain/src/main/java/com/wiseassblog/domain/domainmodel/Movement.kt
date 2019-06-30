@@ -16,8 +16,8 @@ data class Movement(
     //where to find video to play
     val videoUrl:String?,
     //String resource names
-    val descriptionResourceName: String,
-    val instructionsResourceName: String
+    val description: String,
+    val instructions: String
 
 
 )

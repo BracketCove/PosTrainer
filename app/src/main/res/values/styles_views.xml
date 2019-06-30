@@ -3,14 +3,13 @@
 
     <!-- I put style data which effects Views/Widgets/ViewGroups here. -->
     <!-- *********************** Input Fields  *********************** -->
-    <style name="InputField" parent="Widget.AppCompat.EditText" />
-
-    <style name="InputField.ReminderName" parent="android:Widget.TextView">
+    <style name="InputReminderName" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">@color/WHITE</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">32sp</item>
         <item name="android:textColorHint">@color/windowBackground</item>
         <item name="android:inputType">textCapWords|textNoSuggestions</item>
+        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
     </style>
 
     <!-- *********************** Labels  *********************** -->
@@ -34,6 +33,13 @@
         <item name="android:background">@drawable/label_rounded_background_dark</item>
     </style>
 
+    <style name="MovementText.Header.MovementItem">
+        <item name="android:background">@drawable/label_rounded_background_light</item>
+        <item name="android:fontFamily">sans-serif-condensed-medium</item>
+        <item name="android:paddingStart">0dp</item>
+
+    </style>
+
     <style name="MovementText.Header.Sub">
         <item name="android:fontFamily">sans-serif-medium-condensed</item>
         <item name="android:textSize">16sp</item>
@@ -42,16 +48,8 @@
 
     <style name="MovementText.Content">
         <item name="android:fontFamily">sans-serif-condensed-medium</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:scrollbars">vertical</item>
-    </style>
-
-    <style name="Label.Tabs" parent="android:Widget.TextView">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColor">@color/WHITE</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:gravity">center</item>
     </style>
 
     <style name="Label.ReminderWidget" parent="@android:style/Widget.TextView">
@@ -74,49 +72,33 @@
 
     <!-- *********************** Containers  *********************** -->
 
-    <!-- *********************** Buttons  *********************** -->
-    <style name="Button.Flat" parent="Widget.AppCompat.Button.Borderless" />
-
-    <style name="Button_Detail_Frag" parent="android:Widget.ImageButton">
-        <item name="android:layout_alignParentTop">true</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:textColor">@color/WHITE</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingLeft">36dp</item>
-        <item name="android:paddingRight">36dp</item>
-        <item name="android:background">@drawable/button_flat</item>
-    </style>
-
-
-    <style name="Button.Flat.Primary">
-        <item name="android:background">@drawable/button_flat</item>
-        <item name="android:textColor">@color/WHITE</item>
-        <item name="android:layout_marginTop">32dp</item>
-        <item name="android:minWidth">88dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:paddingLeft">16sp</item>
-        <item name="android:paddingRight">16sp</item>
-    </style>
-
-    <style name="Button_Settings" parent="android:Widget.Button">
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">64dp</item>
-        <item name="android:gravity">left|center_vertical</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:textColor">@color/ALPHA_BLACK</item>
-        <item name="android:background">@drawable/button_flat_inverse</item>
-    </style>
-
     <!-- *********************** ImageView/Buttons  *********************** -->
 
     <style name="MovementIcon">
         <item name="android:layout_height">36dp</item>
         <item name="android:layout_width">36dp</item>
         <item name="android:tint">@color/WHITE</item>
+    </style>
+
+    <style name="MovementIcon.MovementItemTarget">
+        <item name="android:tint">@color/MINT_GREEN</item>
+    </style>
+
+    <!-- Inheritience here as applied strictly to make it easy to look this thing up LOL -->
+    <style name="MovementIcon.MovementItemDifficulty">
+        <item name="android:src">@drawable/ic_star_white_24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:visibility">invisible</item>
+
+        <item name="android:tint">@color/colorAccent</item>
+
+
+    </style>
+
+
+    <style name="BottomBar" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <!-- *********************** Toolbar  *********************** -->
@@ -127,7 +109,7 @@
         <item name="android:timePickerMode">clock</item>
         <item name="android:headerBackground">@color/colorAccent</item>
         <item name="android:numbersTextColor">@color/BLACK</item>
-        <item name="android:numbersSelectorColor">?android:attr/colorControlActivated</item>
+        <item name="android:numbersSelectorColor">@color/colorPrimary</item>
         <item name="android:numbersBackgroundColor">@color/WHITE</item>
         <item name="android:amPmTextColor">@color/ALPHA_WHITE</item>
     </style>
@@ -135,10 +117,6 @@
     <style name="CheckboxCustomOverlay" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/WHITE</item>
         <item name="android:textColorSecondary">@color/WHITE</item>
-    </style>
-
-    <style name="PickerTextColor">
-        <item name="android:textColorPrimary">@color/BLACK</item>
     </style>
 
     <style name="Reminder_Switch_Theme" parent="ThemeOverlay.AppCompat">
@@ -161,25 +139,4 @@
         <item name="android:layout_marginTop">2dp</item>
         <item name="android:layout_marginBottom">2dp</item>
     </style>
-
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:background">@android:color/white</item>
-    </style>
-
-    <style name="ToolbarTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">20sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="Toolbar_Popup" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:background">@color/WHITE</item>
-    </style>
-
-    <style name="Toolbar_Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">20sp</item>
-    </style>
-
-
 </resources>

@@ -22,4 +22,5 @@ sealed class MovementListEvent {
     object OnRemindersClick : MovementListEvent()
     data class OnMovementClick(val movementId: String) : MovementListEvent()
     object OnStart : MovementListEvent()
+    object OnStop : MovementListEvent()
 }

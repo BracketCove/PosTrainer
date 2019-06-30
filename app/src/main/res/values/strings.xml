@@ -1,40 +1,19 @@
 <resources>
     <string name="app_name">PosTrainer</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_movement_detail">ActivityMovementDetail</string>
-    <string name="title_activity_movement_menu">ActivityMovementMenu</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_reminders">Reminders</string>
-    <string name="title_activity_manage_reminder">ActivityManageReminder</string>
 
-    <!-- ReminderListActivity -->
+    <!-- Reminder -->
     <string name="reminders_on">ON</string>
     <string name="reminders_off">OFF</string>
     <string name="reminders_prompt">Hit "+" to Create a New Reminder</string>
     <string name="reminder_title">Reminder Title</string>
-    <string name="reminderr_dialog_delete_title">Delete Reminder?</string>
 
-    <!-- ActivityManageReminder -->
+    <!-- ManageReminder -->
     <string name="manage_reminder_title_hint">Reminder Title</string>
     <string name="manage_reminder_vibrate">Vibrate Only</string>
     <string name="manage_reminder_renew">Renew Automatically</string>
-    <string name="manage_reminder_action_done">Done</string>
-    <string name="manage_reminder_action_delete">Delete</string>
-    <string name="manage_reminder_new_title">New Reminder</string>
-    <string name="manage_reminder_toolbar_title">Set Reminder</string>
-    <string name="manage_reminder_write_successful">Reminder Updated/Created</string>
-    <string name="manage_reminder_write_unsuccessful">Reminder Update Unsuccessful</string>
 
-    <!-- ActivityMovementMenu -->
-    <string name="movement_menu_guide">GUIDE</string>
-    <string name="movement_menu_tab_stretches">STRETCHES</string>
-    <string name="movement_menu_tab_exercises">EXERCISES</string>
-
-    <!-- ActivityMovementDetail -->
-    <string name="movement_detail_tab_description_abrv">DESC.</string>
-
-    <string name="movement_detail_tab_description">DESCRIPTION</string>
-    <string name="movement_detail_tab_steps">STEPS</string>
+    <!-- MovementDetail -->
 
 
     <!-- SettingsActivity -->
@@ -43,27 +22,7 @@
     <string name="settings_button_contact">Contact</string>
     <string name="settings_version_number">Version: 2.0</string>
 
-
-    <!-- Dialog -->
-    <string name="dialog_positive_ok">OK</string>
-    <string name="dialog_negative_cancel">Cancel</string>
-
-    <!-- Navigation Fragment-->
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
-    <string name="jump_to">Jump To:</string>
-
-    <!-- Validation -->
-    <string name="error_input_invalid_blank">Title can\'t be blank</string>
-    <string name="error_input_invalid_too_long">Title must be 36 Chars. or less</string>
-    <string name="error_too_many_reminders">Maximum Number of Reminders is 5</string>
-
     <!--Toolbar Titles -->
-    <string name="movement_menu_title">Movements</string>
-    <string name="movement_detail_title">Movement Detail</string>
-    <string name="reminder_list_title">Current Reminders</string>
-    <string name="reminder_manage_title">Manage Reminder</string>
-    <string name="reminder_disclaimer_title">Disclaimer</string>
     <string name="settings_title">About</string>
 
     <!-- Other -->
@@ -117,6 +76,4 @@
     <string name="movements">Movements</string>
     <string name="reminders">Reminders</string>
     <string name="settings">Settings</string>
-
-
 </resources>

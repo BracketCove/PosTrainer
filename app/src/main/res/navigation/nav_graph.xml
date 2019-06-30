@@ -9,7 +9,8 @@
               tools:layout="@layout/fragment_reminder_detail"
     >
         <action android:id="@+id/action_reminderDetailFragment_to_reminderListFragment"
-                app:destination="@id/reminderListFragment"/>
+                app:destination="@id/reminderListFragment"
+        />
 
         <argument android:name="reminderId" app:argType="string" android:defaultValue='""'/>
 
@@ -20,24 +21,29 @@
               tools:layout="@layout/fragment_reminder_list"
     >
         <action android:id="@+id/action_reminderListFragment_to_reminderDetailFragment"
-                app:destination="@id/reminderDetailFragment"/>
+                app:destination="@id/reminderDetailFragment" app:enterAnim="@anim/scale_up"
+                app:exitAnim="@anim/scale_down"/>
         <action android:id="@+id/action_reminderListFragment_to_movementListFragment"
-                app:destination="@id/movementListFragment"/>
+                app:destination="@id/movementListFragment" app:enterAnim="@anim/fade_in_shadow"
+                app:exitAnim="@anim/fade_out"/>
         <action android:id="@+id/action_reminderListFragment_to_settingsFragment"
-                app:destination="@id/settingsFragment"/>
+                app:destination="@id/settingsFragment" app:enterAnim="@anim/fade_in_shadow"
+                app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment android:id="@+id/movementListFragment"
               android:name="com.bracketcove.postrainer.movementlist.MovementListFragment"
               tools:layout="@layout/fragment_movement_list"
               android:label="MovementListFragment">
         <action android:id="@+id/action_movementListFragment_to_reminderListFragment"
-                app:destination="@id/reminderListFragment"/>
+                app:destination="@id/reminderListFragment" app:enterAnim="@anim/fade_in_shadow"
+                app:exitAnim="@anim/fade_out"/>
         <action android:id="@+id/action_movementListFragment_to_movementFragment"
                 app:destination="@id/movementFragment"
 
         />
         <action android:id="@+id/action_movementListFragment_to_settingsFragment"
-                app:destination="@id/settingsFragment"/>
+                app:destination="@id/settingsFragment" app:enterAnim="@anim/fade_in_shadow"
+                app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment android:id="@+id/movementFragment" android:name="com.bracketcove.postrainer.movement.MovementFragment"
               tools:layout="@layout/fragment_movement"
@@ -51,8 +57,10 @@
               tools:layout="@layout/fragment_settings"
               android:label="SettingsFragment">
         <action android:id="@+id/action_settingsFragment_to_reminderListFragment"
-                app:destination="@id/reminderListFragment"/>
+                app:destination="@id/reminderListFragment" app:enterAnim="@anim/fade_in_shadow"
+                app:exitAnim="@anim/fade_out"/>
         <action android:id="@+id/action_settingsFragment_to_movementListFragment"
-                app:destination="@id/movementListFragment"/>
+                app:destination="@id/movementListFragment" app:enterAnim="@anim/fade_in_shadow"
+                app:exitAnim="@anim/fade_out"/>
     </fragment>
 </navigation>

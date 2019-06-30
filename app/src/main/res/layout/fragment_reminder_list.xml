@@ -14,6 +14,7 @@
             android:id="@+id/tlbReminderList"
             android:layout_width="0dp"
             android:layout_height="56dp"
+            android:elevation="@dimen/toolbar_elevation"
             android:background="@color/colorPrimary"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -28,7 +29,7 @@
                 android:layout_height="0dp"
                 android:paddingLeft="16dp"
                 android:gravity="center_vertical|left"
-                android:text="@string/app_name"
+                android:text="@string/reminders"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_constraintLeft_creator="1"
@@ -60,7 +61,7 @@
             android:id="@+id/rec_reminder_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/windowBackground"
+            android:background="@color/colorPrimary"
             android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -91,8 +92,11 @@
             android:layout_marginBottom="48dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+            style="@style/BottomBar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            app:itemIconTint="@drawable/bottom_bar_focus_colors"
+            app:itemTextColor="@drawable/bottom_bar_focus_colors"
             android:id="@+id/bottomNavReminders"
             app:menu="@menu/menu_bottom_nav"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"

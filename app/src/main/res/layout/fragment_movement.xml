@@ -2,56 +2,57 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                      xmlns:app="http://schemas.android.com/apk/res-auto"
                                                      xmlns:tools="http://schemas.android.com/tools"
-                                                     android:orientation="vertical"
+                                                     android:fitsSystemWindows="false"
                                                      android:layout_width="match_parent"
                                                      android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-                                           android:layout_height="match_parent"
-                                           app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                                           tools:visibility="gone"
-    >
-
-        <include
-                layout="@layout/subview_movement"
-        />
-
-    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:id="@+id/ablMovement"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="600dp"
     >
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-                android:background="@color/ALPHA_BLACK"
+        <com.bracketcove.postrainer.movement.MovementCollapsibleToolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="56dp"
+                app:layoutDescription="@xml/scene_parallax_toolbar"
                 android:id="@+id/ctlMovement"
-                app:contentScrim="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                android:fitsSystemWindows="false"
+                app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
             <ImageView
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    android:src="@drawable/ic_launcher_v2"
                     android:id="@+id/imvMovement"
-                    app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="0.5"
+                    android:scaleType="centerCrop"
             />
 
-
-            <androidx.appcompat.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+            <TextView
+                    style="@style/Label.BrandHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="56dp"
                     android:id="@+id/tlbMovement"
-                    app:layout_collapseMode="pin"
+                    tools:text="Passive Hang"
+                    android:textSize="32sp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
             />
 
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.bracketcove.postrainer.movement.MovementCollapsibleToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include layout="@layout/subview_movement"/>
 
-
+    <ProgressBar
+            android:id="@+id/proMovement"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:background="@color/colorPrimary"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+           />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

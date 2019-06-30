@@ -148,6 +148,22 @@ class ReminderLogicTest {
         coVerify { updateReminder.execute(ALARM) }
     }
 
+    @Test
+    fun `On Done empty reminder name`() {
+        val ALARM = getReminder(id = "")
+
+        every { view.getState() } returns ALARM
+        every { viewModel.getReminder() } returns ALARM
+
+
+        alarmDetailLogic.handleEvent(ReminderDetailEvent.OnDoneIconPress)
+
+        verify(exactly = 1) { viewModel.getReminder() }
+        verify(exactly = 1) { view.getState() }
+        verify(exactly = 1) { view.showMessage(PROMPT_ENTER_NAME) }
+        coVerify { updateReminder.execute(ALARM) }
+    }
+
     /**
      *On back: User wishes to return to List View without updates
      * 1. Tell view to navigate
