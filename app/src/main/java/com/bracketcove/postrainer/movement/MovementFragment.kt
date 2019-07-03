@@ -46,15 +46,20 @@ class MovementFragment : Fragment(), MovementContract.View {
             )
         )
 
-        imvMovement.setOnClickListener{
+        imvMovement.setOnClickListener {
             logic?.handleEvent(MovementEvent.OnImageClick)
         }
 
         ablMovement.addOnOffsetChangedListener(
-            object: AppBarLayout.OnOffsetChangedListener{
+            object : AppBarLayout.OnOffsetChangedListener {
                 //Note: because 'reasons', appbar offset ranges from [0, -1428], 0 being expanded state
                 override fun onOffsetChanged(appBar: AppBarLayout?, offset: Int) {
-                     imvMovement.setEnabled(offset == 0)
+                    if (offset == 0) {
+                        imvMovement.isEnabled = true
+                    } else if (imvMovement.isEnabled) {
+                        //if offset is not 0, and the image is enabled, disable it
+                        imvMovement.isEnabled = false
+                    }
                 }
 
             }
@@ -76,13 +81,14 @@ class MovementFragment : Fragment(), MovementContract.View {
 
 
         Glide.with(imvMovement)
-            .load(resources.getIdentifier(
-                resource,
-                "drawable",
-                activity?.packageName
-            ))
+            .load(
+                resources.getIdentifier(
+                    resource,
+                    "drawable",
+                    activity?.packageName
+                )
+            )
             .into(imvMovement)
-
 
 
         val animSlideInRight = AnimationUtils.loadAnimation(

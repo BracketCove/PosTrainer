@@ -13,45 +13,29 @@
 
 ## What is PosTrainer?
 
-PosTrainer is an Alarm App which allows the user to set up to 5 Daily Reminders to sit up Straight and/or Perform stretches to combat bad Posture from being a Desk Jockey.
+PosTrainer is an Notification adn Exercise instruction App which allows the user to set daily reminders to sit up Straight and/or Perform stretches/exercises to combat bad Posture from being a Desk Jockey. 
 
-This App has seen over 5 iterations, as it was the second App Idea I ever built. At this time, I'm currently refactoring it to apply Clean Architecture Principles, as well as Dagger 2 for Dependency Injection, RxJava 2 for Concurrency/Communication, and a Realm Database to store the Reminders. Please see my Software Architecture Diagram for a generalized Picture of this Application's Software Architecture.
+This App is available on the Play Store here (if you learn something from the code, consider downloading and rating the app):
+https://play.google.com/store/apps/details?id=com.bracketcove.postrainer
 
-This App is available on the Play Store here:
-https://play.google.com/store/apps/details?id=com.bracketcove.postrainer&hl=en
+### Reminders Component
+<img src="pos_screen_reminders.jpg" alt="Reminder List Screen" width="270" height="480"/>
 
-### AlarmList Component
-<img src="reminder_list.png" alt="Login Screen" width="270" height="480"/>
 
-<img src="reminder_list_active.png" alt="Login Screen" width="270" height="480"/>
+### Reminder Detail Component
+<img src="reminder_detail.png" alt="Reminder Detail Screen" width="270" height="480"/>
 
-### AlarmDetail Component
-<img src="reminder_detail.png" alt="Create Account Screen" width="270" height="480"/>
+### Movements Component
+<img src="pos_screen_movement_list.jpg" alt="Movement List Screen" width="270" height="480"/>
 
-### AlarmReceiver Page Component
-<img src="alarm_receiver.png" alt="Profile Page Screen" width="270" height="480"/>
+### Movement Detail Component
+<img src="pos_screen_movement_detail_image.jpg" alt="Movement Detail Screen" width="270" height="480"/>
+
+<img src="pos_screen_movement_detail_info.jpg" alt="Movement Detail Screen" width="270" height="480"/>
 
 ### Settings  Component
 <img src="settings.png" alt="Settings Screen" width="270" height="480"/>
 
-## Change Log
-
-As of July 2017, PosTrainer has been drastically refactored. Changes include:
-- Removal of Reminder Objects and references to Reminders. This Decision was made based on the ambiguity between a Reminder and an Alarm. No need for two names that have the same data.
-- Overhaul of my RxJava 2 Implementation. Now uses CompositeDisposable with Observables created via UseCases.
-- Generally UI Improvements
-
-## Issues
-
-- Styling the TimePicker Widget across API versions and Screen sizes is a very obnoxious process; particularly API 21. This will need to be improved over time.
-
-- AlarmReceiver Component sometimes behaves unexpectedly. At this point, I'm considering releasing the wakelock/alarm the moment onPause() is called, just to avoid crashes and issues releasing the Wakelock. 
-
-
-
-## Software Architecture Diagram
-
-<img src="diagram.jpg" alt="Profile Page Screen" width="540" height="960"/>
 
 ## Can I use code from this Repo?
 Absolutely, pursuant to the project's [LICENSE](LICENSE.md). I primarily learned how to build Profiler by learning from free sources and referencing open source libraries, many of which I list (here)[#sources]. That being said, the logo (whenever I get around to making it) and name are my intellectual creations, so don't use them unless you are linking/reffering to this Repo.
@@ -59,18 +43,15 @@ Absolutely, pursuant to the project's [LICENSE](LICENSE.md). I primarily learned
 Follow the rules in the license, and you're good.
 
 ## APIs and Architectures Used:
-This project is greatly inspired by Clean Architecture Principles. Now that I'm more comfortable with RxJava and Dagger 2, I'm confident that I'll be able to execute a modular and highly testable Application on the Android Platform. This project is an attempt to make that idea into an Open Source App.
+- Android Jetpack/Components: Navigation, ViewModel, LiveData, ConstraintLayout
+- Realm for local Persistence
+- BroadcastReceiver, AlarmManager, ForegroundService, NotificationManager
 
-**Architecture patterns:**
-* Model View Presenter (Passive View). Keep Views dumb and simple, so that they don't need to be tested much, if at all (I may write some Espresso Tests, but it isn't high on my priority list).
-* Clean Architecture. To complex to summarize in a few sentences; but the basic idea is having three layers of an Enterprise App (Presentation, Domain (Use Case), and Data (Service) layers). This seperation does increase the number of Classes, but the advantage is in simplicity, testability, and modularity to name a few.
-* Dependency Injection Layer. This Layer satisfies creation of Dependencies (such as ReminderService.java) so that each part of the App has what it needs, when it needs it. This also decouples Object creation from Classes which shouldn't really be creating Objects in the first place (Seperation of Concerns).
+The Architecture is my own personal style which I have developed after eventually deciding that I was done calling things names that
+did not make much sense to me. That is not to say my names are better, but it is to say that they make more sense to me. If you are actually
+interested in learning what Software Architecture means to me without making things needlessly vague nor complex, please read this article:
 
-* Dagger 2. D.I. Framework which I use to Inject Presenters, as well as to Inject Objects into my Service Layer.
-* RxJava/RxAndroid 2 for concurrency. Rx allows me to create Data Streams which change over time, based on what happens in each Layer.
-* Mockito to help with Unit Testing
-* Realm for storing Reminders
-* Plenty of System Services Like Vibrator, AlarmManager, MediaPlayer, PowerManager.WakeLock
+https://medium.com/datadriveninvestor/programming-fundamentals-part-5-separation-of-concerns-software-architecture-f04a900a7c50
 
 ## Sources and Inspiration
 
@@ -104,8 +85,6 @@ If you're in a position where monetary support isn't an option, then you can als
 [Facebook](https://www.facebook.com/wiseassblog/)
 
 [Twitter](https://twitter.com/wiseAss301)
-
-[Patreon](https://www.patreon.com/bePatron?u=5114325)
 
 [Primary Website](http://wiseassblog.com/)
 

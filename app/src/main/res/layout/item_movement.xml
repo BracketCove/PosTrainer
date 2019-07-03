@@ -113,7 +113,7 @@
 
     <ImageView
             android:layout_width="56dp"
-            android:layout_height="56dp" 
+            android:layout_height="56dp"
             android:id="@+id/imvMovementItemThumb"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
